@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Koç Servis">
+<meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Koç Elektronik Servis</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: iOS native — large titles, inset grouped lists, fixed translucent tab bar */
+:root{
+  --bg:#F2F2F7; --card:#FFFFFF; --card2:#F2F2F7; --label:#000000; --label2:rgba(60,60,67,.62); --label3:rgba(60,60,67,.32);
+  --sep:rgba(60,60,67,.22); --fill:rgba(118,118,128,.12); --segon:#FFFFFF; --barbg:rgba(249,249,249,.88);
+  --tint:#007AFF; --green:#248A3D; --greenbg:rgba(52,199,89,.16); --red:#D70015; --redbg:rgba(255,59,48,.13);
+  --orange:#C93400; --orangebg:rgba(255,149,0,.16); --wa:#1FA855; --ink:#111827;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#000000; --card:#1C1C1E; --card2:#2C2C2E; --label:#FFFFFF; --label2:rgba(235,235,245,.62); --label3:rgba(235,235,245,.3);
+  --sep:rgba(84,84,88,.6); --fill:rgba(118,118,128,.24); --segon:#636366; --barbg:rgba(22,22,24,.86);
+  --tint:#0A84FF; --green:#30D158; --greenbg:rgba(48,209,88,.18); --red:#FF453A; --redbg:rgba(255,69,58,.18);
+  --orange:#FF9F0A; --orangebg:rgba(255,159,10,.18); --wa:#25D366; --ink:#0B0F19; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#000000; --card:#1C1C1E; --card2:#2C2C2E; --label:#FFFFFF; --label2:rgba(235,235,245,.62); --label3:rgba(235,235,245,.3);
+  --sep:rgba(84,84,88,.6); --fill:rgba(118,118,128,.24); --segon:#636366; --barbg:rgba(22,22,24,.86);
+  --tint:#0A84FF; --green:#30D158; --greenbg:rgba(48,209,88,.18); --red:#FF453A; --redbg:rgba(255,69,58,.18);
+  --orange:#FF9F0A; --orangebg:rgba(255,159,10,.18); --wa:#25D366; --ink:#0B0F19; color-scheme:dark;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--label);font-family:var(--font);font-size:17px;line-height:1.3;letter-spacing:-.01em;touch-action:manipulation}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--tint);outline-offset:2px}
+.app{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:8px calc(96px + env(safe-area-inset-bottom,0px))}
+.view{display:flex;flex-direction:column;gap:22px}
+.hdr{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-top:12px}
+.hdr .eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--label2);display:flex;align-items:center;gap:8px}
+.mark{width:22px;height:22px;border-radius:6px;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:10px;font-weight:800;letter-spacing:0;box-shadow:inset 0 -2px 0 var(--tint)}
+h1{font-family:var(--font-display);font-size:34px;font-weight:700;letter-spacing:.01em;margin:4px 0 0;text-wrap:balance}
+h2{font-size:22px;font-weight:700;margin:0;letter-spacing:-.01em}
+.sect{display:flex;flex-direction:column;gap:7px}
+.sect-t{font-size:13px;text-transform:uppercase;letter-spacing:.03em;color:var(--label2);padding:0 16px}
+.foot{font-size:13px;color:var(--label2);padding:0 16px;line-height:1.38}
+.group{background:var(--card);border-radius:12px;overflow:hidden}
+.cell{position:relative;display:flex;align-items:center;gap:12px;min-height:46px;padding:10px 16px}
+.cell+.cell::before,.cell+.row::before,.row+.row::before,.row+.cell::before{content:"";position:absolute;top:0;left:16px;right:0;height:.5px;background:var(--sep)}
+.row+.row.ic::before,.row.ic+.row::before{left:60px}
+.cell label,.cell .lbl{flex:0 0 auto;min-width:92px}
+.cell .val{flex:1;min-width:0;text-align:right;border:0;background:transparent;outline:none;padding:0}
+.cell select.val{appearance:none;-webkit-appearance:none;text-align:right;text-align-last:right;color:var(--label2);padding-right:18px;background:transparent}
+.chev{position:absolute;right:14px;top:50%;width:8px;height:8px;border-right:2px solid var(--label3);border-bottom:2px solid var(--label3);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.cell input.val::placeholder,textarea::placeholder{color:var(--label3)}
+.cell.stack{flex-direction:column;align-items:stretch;gap:8px}
+textarea{width:100%;border:0;background:transparent;outline:none;resize:none;min-height:64px;padding:0;line-height:1.35}
+.amount{font-size:28px;font-weight:600;font-variant-numeric:tabular-nums;text-align:left!important}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--fill);border-radius:9px;padding:2px;gap:2px}
+.seg button{border:0;background:transparent;border-radius:7px;padding:7px 6px;font-size:14px;font-weight:500;min-height:32px;transition:background .18s}
+.seg button[aria-pressed="true"]{background:var(--segon);font-weight:600;box-shadow:0 3px 8px rgba(0,0,0,.12),0 1px 1px rgba(0,0,0,.04)}
+.seg.sm{min-width:110px}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px 2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:0;background:var(--fill);border-radius:16px;padding:6px 12px;font-size:14px;color:var(--label)}
+.chip:active{opacity:.6}
+.switch{appearance:none;-webkit-appearance:none;width:51px;height:31px;border-radius:16px;background:var(--fill);position:relative;flex:0 0 auto;transition:background .2s;margin:0;cursor:pointer}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15),0 1px 1px rgba(0,0,0,.16);transition:transform .2s}
+.switch:checked{background:#34C759}
+.switch:checked::after{transform:translateX(20px)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;border:0;border-radius:12px;font-size:17px;font-weight:600;text-decoration:none;padding:12px 16px;text-align:center}
+.btn:active{opacity:.7}
+.btn-p{background:var(--tint);color:#fff}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-g{background:var(--card);color:var(--tint)}
+.btn-d{background:var(--card);color:var(--red)}
+.btn-s{min-height:38px;font-size:15px;border-radius:10px;padding:8px 12px}
+.btns{display:flex;flex-direction:column;gap:10px}
+.lnk{border:0;background:transparent;color:var(--tint);padding:0;font-size:17px}
+.lnk.d{color:var(--red)}
+/* record rows */
+.row{position:relative;display:flex;align-items:center;gap:12px;padding:11px 12px 11px 16px;min-height:60px}
+.ico{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;flex:0 0 auto;color:#fff}
+.ico svg{width:18px;height:18px}
+.ico.servis{background:#5856D6}.ico.tahsilat{background:#34C759}.ico.gider{background:#FF9500}
+.rmain{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.rtitle{font-size:16px;font-weight:500;overflow-wrap:anywhere}
+.rsub{font-size:13px;color:var(--label2);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.no{font-family:var(--mono);font-size:12px;color:var(--label2)}
+.ramt{font-variant-numeric:tabular-nums;font-weight:600;font-size:16px;white-space:nowrap;text-align:right}
+.ramt.plus{color:var(--green)}.ramt.minus{color:var(--red)}
+.del{border:0;background:transparent;color:var(--label3);width:34px;height:34px;border-radius:8px;display:grid;place-items:center;flex:0 0 auto;margin-right:-6px}
+.del svg{width:18px;height:18px}
+.del:active{background:var(--redbg);color:var(--red)}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;border-radius:6px;padding:2px 7px;white-space:nowrap}
+.pill.ok{background:var(--greenbg);color:var(--green)}
+.pill.bad{background:var(--redbg);color:var(--red)}
+.pill.wait{background:var(--orangebg);color:var(--orange)}
+.pill.mute{background:var(--fill);color:var(--label2)}
+.empty{padding:28px 20px;text-align:center;color:var(--label2);font-size:15px;line-height:1.45}
+.empty b{display:block;color:var(--label);font-size:17px;margin-bottom:4px}
+/* banner */
+.banner{border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;background:var(--orangebg);color:var(--label)}
+.banner.fri{background:linear-gradient(135deg,#FF3B30,#FF9500);color:#fff}
+.banner .bi{font-size:26px;line-height:1}
+.banner b{display:block;font-size:17px;margin-bottom:2px}
+.banner p{margin:0;font-size:14px;line-height:1.4;opacity:.95}
+button.banner{border:0;text-align:left;width:100%}
+/* tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--card);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.tile .tl{font-size:13px;color:var(--label2);font-weight:500}
+.tile .tv{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;overflow-wrap:anywhere}
+.tile .ts{font-size:12px;color:var(--label2);font-variant-numeric:tabular-nums;line-height:1.4}
+.tv.pos{color:var(--green)}.tv.neg{color:var(--red)}
+.tile.debt .tv{color:var(--red)}
+/* open-fis group */
+.fgrp-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 16px 4px}
+.fgrp-h h3{margin:0;font-size:17px;font-weight:700}
+.fgrp-h .tot{font-size:14px;font-weight:600;color:var(--red);font-variant-numeric:tabular-nums;text-align:right}
+.fis{position:relative;padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.fis+.fis::before{content:"";position:absolute;top:0;left:16px;right:0;height:.5px;background:var(--sep)}
+.fis-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.fis-amt{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.btn-pay{background:var(--greenbg);color:var(--green);min-height:42px;font-size:16px}
+.fgrp-act{padding:4px 16px 14px;display:flex;gap:8px}
+/* cari list */
+.cari{width:100%;border:0;background:transparent;text-align:left}
+.cari .chk{color:var(--tint);font-weight:700;width:18px;text-align:center}
+.bal{font-size:13px;font-variant-numeric:tabular-nums;color:var(--label2);text-align:right;white-space:nowrap}
+.bal .r{color:var(--red);font-weight:600}
+.detail-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:0 4px}
+.search{display:flex;align-items:center;gap:8px;background:var(--fill);border-radius:10px;padding:8px 10px}
+.search svg{width:17px;height:17px;color:var(--label2);flex:0 0 auto}
+.search input{flex:1;border:0;background:transparent;outline:none;min-width:0}
+/* tab bar */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--barbg);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--sep);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px));padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabbar .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px 6px;color:var(--label2);font-size:10px;font-weight:500;position:relative;min-height:49px}
+.tab svg{width:26px;height:26px}
+.tab[aria-selected="true"]{color:var(--tint)}
+.badge{position:absolute;top:3px;left:calc(50% + 6px);min-width:18px;height:18px;border-radius:9px;background:#FF3B30;color:#fff;font-size:12px;font-weight:600;display:grid;place-items:center;padding:0 5px}
+/* sheet + toast */
+.sheet-wrap{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.4);animation:fade .2s}
+.sheet{position:relative;width:100%;max-width:520px;padding:0 max(8px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:8px;animation:up .25s cubic-bezier(.2,.9,.3,1)}
+.sheet-g{background:var(--card);border-radius:14px;overflow:hidden}
+.sheet-h{padding:16px 18px 14px;text-align:center;color:var(--label2);font-size:13px;line-height:1.4}
+.sheet-h b{display:block;color:var(--label);font-size:15px;margin-bottom:3px}
+.sheet-a{display:block;width:100%;border:0;border-top:.5px solid var(--sep);background:transparent;color:var(--tint);font-size:19px;padding:16px;text-align:center;text-decoration:none}
+.sheet-a.d{color:var(--red)}
+.sheet-a.b{font-weight:600}
+.sheet-c{background:var(--card);border:0;border-radius:14px;color:var(--tint);font-weight:600;font-size:19px;padding:16px}
+.toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:60;background:rgba(30,30,32,.94);color:#fff;font-size:15px;font-weight:500;padding:11px 18px;border-radius:22px;max-width:calc(100% - 32px);text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:drop .25s}
+@keyframes fade{from{opacity:0}}
+@keyframes up{from{transform:translateY(100%)}}
+@keyframes drop{from{transform:translate(-50%,-20px);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:370px){.tiles{grid-template-columns:1fr}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+<div class="app">
+  <!-- ========== YENİ FİŞ ========== -->
+  <section class="view" id="v-yeni" data-view="yeni">
+    <header class="hdr"><div><div class="eyebrow"><span class="mark">KE</span>KOÇ ELEKTRONİK · Teknik Servis &amp; Tasarım</div><h1>Yeni Fiş</h1></div></header>
+    <div id="yeni-banner"></div>
+    <form id="fis-form" class="view" autocomplete="off" novalidate>
+      <div class="sect">
+        <div class="sect-t">İşlem Türü</div>
+        <div class="seg" id="f-tur" role="group" aria-label="İşlem türü">
+          <button type="button" data-tur="servis" aria-pressed="true">Servis</button>
+          <button type="button" data-tur="tahsilat" aria-pressed="false">Tahsilat</button>
+          <button type="button" data-tur="gider" aria-pressed="false">Gider</button>
+        </div>
+        <div class="foot" id="tur-acik">Servis / İşçilik (Alacak Yaz) — firmanın hesabına borç yazılır.</div>
+      </div>
+
+      <div class="sect">
+        <div class="group">
+          <div class="cell"><label for="f-cari">Müşteri</label><select class="val" id="f-cari"></select><span class="chev"></span></div>
+          <div class="cell" id="c-bagli" hidden><label for="f-bagli">Açık fiş</label><select class="val" id="f-bagli"></select><span class="chev"></span></div>
+          <div class="cell"><label for="f-tarih">Tarih</label><input class="val" type="date" id="f-tarih"></div>
+        </div>
+      </div>
+
+      <div class="sect">
+        <div class="sect-t">Yapılan İşlem</div>
+        <div class="group"><div class="cell stack">
+          <textarea id="f-aciklama" rows="2" placeholder="Örn: Picanol kart tamiri, IGBT değişimi…"></textarea>
+          <div class="chips" id="f-chips"></div>
+        </div></div>
+      </div>
+
+      <div class="sect">
+        <div class="sect-t">Tutar</div>
+        <div class="group"><div class="cell">
+          <input class="val amount" id="f-tutar" inputmode="decimal" placeholder="0,00" aria-label="Tutar">
+          <div class="seg sm" id="f-doviz" role="group" aria-label="Para birimi">
+            <button type="button" data-doviz="TL" aria-pressed="true">TL ₺</button>
+            <button type="button" data-doviz="USD" aria-pressed="false">USD $</button>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="sect" id="s-servis">
+        <div class="group">
+          <div class="cell"><label for="f-garanti">Garanti</label>
+            <select class="val" id="f-garanti">
+              <option value="0">Garantisiz</option><option value="3">3 Ay</option><option value="6" selected>6 Ay</option><option value="12">12 Ay</option><option value="24">24 Ay</option>
+            </select><span class="chev"></span></div>
+          <div class="cell"><label for="f-pesin" style="flex:1">Ödemesi Peşin Alındı</label><input type="checkbox" class="switch" id="f-pesin"></div>
+        </div>
+        <div class="foot" id="pesin-acik">Kapalıysa fiş “Ödeme Bekliyor” olarak açık kalır ve Cuma tahsilat listesine düşer.</div>
+      </div>
+
+      <button class="btn btn-p" type="submit" id="f-kaydet">Fişi Kaydet</button>
+    </form>
+
+    <div class="sect">
+      <div class="sect-t">Son İşlemler</div>
+      <div class="group" id="son-list"></div>
+    </div>
+  </section>
+
+  <!-- ========== AÇIK FİŞLER ========== -->
+  <section class="view" id="v-acik" data-view="acik" hidden>
+    <header class="hdr"><div><div class="eyebrow"><span class="mark">KE</span>Haftalık Cuma Tahsilatı</div><h1>Açık Fişler</h1></div></header>
+    <div id="acik-banner"></div>
+    <div id="acik-list" class="view"></div>
+  </section>
+
+  <!-- ========== CARİLER & PDF ========== -->
+  <section class="view" id="v-cari" data-view="cari" hidden>
+    <header class="hdr"><div><div class="eyebrow"><span class="mark">KE</span>Cari Hesaplar</div><h1>Cariler &amp; PDF</h1></div></header>
+    <div class="sect">
+      <div class="sect-t">Firmalar</div>
+      <div class="group" id="cari-list"></div>
+    </div>
+    <div id="cari-detay" class="view"></div>
+    <div class="sect">
+      <div class="sect-t">Yeni Firma (Cari) Ekle</div>
+      <form class="group" id="cari-form" autocomplete="off" novalidate>
+        <div class="cell"><label for="c-ad">Firma adı</label><input class="val" id="c-ad" placeholder="Örn: Yıldız Dokuma"></div>
+        <div class="cell"><label for="c-tel">WhatsApp</label><input class="val" id="c-tel" type="tel" inputmode="tel" placeholder="05xx xxx xx xx"></div>
+        <div class="cell"><button class="lnk" type="submit" style="font-weight:600">+ Firmayı Ekle</button></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ========== GARANTİ & KASA ========== -->
+  <section class="view" id="v-kasa" data-view="kasa" hidden>
+    <header class="hdr"><div><div class="eyebrow"><span class="mark">KE</span>Genel Durum</div><h1>Garanti &amp; Kasa</h1></div></header>
+    <div class="sect">
+      <div class="sect-t">Genel Kasa</div>
+      <div class="tiles" id="kasa-tiles"></div>
+      <div class="foot">Net kasa = tahsilatlar − giderler. TL ve USD hesapları ayrı tutulur.</div>
+    </div>
+    <div class="sect">
+      <div class="sect-t">Garanti Sorgulama</div>
+      <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="g-ara" type="search" placeholder="Firma adı veya yapılan iş ara" aria-label="Kayıt ara"></label>
+      <div class="seg" id="g-filtre" role="group" aria-label="Liste filtresi">
+        <button type="button" data-f="servis" aria-pressed="true">Servis Fişleri</button>
+        <button type="button" data-f="tum" aria-pressed="false">Tüm Kayıtlar</button>
+      </div>
+      <div class="group" id="g-list"></div>
+      <div class="foot" id="g-say"></div>
+    </div>
+    <div class="sect">
+      <div class="sect-t">Veri Yönetimi</div>
+      <div class="group">
+        <div class="cell"><button class="lnk" type="button" id="b-yedek">Yedeği İndir (JSON)</button></div>
+        <div class="cell"><button class="lnk" type="button" id="b-yukle">Yedekten Geri Yükle</button><input type="file" id="f-yukle" accept="application/json,.json" hidden></div>
+        <div class="cell"><button class="lnk d" type="button" id="b-sifirla">Tüm Verileri Sıfırla</button></div>
+      </div>
+      <div class="foot" id="veri-durum"></div>
+    </div>
+  </section>
+</div>
+
+<nav class="tabbar" role="tablist" aria-label="Sekmeler"><div class="in">
+  <button class="tab" role="tab" data-tab="yeni" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>Yeni Fiş</button>
+  <button class="tab" role="tab" data-tab="acik" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Açık Fişler<span class="badge" id="tab-badge" hidden></span></button>
+  <button class="tab" role="tab" data-tab="cari" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Cariler &amp; PDF</button>
+  <button class="tab" role="tab" data-tab="kasa" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>Garanti &amp; Kasa</button>
+</div></nav>
+
+<div id="sheet" class="sheet-wrap" hidden></div>
+<div id="toast" class="toast" hidden></div>
+
+<script>
+(function(){
+"use strict";
+var FIRMA = "KOÇ ELEKTRONİK", ALT = "Teknik Servis & Tasarım";
+var LS_KEY = "koc_elektronik_servis_v1", TAB_KEY = "koc_elektronik_tab";
+var IC = {
+  servis:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+  tahsilat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>',
+  gider:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>',
+  trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>'
+};
+var TUR = {
+  servis:{ad:"Servis / İşçilik", acik:"Servis / İşçilik (Alacak Yaz) — firmanın hesabına borç yazılır.", btn:"Fişi Kaydet",
+    chips:["Picanol kart tamiri","IGBT değişimi","Far tasarımı","Sürücü (inverter) tamiri","Güç kaynağı tamiri","Arıza tespiti"]},
+  tahsilat:{ad:"Tahsilat", acik:"Tahsilat / Ödeme Aldım (Gelir) — firmanın borcundan düşülür, kasaya gelir yazılır.", btn:"Tahsilatı Kaydet",
+    chips:["Nakit tahsilat","Havale / EFT","Kredi kartı","Çek"]},
+  gider:{ad:"Malzeme / Gider", acik:"Malzeme / Dükkan Gideri — kasadan çıkış olarak yazılır.", btn:"Gideri Kaydet",
+    chips:["Elektronik komponent","Malzeme alımı","Kira","Elektrik faturası","Kargo","Takım / ekipman"]}
+};
+
+/* ---------- veri ---------- */
+function varsayilan(){ return {cariler:[{id:"c_inter",ad:"İnter Tekstil",tel:""},{id:"c_mercan",ad:"Mercan Tekstil",tel:""}],kayitlar:[],seq:0}; }
+var storageOk = true, S = yukleLS();
+function yukleLS(){
+  try{
+    var raw = localStorage.getItem(LS_KEY);
+    if(raw){ var d = JSON.parse(raw); if(gecerli(d)) return normal(d); }
+  }catch(e){ storageOk = false; }
+  return varsayilan();
+}
+function gecerli(d){ return d && Array.isArray(d.cariler) && Array.isArray(d.kayitlar); }
+function normal(d){ return {cariler:d.cariler, kayitlar:d.kayitlar, seq:+d.seq||d.kayitlar.reduce(function(m,k){return Math.max(m,k.no||0)},0)}; }
+function kaydetLS(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(S)); storageOk = true; }
+  catch(e){ storageOk = false; toast("Uyarı: Veri telefona kaydedilemedi (gizli sekme olabilir)."); }
+}
+
+/* ---------- yardımcılar ---------- */
+function $(s){ return document.querySelector(s); }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function p2(n){ return String(n).padStart(2,"0"); }
+function isoGun(d){ return d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate()); }
+function bugun(){ return isoGun(new Date()); }
+function tarihTR(s){ if(!s) return ""; var a=s.split("-"); return a[2]+"."+a[1]+"."+a[0]; }
+function gunNesne(s){ var a=s.split("-"); return new Date(+a[0],+a[1]-1,+a[2]); }
+var NF = new Intl.NumberFormat("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2});
+function para(v,c){ return NF.format(v)+(c==="USD"?" $":" ₺"); }
+function paraPdf(v,c){ return NF.format(v)+(c==="USD"?" USD":" TL"); }
+function yuvarla(v){ return Math.round(v*100)/100; }
+function tutarOku(s){
+  s = String(s||"").replace(/[^\d.,-]/g,"");
+  if(s.indexOf(",")>-1) s = s.replace(/\./g,"").replace(",",".");
+  else if((s.match(/\./g)||[]).length>1) s = s.replace(/\./g,"");
+  var n = parseFloat(s); return isFinite(n) ? yuvarla(n) : NaN;
+}
+function fisNo(k){ return "#KE-"+String(k.no||0).padStart(4,"0"); }
+function trKucuk(s){ return String(s||"").toLocaleLowerCase("tr-TR"); }
+function cariAd(id, k){
+  if(id==="genel") return "Genel Müşteri";
+  if(id==="gider") return "Dükkan Gideri";
+  for(var i=0;i<S.cariler.length;i++) if(S.cariler[i].id===id) return S.cariler[i].ad;
+  return (k && k.cariAd) || "Silinmiş firma";
+}
+function cariBul(id){ for(var i=0;i<S.cariler.length;i++) if(S.cariler[i].id===id) return S.cariler[i]; return null; }
+function kayitBul(id){ for(var i=0;i<S.kayitlar.length;i++) if(S.kayitlar[i].id===id) return S.kayitlar[i]; return null; }
+function siraliYeni(a){ return a.slice().sort(function(x,y){ return (y.tarih.localeCompare(x.tarih)) || ((y.olusturma||0)-(x.olusturma||0)); }); }
+function siraliEski(a){ return siraliYeni(a).reverse(); }
+function bakiye(cariId){
+  var b={TL:0,USD:0};
+  S.kayitlar.forEach(function(k){
+    if(k.cariId!==cariId) return;
+    if(k.tur==="servis") b[k.doviz]+=k.tutar;
+    else if(k.tur==="tahsilat") b[k.doviz]-=k.tutar;
+  });
+  b.TL=yuvarla(b.TL); b.USD=yuvarla(b.USD); return b;
+}
+function kasa(){
+  var r={TL:{gelir:0,gider:0},USD:{gelir:0,gider:0}};
+  S.kayitlar.forEach(function(k){ if(k.tur==="tahsilat") r[k.doviz].gelir+=k.tutar; else if(k.tur==="gider") r[k.doviz].gider+=k.tutar; });
+  return r;
+}
+function acikFisler(cariId){
+  return siraliEski(S.kayitlar.filter(function(k){ return k.tur==="servis" && k.durum==="acik" && (!cariId || k.cariId===cariId); }));
+}
+function topla(list){ var t={TL:0,USD:0}; list.forEach(function(k){ t[k.doviz]+=k.tutar; }); return t; }
+function toplamYazi(t){ var p=[]; if(t.TL) p.push(para(t.TL,"TL")); if(t.USD) p.push(para(t.USD,"USD")); return p.join(" + ")||para(0,"TL"); }
+function addMonths(d,m){ var r=new Date(d.getFullYear(),d.getMonth()+m,d.getDate()); if(r.getDate()!==d.getDate()) r.setDate(0); return r; }
+function garantiDurum(k){
+  if(k.tur!=="servis") return "";
+  if(!k.garanti) return '<span class="pill mute">Garantisiz</span>';
+  var bit = addMonths(gunNesne(k.tarih), +k.garanti);
+  var kalan = Math.round((bit - gunNesne(bugun()))/86400000);
+  if(kalan>0) return '<span class="pill ok">🟢 '+kalan+' gün kaldı</span>';
+  if(kalan===0) return '<span class="pill ok">🟢 Bugün bitiyor</span>';
+  return '<span class="pill bad">🔴 Garantisi Bitti</span>';
+}
+function durumPill(k){
+  if(k.tur!=="servis") return "";
+  return k.durum==="acik" ? '<span class="pill wait">Ödeme Bekliyor</span>' : '<span class="pill ok">Ödendi</span>';
+}
+function telNormal(t){
+  var d=String(t||"").replace(/\D/g,"");
+  if(!d) return "";
+  if(d.indexOf("00")===0) d=d.slice(2);
+  if(d.charAt(0)==="0") d="90"+d.slice(1);
+  else if(d.length===10 && d.charAt(0)==="5") d="90"+d;
+  return d;
+}
+
+/* ---------- toast & sheet ---------- */
+var toastT;
+function toast(msg){ var t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(function(){ t.hidden=true; }, 2600); }
+function sheet(o){
+  var w=$("#sheet");
+  var h='<div class="sheet-bg" data-x="1"></div><div class="sheet" role="dialog" aria-modal="true"><div class="sheet-g">';
+  if(o.title||o.msg) h+='<div class="sheet-h">'+(o.title?'<b>'+esc(o.title)+'</b>':'')+esc(o.msg||"")+'</div>';
+  (o.actions||[]).forEach(function(a,i){
+    var cls="sheet-a"+(a.style==="d"?" d":"")+(a.bold?" b":"");
+    h+= a.href ? '<a class="'+cls+'" href="'+esc(a.href)+'" target="_blank" rel="noopener" data-i="'+i+'">'+esc(a.label)+'</a>'
+               : '<button type="button" class="'+cls+'" data-i="'+i+'">'+esc(a.label)+'</button>';
+  });
+  h+='</div><button type="button" class="sheet-c" data-x="1">Vazgeç</button></div>';
+  w.innerHTML=h; w.hidden=false;
+  w.onclick=function(e){
+    var el=e.target.closest("[data-i],[data-x]"); if(!el) return;
+    if(el.hasAttribute("data-x")){ w.hidden=true; return; }
+    var a=o.actions[+el.getAttribute("data-i")];
+    if(!a.href) e.preventDefault();
+    w.hidden=true; if(a.fn) a.fn();
+  };
+}
+
+/* ---------- satır şablonu ---------- */
+function satir(k, opt){
+  opt=opt||{};
+  var isaret = k.tur==="servis" ? "" : (k.tur==="tahsilat" ? "plus" : "minus");
+  var on = k.tur==="tahsilat" ? "+ " : (k.tur==="gider" ? "− " : "");
+  var alt = [];
+  if(opt.cari!==false) alt.push(esc(cariAd(k.cariId,k)));
+  alt.push(tarihTR(k.tarih));
+  if(k.tur==="servis") alt.push('<span class="no">'+fisNo(k)+'</span>');
+  var pills = (opt.garanti ? garantiDurum(k) : "") + (opt.durum!==false ? durumPill(k) : "");
+  return '<div class="row ic"><span class="ico '+k.tur+'" aria-hidden="true">'+IC[k.tur]+'</span>'+
+    '<div class="rmain"><div class="rtitle">'+esc(k.aciklama)+'</div><div class="rsub">'+alt.join(" · ")+(pills?" "+pills:"")+'</div></div>'+
+    '<div class="ramt '+isaret+'">'+on+para(k.tutar,k.doviz)+'</div>'+
+    '<button type="button" class="del" data-sil="'+k.id+'" aria-label="Kaydı sil">'+IC.trash+'</button></div>';
+}
+function bos(baslik, metin){ return '<div class="empty"><b>'+esc(baslik)+'</b>'+esc(metin)+'</div>'; }
+
+/* ---------- form ---------- */
+var fTur="servis", fDoviz="TL";
+function setTur(t){
+  fTur=t;
+  document.querySelectorAll("#f-tur button").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.tur===t)); });
+  $("#tur-acik").textContent=TUR[t].acik;
+  $("#f-kaydet").textContent=TUR[t].btn;
+  $("#s-servis").hidden = t!=="servis";
+  var sel=$("#f-cari");
+  if(t==="gider") sel.value="gider";
+  else if(sel.value==="gider") sel.value = S.cariler[0] ? S.cariler[0].id : "genel";
+  $("#f-chips").innerHTML = TUR[t].chips.map(function(c){ return '<button type="button" class="chip">'+esc(c)+'</button>'; }).join("");
+  renderBagli();
+}
+function setDoviz(d){
+  fDoviz=d;
+  document.querySelectorAll("#f-doviz button").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.doviz===d)); });
+}
+function renderCariSelect(){
+  var sel=$("#f-cari"), cur=sel.value;
+  var h='<optgroup label="Kayıtlı Cariler">'+S.cariler.map(function(c){ return '<option value="'+esc(c.id)+'">'+esc(c.ad)+'</option>'; }).join("")+'</optgroup>'+
+        '<optgroup label="Diğer"><option value="genel">Genel Müşteri</option><option value="gider">Dükkan Gideri</option></optgroup>';
+  sel.innerHTML=h;
+  var ok=Array.prototype.some.call(sel.options,function(o){return o.value===cur;});
+  sel.value = ok ? cur : (fTur==="gider" ? "gider" : (S.cariler[0]?S.cariler[0].id:"genel"));
+}
+function renderBagli(){
+  var c=$("#c-bagli"), sel=$("#f-bagli"), tut=$("#f-tutar");
+  if(fTur!=="tahsilat"){ c.hidden=true; sel.value=""; tut.disabled=false; return; }
+  var list=acikFisler($("#f-cari").value), cur=sel.value;
+  c.hidden = list.length===0;
+  sel.innerHTML='<option value="">Bağımsız tahsilat</option>'+list.map(function(k){
+    return '<option value="'+k.id+'">'+fisNo(k)+' · '+esc(k.aciklama.slice(0,24))+' · '+para(k.tutar,k.doviz)+'</option>'; }).join("");
+  sel.value = list.some(function(k){return k.id===cur;}) ? cur : "";
+  bagliDegisti();
+}
+function bagliDegisti(){
+  var id=$("#f-bagli").value, tut=$("#f-tutar");
+  if(fTur==="tahsilat" && id){ var k=kayitBul(id); tut.value=NF.format(k.tutar); setDoviz(k.doviz); tut.disabled=true;
+    if(!$("#f-aciklama").value.trim()) $("#f-aciklama").value="Tahsilat";
+  } else tut.disabled=false;
+}
+function tahsilatOlustur(fis, etiket, tarih){
+  return {id:uid(), tur:"tahsilat", cariId:fis.cariId, cariAd:fis.cariAd, aciklama:etiket+" – "+fisNo(fis)+" "+fis.aciklama,
+          tutar:fis.tutar, doviz:fis.doviz, tarih:tarih, bagliFisId:fis.id, olusturma:Date.now()+1};
+}
+function fisKaydet(e){
+  e.preventDefault();
+  var cariId=$("#f-cari").value, aciklama=$("#f-aciklama").value.trim(), tarih=$("#f-tarih").value||bugun();
+  var bagli = fTur==="tahsilat" ? $("#f-bagli").value : "";
+  if(bagli){ odemeAlindi(bagli, tarih, aciklama); formTemizle(); return; }
+  var tutar=tutarOku($("#f-tutar").value);
+  if(!aciklama){ toast("Yapılan işlemi yazın."); $("#f-aciklama").focus(); return; }
+  if(!(tutar>0)){ toast("Geçerli bir tutar girin."); $("#f-tutar").focus(); return; }
+  if(fTur==="servis" && cariId==="gider"){ toast("Servis fişi için bir müşteri seçin."); return; }
+  var k={id:uid(), tur:fTur, cariId:cariId, cariAd:cariAd(cariId), aciklama:aciklama, tutar:tutar, doviz:fDoviz, tarih:tarih, olusturma:Date.now()};
+  if(fTur==="servis"){
+    k.no=++S.seq; k.garanti=+$("#f-garanti").value;
+    if($("#f-pesin").checked){ k.durum="odendi"; k.odemeTarihi=tarih; var t=tahsilatOlustur(k,"Peşin tahsilat",tarih); k.tahsilatId=t.id; S.kayitlar.push(k,t); }
+    else { k.durum="acik"; S.kayitlar.push(k); }
+  } else S.kayitlar.push(k);
+  kaydetLS(); formTemizle(); render();
+  toast(fTur==="servis" ? (k.durum==="acik" ? fisNo(k)+" açık fiş olarak kaydedildi" : fisNo(k)+" kaydedildi, kasaya işlendi") : (fTur==="tahsilat"?"Tahsilat kasaya işlendi":"Gider kasadan düşüldü"));
+}
+function formTemizle(){ $("#f-aciklama").value=""; $("#f-tutar").value=""; $("#f-pesin").checked=false; $("#f-tutar").disabled=false; $("#f-bagli").value=""; }
+
+/* ---------- işlemler ---------- */
+function odemeAlindi(id, tarih, not){
+  var k=kayitBul(id); if(!k || k.durum!=="acik") return;
+  tarih=tarih||bugun();
+  k.durum="odendi"; k.odemeTarihi=tarih;
+  var t=tahsilatOlustur(k, (not && not!=="Tahsilat") ? not : "Fiş tahsilatı", tarih);
+  k.tahsilatId=t.id; S.kayitlar.push(t);
+  kaydetLS(); render();
+  toast("💸 "+fisNo(k)+" ödendi · "+para(k.tutar,k.doviz)+" kasaya eklendi");
+}
+function silSor(id){
+  var k=kayitBul(id); if(!k) return;
+  var msg = k.aciklama+" · "+para(k.tutar,k.doviz)+". ";
+  if(k.tur==="servis" && k.tahsilatId) msg+="Bu fişe bağlı tahsilat da kasadan silinir.";
+  else if(k.tur==="tahsilat" && k.bagliFisId) msg+="Bağlı fiş tekrar “Ödeme Bekliyor” durumuna döner.";
+  else msg+="Bu işlem geri alınamaz.";
+  sheet({title:"Kayıt silinsin mi?", msg:msg, actions:[{label:"Kaydı Sil", style:"d", fn:function(){ sil(id); }}]});
+}
+function sil(id){
+  var k=kayitBul(id); if(!k) return;
+  var silinecek=[id];
+  if(k.tur==="servis" && k.tahsilatId) silinecek.push(k.tahsilatId);
+  if(k.tur==="tahsilat" && k.bagliFisId){ var f=kayitBul(k.bagliFisId); if(f){ f.durum="acik"; delete f.tahsilatId; delete f.odemeTarihi; } }
+  S.kayitlar=S.kayitlar.filter(function(x){ return silinecek.indexOf(x.id)<0; });
+  kaydetLS(); render(); toast("Kayıt silindi");
+}
+
+/* ---------- render: yeni ---------- */
+function bannerHTML(compact){
+  var acik=acikFisler(), gun=new Date().getDay();
+  if(!acik.length) return "";
+  var t=toplamYazi(topla(acik)), firmalar={};
+  acik.forEach(function(k){ firmalar[k.cariId]=1; });
+  var fs=Object.keys(firmalar).length;
+  if(gun===5) return '<'+(compact?'button type="button" data-git="acik"':'div')+' class="banner fri"><span class="bi">📅</span><div><b>Bugün Cuma — Tahsilat Günü!</b><p>'+acik.length+' açık fiş ('+fs+' firma) ödeme bekliyor: <strong>'+t+'</strong>. Ödemeleri toplamayı unutmayın.'+(compact?' Listeye gitmek için dokunun.':'')+'</p></div></'+(compact?'button':'div')+'>';
+  if(compact) return "";
+  var kalan=(5-gun+7)%7;
+  return '<div class="banner"><span class="bi">⏳</span><div><b>'+acik.length+' fiş ödeme bekliyor</b><p>Toplam '+t+'. Cuma tahsilat kontrolüne '+kalan+' gün var.</p></div></div>';
+}
+function renderYeni(){
+  $("#yeni-banner").innerHTML=bannerHTML(true);
+  var son=siraliYeni(S.kayitlar).slice(0,6);
+  $("#son-list").innerHTML = son.length ? son.map(function(k){ return satir(k); }).join("") : bos("Henüz kayıt yok","İlk servis fişini yukarıdan girin; burada son 6 işlem görünür.");
+}
+
+/* ---------- render: açık fişler ---------- */
+function renderAcik(){
+  var acik=acikFisler();
+  $("#acik-banner").innerHTML=bannerHTML(false);
+  var b=$("#tab-badge"); b.hidden=!acik.length; b.textContent=acik.length;
+  if(!acik.length){ $("#acik-list").innerHTML='<div class="group">'+bos("Açık fiş yok 🎉","Tüm servis fişlerinin ödemesi alınmış. Peşin alınmayan yeni fişler burada listelenir.")+'</div>'; return; }
+  var gruplar={}, sira=[];
+  acik.forEach(function(k){ if(!gruplar[k.cariId]){ gruplar[k.cariId]=[]; sira.push(k.cariId); } gruplar[k.cariId].push(k); });
+  var bugunD=gunNesne(bugun());
+  $("#acik-list").innerHTML = sira.map(function(cid){
+    var l=gruplar[cid], t=topla(l);
+    return '<div class="group"><div class="fgrp-h"><h3>'+esc(cariAd(cid,l[0]))+'</h3><div class="tot">'+toplamYazi(t)+'</div></div>'+
+      l.map(function(k){
+        var gun=Math.round((bugunD-gunNesne(k.tarih))/86400000);
+        return '<div class="fis"><div class="fis-top"><div class="rmain"><div class="rtitle">'+esc(k.aciklama)+'</div>'+
+          '<div class="rsub"><span class="no">'+fisNo(k)+'</span> · '+tarihTR(k.tarih)+' · '+(gun>0?gun+' gündür açık':'bugün')+' <span class="pill wait">Ödeme Bekliyor</span></div></div>'+
+          '<div class="fis-amt">'+para(k.tutar,k.doviz)+'</div></div>'+
+          '<button type="button" class="btn btn-s btn-pay" data-ode="'+k.id+'">💸 Ödemesi Alındı (Hesaptan Düş)</button></div>';
+      }).join("")+
+      (cid!=="genel" ? '<div class="fgrp-act"><button type="button" class="btn btn-s btn-g" style="background:var(--card2)" data-hatirlat="'+esc(cid)+'">💬 WhatsApp ile Hatırlat</button></div>' : '')+
+      '</div>';
+  }).join("");
+}
+
+/* ---------- render: cariler ---------- */
+var seciliCari = null;
+function bakiyeKisa(b){
+  var p=[]; if(b.TL) p.push('<span class="'+(b.TL>0?'r':'')+'">'+para(b.TL,"TL")+'</span>'); if(b.USD) p.push('<span class="'+(b.USD>0?'r':'')+'">'+para(b.USD,"USD")+'</span>');
+  return p.length ? p.join("<br>") : "Hesap kapalı";
+}
+function renderCari(){
+  var liste=S.cariler.map(function(c){ return {id:c.id, ad:c.ad}; }).concat([{id:"genel", ad:"Genel Müşteri"}]);
+  if(!seciliCari || !liste.some(function(c){return c.id===seciliCari;})) seciliCari=liste[0].id;
+  $("#cari-list").innerHTML = liste.map(function(c){
+    var on=c.id===seciliCari;
+    return '<button type="button" class="cell cari" data-cari="'+esc(c.id)+'" aria-pressed="'+on+'"><span class="chk" aria-hidden="true">'+(on?"✓":"")+'</span><span style="flex:1;min-width:0;'+(on?'font-weight:600':'')+'">'+esc(c.ad)+'</span><span class="bal">'+bakiyeKisa(bakiye(c.id))+'</span></button>';
+  }).join("");
+
+  var id=seciliCari, ad=cariAd(id), b=bakiye(id), c=cariBul(id), acik=acikFisler(id);
+  var hareket=siraliYeni(S.kayitlar.filter(function(k){ return k.cariId===id && k.tur!=="gider"; }));
+  function tile(cur){
+    var v=b[cur], cls = v>0 ? "debt" : "", durum = v>0 ? "Kalan borç" : (v<0 ? "Avans / fazla ödeme" : "Hesap kapalı");
+    return '<div class="tile '+cls+'"><span class="tl">'+(cur==="TL"?"TL Bakiye":"USD Bakiye")+'</span><span class="tv">'+para(Math.abs(v),cur)+'</span><span class="ts">'+durum+'</span></div>';
+  }
+  var h='<div class="detail-h"><h2>'+esc(ad)+'</h2><span class="foot" style="padding:0">'+acik.length+' açık fiş</span></div>'+
+    '<div class="tiles">'+tile("TL")+tile("USD")+'</div>';
+  if(c) h+='<div class="group"><div class="cell"><label for="c-tel-e">WhatsApp</label><input class="val" id="c-tel-e" type="tel" inputmode="tel" placeholder="Numara ekleyin (isteğe bağlı)" value="'+esc(c.tel||"")+'" data-tel="'+esc(c.id)+'"></div></div>';
+  h+='<div class="btns"><button type="button" class="btn btn-p" id="b-pdf">📄 PDF Yap ve WhatsApp’tan Gönder</button>'+
+     '<button type="button" class="btn btn-wa" id="b-wa">💬 Sadece WhatsApp Mesajı Gönder</button></div>'+
+     '<div class="sect"><div class="sect-t">Geçmiş İşlemler ('+hareket.length+')</div><div class="group">'+
+     (hareket.length ? hareket.map(function(k){ return satir(k,{cari:false}); }).join("") : bos("Bu firmada işlem yok","Yeni Fiş sekmesinden bu firmaya servis veya tahsilat girin."))+
+     '</div></div>';
+  if(c) h+='<button type="button" class="btn btn-d" id="b-cari-sil">Firmayı Sil</button>';
+  $("#cari-detay").innerHTML=h;
+}
+
+/* ---------- render: kasa & garanti ---------- */
+var gFiltre="servis";
+function renderKasa(){
+  var k=kasa(), alacak={TL:0,USD:0};
+  S.kayitlar.forEach(function(x){ if(x.tur==="servis") alacak[x.doviz]+=x.tutar; else if(x.tur==="tahsilat") alacak[x.doviz]-=x.tutar; });
+  function tile(cur){
+    var net=yuvarla(k[cur].gelir-k[cur].gider);
+    return '<div class="tile"><span class="tl">Net '+cur+' Kasası</span><span class="tv '+(net>0?"pos":net<0?"neg":"")+'">'+(net<0?"−":"")+para(Math.abs(net),cur)+'</span>'+
+      '<span class="ts">Tahsilat +'+para(k[cur].gelir,cur)+'<br>Gider −'+para(k[cur].gider,cur)+'<br>Dışarıdaki alacak '+para(Math.max(0,yuvarla(alacak[cur])),cur)+'</span></div>';
+  }
+  $("#kasa-tiles").innerHTML=tile("TL")+tile("USD");
+  var q=trKucuk($("#g-ara").value.trim());
+  var list=siraliYeni(S.kayitlar.filter(function(x){
+    if(gFiltre==="servis" && x.tur!=="servis") return false;
+    if(!q) return true;
+    return trKucuk(cariAd(x.cariId,x)+" "+x.aciklama+" "+fisNo(x)).indexOf(q)>-1;
+  }));
+  var goster=list.slice(0,150);
+  $("#g-list").innerHTML = goster.length ? goster.map(function(x){ return satir(x,{garanti:true}); }).join("")
+    : (q ? bos("Sonuç bulunamadı","“"+$("#g-ara").value.trim()+"” için kayıt yok. Firma adını veya işin bir kelimesini deneyin.") : bos("Kayıt yok","Servis fişleri girildikçe garanti durumlarıyla burada listelenir."));
+  $("#g-say").textContent = list.length ? list.length+" kayıt"+(list.length>goster.length?" (ilk "+goster.length+" gösteriliyor)":"") : "";
+  $("#veri-durum").textContent = (storageOk ? "Veriler bu cihazın hafızasında (LocalStorage) saklanır. " : "Uyarı: Bu tarayıcı veriyi kalıcı saklamıyor, yedek almayı unutmayın. ")+S.kayitlar.length+" kayıt, "+S.cariler.length+" firma. Düzenli olarak JSON yedeği alın.";
+}
+function render(){ renderCariSelect(); renderBagli(); renderYeni(); renderAcik(); renderCari(); renderKasa(); }
+
+/* ---------- WhatsApp metni ---------- */
+function waMetni(cariId, pdfVar){
+  var ad=cariAd(cariId), b=bakiye(cariId), acik=acikFisler(cariId);
+  var s="Merhaba "+ad+" yetkilisi,\n\nKoç Elektronik güncel cari hesap özetiniz ve açık fişleriniz aşağıdadır:\n\n";
+  s+="🧾 *Açık Fişler ("+acik.length+")*\n";
+  if(acik.length) acik.forEach(function(k){ s+="• "+tarihTR(k.tarih)+" – "+k.aciklama+" – "+para(k.tutar,k.doviz)+" ("+fisNo(k)+")\n"; });
+  else s+="Açık fişiniz bulunmamaktadır.\n";
+  s+="\n💰 *Güncel Kalan Bakiye*\n";
+  ["TL","USD"].forEach(function(c){ var v=b[c]; s+=c+": "+(v<0?"-":"")+para(Math.abs(v),c)+(v<0?" (avans)":"")+"\n"; });
+  s+="\n"+(pdfVar?"Detaylı hesap ekstreniz ekteki PDF dosyasındadır.\n":"")+"Ödemeleriniz için şimdiden teşekkür ederiz.\n\nİyi çalışmalar dileriz.\n*KOÇ ELEKTRONİK*\nTeknik Servis & Tasarım";
+  return s;
+}
+function waLink(cariId, metin){ var c=cariBul(cariId), tel=telNormal(c&&c.tel); return "https://wa.me/"+tel+"?text="+encodeURIComponent(metin); }
+function linkAc(url){ var a=document.createElement("a"); a.href=url; a.target="_blank"; a.rel="noopener"; document.body.appendChild(a); a.click(); a.remove(); }
+function panoya(t){ try{ if(navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t).then(function(){return true;},function(){return false;}); }catch(e){} return Promise.resolve(false); }
+function sadeceWa(cariId){
+  var m=waMetni(cariId,false), url=waLink(cariId,m);
+  linkAc(url);
+}
+
+/* ---------- PDF ---------- */
+var fontHazir=false, fontYukleniyor=null;
+function fontYukle(){
+  if(fontHazir) return Promise.resolve(true);
+  if(fontYukleniyor) return fontYukleniyor;
+  fontYukleniyor=new Promise(function(res){
+    var bitti=false; function son(v){ if(!bitti){ bitti=true; if(!v) fontYukleniyor=null; res(v); } }
+    if(window.pdfMake && pdfMake.vfs && pdfMake.vfs["Roboto-Regular.ttf"]){ fontHazir=true; return son(true); }
+    var s=document.createElement("script");
+    s.src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js";
+    s.onload=function(){ fontHazir=!!(window.pdfMake && pdfMake.vfs && pdfMake.vfs["Roboto-Regular.ttf"]); son(fontHazir); };
+    s.onerror=function(){ son(false); };
+    document.head.appendChild(s);
+    setTimeout(function(){ son(fontHazir); }, 12000);
+  });
+  return fontYukleniyor;
+}
+function ascii(s){ return String(s).replace(/ğ/g,"g").replace(/Ğ/g,"G").replace(/ş/g,"s").replace(/Ş/g,"S").replace(/ı/g,"i").replace(/İ/g,"I").replace(/₺/g,"TL").replace(/[^\x00-\xFF]/g,""); }
+function pdfOlustur(cariId){
+  var jsPDF=window.jspdf.jsPDF, doc=new jsPDF({unit:"mm",format:"a4"});
+  var F="helvetica", T=ascii;
+  if(fontHazir){
+    var v=pdfMake.vfs;
+    doc.addFileToVFS("Roboto-Regular.ttf",v["Roboto-Regular.ttf"]); doc.addFont("Roboto-Regular.ttf","Roboto","normal");
+    doc.addFileToVFS("Roboto-Medium.ttf",v["Roboto-Medium.ttf"]); doc.addFont("Roboto-Medium.ttf","Roboto","bold");
+    F="Roboto"; T=function(s){ return String(s); };
+  }
+  var W=210, M=14, ad=cariAd(cariId), b=bakiye(cariId), acik=acikFisler(cariId), simdi=new Date();
+  var INK=[17,24,39], TINT=[0,122,255];
+  doc.setFillColor.apply(doc,INK); doc.rect(0,0,W,36,"F");
+  doc.setFillColor.apply(doc,TINT); doc.rect(0,36,W,1.4,"F");
+  doc.setTextColor(255,255,255); doc.setFont(F,"bold"); doc.setFontSize(21); doc.text(T(FIRMA),M,17);
+  doc.setFont(F,"normal"); doc.setFontSize(10.5); doc.setTextColor(190,200,215); doc.text(T(ALT),M,25);
+  doc.setFontSize(9); doc.setTextColor(255,255,255); doc.setFont(F,"bold"); doc.text(T("CARİ HESAP EKSTRESİ"),W-M,15,{align:"right"});
+  doc.setFont(F,"normal"); doc.setTextColor(190,200,215);
+  doc.text(T("Tarih: ")+tarihTR(isoGun(simdi))+"  "+p2(simdi.getHours())+":"+p2(simdi.getMinutes()),W-M,21,{align:"right"});
+  doc.text(T("Açık fiş: ")+acik.length,W-M,26,{align:"right"});
+
+  doc.setTextColor(120,128,140); doc.setFontSize(8.5); doc.text(T("SAYIN"),M,48);
+  doc.setTextColor.apply(doc,INK); doc.setFont(F,"bold"); doc.setFontSize(15); doc.text(T(ad),M,55);
+  doc.setFont(F,"normal"); doc.setFontSize(9); doc.setTextColor(110,118,130);
+  doc.text(T("Aşağıda firmanıza ait tüm servis ve tahsilat hareketleri listelenmiştir."),M,61);
+
+  var hareket=siraliEski(S.kayitlar.filter(function(k){ return k.cariId===cariId && k.tur!=="gider"; }));
+  var body=hareket.map(function(k){
+    var acik2 = k.aciklama + (k.tur==="servis" ? "\n"+fisNo(k)+(k.garanti?" · "+k.garanti+" ay garanti":"") : "");
+    var durum = k.tur==="servis" ? (k.durum==="acik"?"Ödeme Bekliyor":"Ödendi") : "Tahsil Edildi";
+    var tutar = (k.tur==="tahsilat"?"- ":"")+paraPdf(k.tutar,k.doviz);
+    return [tarihTR(k.tarih), T(k.tur==="servis"?"Servis / İşçilik":"Tahsilat"), T(acik2), T(durum), T(tutar)];
+  });
+  if(!body.length) body=[["","",T("Kayıtlı işlem bulunmamaktadır."),"",""]];
+  doc.autoTable({
+    startY:67, margin:{left:M,right:M,bottom:20},
+    head:[[T("Tarih"),T("İşlem"),T("Açıklama"),T("Durum"),T("Tutar")]], body:body,
+    theme:"plain",
+    styles:{font:F,fontSize:9,cellPadding:{top:2.6,bottom:2.6,left:2.4,right:2.4},textColor:[33,37,45],valign:"middle",lineColor:[228,231,236],lineWidth:{bottom:.2}},
+    headStyles:{fillColor:INK,textColor:255,fontStyle:"bold",fontSize:9},
+    alternateRowStyles:{fillColor:[246,248,251]},
+    columnStyles:{0:{cellWidth:22},1:{cellWidth:28},3:{cellWidth:28},4:{cellWidth:32,halign:"right",fontStyle:"bold"}},
+    didParseCell:function(d){
+      if(d.section!=="body") return;
+      var raw=String(d.cell.raw||"");
+      if(d.column.index===3){ if(raw.indexOf("Bekliyor")>-1) d.cell.styles.textColor=[201,52,0]; else if(raw) d.cell.styles.textColor=[36,138,61]; }
+      if(d.column.index===4 && raw.charAt(0)==="-") d.cell.styles.textColor=[36,138,61];
+    }
+  });
+  var y=doc.lastAutoTable.finalY+9;
+  if(y>238){ doc.addPage(); y=20; }
+  doc.setFillColor(243,246,250); doc.roundedRect(M,y,W-2*M,40,2.5,2.5,"F");
+  doc.setFillColor.apply(doc,TINT); doc.rect(M,y,1.4,40,"F");
+  doc.setTextColor.apply(doc,INK); doc.setFont(F,"bold"); doc.setFontSize(11); doc.text(T("GÜNCEL KALAN TL VE USD BAKİYE ÖZETİ"),M+7,y+9);
+  var cw=(W-2*M-14)/2;
+  ["TL","USD"].forEach(function(c,i){
+    var x=M+7+i*cw, v=b[c];
+    doc.setFont(F,"normal"); doc.setFontSize(9); doc.setTextColor(110,118,130); doc.text(T(c==="TL"?"TL Bakiye":"USD Bakiye"),x,y+18);
+    doc.setFont(F,"bold"); doc.setFontSize(16);
+    if(v>0) doc.setTextColor(200,30,30); else doc.setTextColor(36,138,61);
+    doc.text(T(paraPdf(Math.abs(v),c)),x,y+27);
+    doc.setFont(F,"normal"); doc.setFontSize(8.5); doc.setTextColor(110,118,130);
+    doc.text(T(v>0?"Kalan borç":(v<0?"Avans / fazla ödeme":"Hesap kapalı")),x,y+33);
+  });
+  y+=50;
+  if(acik.length){
+    var t=topla(acik), parca=[]; if(t.TL) parca.push(paraPdf(t.TL,"TL")); if(t.USD) parca.push(paraPdf(t.USD,"USD"));
+    doc.setFontSize(9); doc.setTextColor(201,52,0); doc.text(T(acik.length+" adet açık fiş ödeme bekliyor: "+parca.join(" + ")),M,y); y+=6;
+  }
+  doc.setFontSize(8.5); doc.setTextColor(120,128,140);
+  doc.text(doc.splitTextToSize(T("Bu ekstre "+tarihTR(isoGun(simdi))+" tarihinde Koç Elektronik tarafından düzenlenmiştir. Hesap hareketlerinde uyuşmazlık olması halinde lütfen bizimle iletişime geçiniz."),W-2*M),M,y);
+  var n=doc.getNumberOfPages();
+  for(var i=1;i<=n;i++){
+    doc.setPage(i); doc.setDrawColor(228,231,236); doc.setLineWidth(.2); doc.line(M,285,W-M,285);
+    doc.setFont(F,"normal"); doc.setFontSize(8); doc.setTextColor(140,146,156);
+    doc.text(T(FIRMA+" · "+ALT),M,290); doc.text(T("Sayfa "+i+" / "+n),W-M,290,{align:"right"});
+  }
+  return doc.output("blob");
+}
+function dosyaAdi(cariId){
+  var ad=ascii(cariAd(cariId)).replace(/[çÇ]/g,"c").replace(/[öÖ]/g,"o").replace(/[üÜ]/g,"u").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"");
+  return "Koc_Elektronik_Ekstre_"+ad+"_"+tarihTR(bugun()).replace(/\./g,"-")+".pdf";
+}
+function indir(blob, ad){
+  var url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url; a.download=ad; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 60000);
+}
+function pdfPaylas(cariId){
+  if(!window.jspdf || !window.jspdf.jsPDF){ toast("PDF kütüphanesi yüklenemedi. İnternet bağlantısını kontrol edin."); return; }
+  var metin=waMetni(cariId,true);
+  panoya(metin);
+  var hemen=fontHazir;
+  fontYukle().then(function(){
+    var blob;
+    try{ blob=pdfOlustur(cariId); }catch(e){ toast("PDF oluşturulamadı: "+e.message); return; }
+    var ad=dosyaAdi(cariId), file=null;
+    try{ file=new File([blob],ad,{type:"application/pdf"}); }catch(e){}
+    var paylasir = file && navigator.canShare && navigator.share && navigator.canShare({files:[file]});
+    if(!paylasir){ yedekYol(cariId,blob,ad,metin); return; }
+    var paylas=function(){
+      navigator.share({files:[file], text:metin, title:"Koç Elektronik Cari Ekstre"}).then(function(){
+        toast("Gönderildi. Mesaj metni panoda da hazır.");
+      }).catch(function(err){
+        if(err && err.name==="AbortError") return;
+        if(err && err.name==="NotAllowedError") return ikinciAdim();
+        yedekYol(cariId,blob,ad,metin);
+      });
+    };
+    var ikinciAdim=function(){
+      sheet({title:"PDF hazır", msg:ad+" oluşturuldu. Paylaşım ekranından WhatsApp’ı seçin.", actions:[{label:"📤 Paylaş (WhatsApp)", bold:true, fn:paylas},{label:"PDF’i İndir", fn:function(){ indir(blob,ad); }}]});
+    };
+    if(hemen) paylas(); else ikinciAdim();
+  });
+}
+function yedekYol(cariId, blob, ad, metin){
+  try{ indir(blob,ad); }catch(e){}
+  sheet({title:"PDF indirildi", msg:"Tarayıcınız dosya paylaşımını desteklemiyor. WhatsApp’ı açıp indirilen PDF’i sohbete ekleyin; mesaj metni hazır geliyor.",
+    actions:[{label:"💬 WhatsApp’ı Aç", bold:true, href:waLink(cariId,metin)},{label:"PDF’i Tekrar İndir", fn:function(){ indir(blob,ad); }}]});
+}
+
+/* ---------- yedek ---------- */
+function yedekIndir(){
+  var veri=JSON.stringify({uygulama:"KOÇ ELEKTRONİK Servis",surum:1,tarih:new Date().toISOString(),cariler:S.cariler,kayitlar:S.kayitlar,seq:S.seq},null,2);
+  var ad="koc-elektronik-yedek-"+bugun()+".json", blob=new Blob([veri],{type:"application/json"});
+  try{
+    var file=new File([blob],ad,{type:"application/json"});
+    if(navigator.canShare && navigator.share && navigator.canShare({files:[file]}) && /iP(hone|ad|od)/.test(navigator.userAgent)){
+      navigator.share({files:[file], title:"Koç Elektronik Yedek"}).catch(function(e){ if(!e||e.name!=="AbortError") indir(blob,ad); });
+      return;
+    }
+  }catch(e){}
+  indir(blob,ad); toast("Yedek dosyası indirildi");
+}
+function yedekYukle(file){
+  var r=new FileReader();
+  r.onload=function(){
+    var d; try{ d=JSON.parse(r.result); }catch(e){ toast("Dosya okunamadı: geçerli bir JSON yedeği değil."); return; }
+    if(!gecerli(d)){ toast("Bu dosya Koç Elektronik yedeği değil."); return; }
+    sheet({title:"Yedek geri yüklensin mi?", msg:d.cariler.length+" firma ve "+d.kayitlar.length+" kayıt yüklenecek. Telefondaki mevcut verilerin yerini alır.",
+      actions:[{label:"Geri Yükle", style:"d", fn:function(){ S=normal(d); kaydetLS(); render(); toast("Yedek geri yüklendi"); }}]});
+  };
+  r.readAsText(file);
+}
+
+/* ---------- sekmeler ---------- */
+function sekme(t){
+  document.querySelectorAll(".view[data-view]").forEach(function(v){ v.hidden = v.dataset.view!==t; });
+  document.querySelectorAll(".tab").forEach(function(b){ b.setAttribute("aria-selected", String(b.dataset.tab===t)); });
+  try{ localStorage.setItem(TAB_KEY,t); }catch(e){}
+  window.scrollTo(0,0);
+}
+
+/* ---------- olaylar ---------- */
+document.addEventListener("click", function(e){
+  var el;
+  if((el=e.target.closest(".tab"))) return sekme(el.dataset.tab);
+  if((el=e.target.closest("[data-git]"))) return sekme(el.dataset.git);
+  if((el=e.target.closest("#f-tur button"))) return setTur(el.dataset.tur);
+  if((el=e.target.closest("#f-doviz button"))){ if(!$("#f-tutar").disabled) setDoviz(el.dataset.doviz); return; }
+  if((el=e.target.closest("#f-chips .chip"))){ var ta=$("#f-aciklama"); ta.value = ta.value.trim() ? ta.value.trim()+", "+el.textContent : el.textContent; return; }
+  if((el=e.target.closest("[data-sil]"))) return silSor(el.dataset.sil);
+  if((el=e.target.closest("[data-ode]"))){
+    var k=kayitBul(el.dataset.ode);
+    return sheet({title:"Ödeme alındı mı?", msg:cariAd(k.cariId,k)+" · "+k.aciklama+" · "+para(k.tutar,k.doviz)+". Fiş “Ödendi” olur, cari borçtan düşülür ve kasaya gelir yazılır.",
+      actions:[{label:"💸 Evet, Hesaptan Düş", bold:true, fn:function(){ odemeAlindi(k.id); }}]});
+  }
+  if((el=e.target.closest("[data-hatirlat]"))) return sadeceWa(el.dataset.hatirlat);
+  if((el=e.target.closest("[data-cari]"))){ seciliCari=el.dataset.cari; renderCari(); return; }
+  if(e.target.closest("#b-pdf")) return pdfPaylas(seciliCari);
+  if(e.target.closest("#b-wa")) return sadeceWa(seciliCari);
+  if(e.target.closest("#b-cari-sil")){
+    var c=cariBul(seciliCari); if(!c) return;
+    var n=S.kayitlar.filter(function(x){return x.cariId===c.id;}).length;
+    return sheet({title:c.ad+" silinsin mi?", msg:n ? n+" kaydı var. Kayıtları kasada tutup sadece firmayı listeden kaldırabilir veya hepsini silebilirsiniz." : "Bu firmada kayıt yok.",
+      actions:[{label:"Sadece Firmayı Sil", style:"d", fn:function(){ S.cariler=S.cariler.filter(function(x){return x.id!==c.id;}); kaydetLS(); render(); toast("Firma silindi"); }}]
+        .concat(n?[{label:"Firmayı ve "+n+" Kaydını Sil", style:"d", fn:function(){ S.cariler=S.cariler.filter(function(x){return x.id!==c.id;}); S.kayitlar=S.kayitlar.filter(function(x){return x.cariId!==c.id;}); kaydetLS(); render(); toast("Firma ve kayıtları silindi"); }}]:[])});
+  }
+  if(e.target.closest("#b-yedek")) return yedekIndir();
+  if(e.target.closest("#b-yukle")) return $("#f-yukle").click();
+  if(e.target.closest("#b-sifirla")) return sheet({title:"Tüm veriler silinsin mi?", msg:"Bütün fişler, tahsilatlar ve eklediğiniz firmalar silinir. Önce yedek almanız önerilir.",
+      actions:[{label:"Her Şeyi Sil", style:"d", fn:function(){ S=varsayilan(); kaydetLS(); render(); toast("Veriler sıfırlandı"); }}]});
+  if((el=e.target.closest("#g-filtre button"))){ gFiltre=el.dataset.f; document.querySelectorAll("#g-filtre button").forEach(function(b){ b.setAttribute("aria-pressed",String(b===el)); }); renderKasa(); }
+});
+$("#fis-form").addEventListener("submit", fisKaydet);
+$("#f-cari").addEventListener("change", renderBagli);
+$("#f-bagli").addEventListener("change", bagliDegisti);
+$("#f-pesin").addEventListener("change", function(){ $("#pesin-acik").textContent = this.checked ? "Fiş direkt “Ödendi” sayılır ve tutar kasaya gelir olarak işlenir." : "Kapalıysa fiş “Ödeme Bekliyor” olarak açık kalır ve Cuma tahsilat listesine düşer."; });
+$("#g-ara").addEventListener("input", renderKasa);
+$("#f-yukle").addEventListener("change", function(){ if(this.files[0]) yedekYukle(this.files[0]); this.value=""; });
+$("#cari-form").addEventListener("submit", function(e){
+  e.preventDefault();
+  var ad=$("#c-ad").value.trim(); if(!ad){ toast("Firma adını yazın."); $("#c-ad").focus(); return; }
+  if(S.cariler.some(function(c){ return trKucuk(c.ad)===trKucuk(ad); })){ toast("Bu firma zaten kayıtlı."); return; }
+  var c={id:"c_"+uid(), ad:ad, tel:$("#c-tel").value.trim()};
+  S.cariler.push(c); kaydetLS(); seciliCari=c.id; $("#c-ad").value=""; $("#c-tel").value=""; render(); toast(ad+" eklendi");
+});
+document.addEventListener("change", function(e){
+  var el=e.target.closest("[data-tel]"); if(!el) return;
+  var c=cariBul(el.dataset.tel); if(c){ c.tel=el.value.trim(); kaydetLS(); toast("Numara kaydedildi"); }
+});
+
+/* ---------- açılış ---------- */
+$("#f-tarih").value=bugun();
+renderCariSelect(); setTur("servis"); render();
+var ilk="yeni"; try{ ilk=localStorage.getItem(TAB_KEY)||"yeni"; }catch(e){}
+var h=(location.hash||"").slice(1); if(["yeni","acik","cari","kasa"].indexOf(h)>-1) ilk=h;
+sekme(ilk);
+setTimeout(fontYukle, 1200);
+/* ana ekran ikonu */
+try{
+  var cv=document.createElement("canvas"); cv.width=cv.height=180; var g=cv.getContext("2d");
+  g.fillStyle="#111827"; g.fillRect(0,0,180,180); g.fillStyle="#007AFF"; g.fillRect(0,150,180,30);
+  g.fillStyle="#fff"; g.font="bold 78px -apple-system,Helvetica,Arial,sans-serif"; g.textAlign="center"; g.textBaseline="middle"; g.fillText("KE",90,78);
+  var ln=document.createElement("link"); ln.rel="apple-touch-icon"; ln.href=cv.toDataURL("image/png"); document.head.appendChild(ln);
+}catch(e){}
+})();
+</script>
+</body>
+</html>
