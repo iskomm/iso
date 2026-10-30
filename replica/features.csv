@@ -1,0 +1,35 @@
+feature,area,priority,original,clone,notes
+Describe a circuit in plain English and get an editable schematic,ai,must,yes,no,the core loop; output must stay fully editable
+AI uses real orderable parts (MPNs) not generic symbols,ai,must,yes,no,needs a parts source behind the AI
+Iterate on the schematic through chat (change values add blocks),ai,must,partial,no,implied by copilot wording; not confirmed
+Schematic editor: place wire label move rotate delete undo,schematic,must,yes,no,
+Net labels and power symbols,schematic,must,yes,no,standard; not named in sources
+Multi-sheet or hierarchical schematics,schematic,should,unknown,no,not stated in sources
+Component search across LCSC DigiKey Mouser,parts,must,yes,no,through each distributor's official API with the user's own keys
+Import a part with symbol footprint and datasheet link,parts,must,yes,no,
+Symbol editor,parts,should,yes,no,named on vendor comparison page
+Footprint editor,parts,should,yes,no,named on vendor comparison page
+Footprint generation to IPC-7351B,parts,should,yes,no,stated by maker on Product Hunt; write the generator fresh
+ERC electrical rules check with a violations list,checks,must,yes,no,vendor says ERC is mandatory because AI connectivity can be wrong
+Export to KiCad project,interop,must,yes,no,KiCad formats are open and documented
+Free plan with full editor and limited daily AI,plans,must,yes,no,original: no card no expiry
+AI usage meter and limits per plan,plans,should,yes,no,original Pro: 50 credits/day 250/rolling week (pricing page may be stale)
+Paid plan raising AI limits,plans,should,yes,no,original Pro around $20/month; sources disagree
+Desktop app for Windows macOS Linux,platform,should,yes,no,original ships exe dmg AppImage/tar.gz; a web-first clone is a valid rescope
+SPICE simulation via ngspice (op transient AC DC sweep),simulation,could,yes,no,ngspice is open source and can be used directly
+Waveform and results viewer,simulation,could,yes,no,
+PCB editor with stackup management and copper pours,pcb,could,yes,no,outside the recommended capture-first slice
+Auto-router with presets layer filters and completion summary,pcb,could,yes,no,hard; the original also points users to external routers
+DRC design rules check,pcb,could,yes,no,
+3D board view,pcb,could,yes,no,
+Gerber X2 and Excellon drill export,manufacturing,could,yes,no,
+JLCPCB-format BOM and CPL export,manufacturing,could,yes,no,file format is public; no partnership needed for the format
+Export to Altium,interop,could,yes,no,check the format's documentation and licence before building
+Read and write EAGLE files,interop,could,partial,no,only one listing says so
+Hand-off to external autorouters (Quilter DeepPCB),interop,could,partial,no,mentioned in vendor blog; KiCad export likely covers it
+File uploads to the AI (datasheets images),ai,could,yes,no,free tier lists file uploads
+Basic vs Pro AI model choice,ai,could,yes,no,
+Distributor part catalogues and pricing data,parts,skip,yes,skip,owned by LCSC DigiKey Mouser; use their APIs under their terms and do not copy the data
+ProtoFlow's own symbol and footprint library content,parts,skip,yes,skip,their content; generate or source your own
+JLCPCB ordering partnership or integration deal,manufacturing,skip,unknown,skip,a partner deal is not a feature; exporting the public file format is enough
+ProtoFlow's AI prompts models and training data,ai,skip,yes,skip,not visible and not theirs to give; build your own pipeline
