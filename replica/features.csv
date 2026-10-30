@@ -33,3 +33,18 @@ Distributor part catalogues and pricing data,parts,skip,yes,skip,owned by LCSC D
 ProtoFlow's own symbol and footprint library content,parts,skip,yes,skip,their content; generate or source your own
 JLCPCB ordering partnership or integration deal,manufacturing,skip,unknown,skip,a partner deal is not a feature; exporting the public file format is enough
 ProtoFlow's AI prompts models and training data,ai,skip,yes,skip,not visible and not theirs to give; build your own pipeline
+Start screen with prompt box suggestion chips and quick actions,onboarding,must,yes,no,seen S01: New Project / Open File / Open Folder / Community
+AI model picker in the prompt box,ai,should,yes,no,seen S01: default "Claude Sonnet 5.5"
+Prompt box attachments and Tools menu,ai,should,yes,no,seen S01: + and Tools buttons
+AI Copilot side panel next to Properties,ai,must,yes,no,seen S01: right-hand tab
+Hierarchy panel with Components and Nets tabs and search,schematic,must,yes,no,seen S01: counts and sort
+Properties panel for the selected item,schematic,must,yes,no,seen S01: component wire annotation net label section
+Power and ground symbols in the toolbar (GND 5V 3V3),schematic,must,yes,no,seen S01
+Status bar: mode counts snap zoom grid,schematic,should,yes,no,seen S01: Grid 1.27mm and Snap ON
+Command palette (Find features Ctrl+Shift+P),navigation,should,yes,no,seen S01
+Guided tutorial for new users,onboarding,should,yes,no,seen S01
+Version history,projects,could,yes,no,history icon in S01 toolbar; not opened
+Comments on a design,collaboration,could,yes,no,comment icon in S01 toolbar; not opened
+Activity stats (sessions components wires active days),account,could,yes,no,seen S01 with All/30d/7d filter
+Community design gallery,community,could,yes,skip,their users and designs are their network; a gallery feature can be built but starts empty
+Free credits for joining Discord,growth,skip,yes,skip,"Get 30 credits free" offer is a marketing tactic tied to their community
