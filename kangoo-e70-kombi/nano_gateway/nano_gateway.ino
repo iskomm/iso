@@ -353,6 +353,16 @@ static bool setFlag(const char *name, bool v) {
   return false;
 }
 
+// Elle değer verilince: test modu açıksa kapatılır (yoksa değeri hemen ezer),
+// masa modu kapalıysa uyarılır.
+static void manualValue() {
+  if (demo.on) {
+    demo.on = false;
+    Serial.println(F("> Test modu kapatıldı (elle değer verildi)"));
+  }
+  if (!bench) Serial.println(F("! Masa modu kapalı: göstergeye gitmesi için önce 'bench 1' yazın"));
+}
+
 static void handleCommand(char *line) {
   char *argv[12];
   int argc = 0;
@@ -415,11 +425,38 @@ static void handleCommand(char *line) {
     PF("> Masa modu %s\n", bench ? "AÇIK (kontak açık)" : "kapalı");
     return;
   }
-  if (!strcmp(cmd, "rpm")  && a1) { st.rpm = atof(a1); return; }
-  if (!strcmp(cmd, "spd")  && a1) { st.speedKmh = atof(a1); return; }
-  if (!strcmp(cmd, "tmp")  && a1) { st.coolantC = atoi(a1); return; }
-  if (!strcmp(cmd, "fuel") && a1) { st.fuelPct = atof(a1); return; }
-  if (a1 && setFlag(cmd, atoi(a1))) return;
+  if (!strcmp(cmd, "rpm") && a1) {
+    manualValue();
+    st.rpm = atof(a1);
+    Serial.print(F("> Devir "));
+    Serial.println(st.rpm, 0);
+    return;
+  }
+  if (!strcmp(cmd, "spd") && a1) {
+    manualValue();
+    st.speedKmh = atof(a1);
+    Serial.print(F("> Hız "));
+    Serial.println(st.speedKmh, 0);
+    return;
+  }
+  if (!strcmp(cmd, "tmp") && a1) {
+    manualValue();
+    st.coolantC = atoi(a1);
+    PF("> Motor suyu %d C\n", st.coolantC);
+    return;
+  }
+  if (!strcmp(cmd, "fuel") && a1) {
+    manualValue();
+    st.fuelPct = atof(a1);
+    Serial.print(F("> Yakıt %"));
+    Serial.println(st.fuelPct, 0);
+    return;
+  }
+  if (a1 && setFlag(cmd, atoi(a1))) {
+    if (strcmp(cmd, "ign")) manualValue();
+    PF("> %s %s\n", cmd, atoi(a1) ? "açık" : "kapalı");
+    return;
+  }
 
   if (!strcmp(cmd, "uyari") && a2) {
     for (auto &l : lamps) {
