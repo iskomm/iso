@@ -1,0 +1,380 @@
+// Kangoo 2 -> BMW E70 KOMBI CAN çevirici — ESP32
+//
+//  Kangoo CAN (500 kbps)  --SN65HVD230--  ESP32 TWAI
+//  BMW K-CAN  (100 kbps)  --MCP2515-----  ESP32 SPI
+//
+// Gerekli kütüphane: "autowp-mcp2515" (Arduino Kütüphane Yöneticisi'nden)
+// Seri monitör: 115200 baud, satır sonu "Newline". Komutlar için "help".
+//
+// Ayarlar: config.h (pinler), kangoo.h (Kangoo ID'leri), bmw.h (BMW mesajları)
+
+#include <Arduino.h>
+#include <SPI.h>
+#include <mcp2515.h>
+#include "driver/twai.h"
+
+#include "config.h"
+#include "kangoo.h"
+#include "bmw.h"
+
+static MCP2515 mcp(BMW_CS_PIN, BMW_SPI_HZ);
+static VehicleState st;
+
+static bool     bench = false;          // true: değerler seri monitörden gelir
+static bool     twaiNormal = false;     // false: sadece dinleme
+static uint32_t framesSinceStart = 0;
+static uint32_t lastRx = 0;
+static uint32_t rxTotal = 0, txOk = 0, txErr = 0, obdTx = 0;
+static uint32_t lastObd = 0, lastStatus = 0, lastFuel = 0;
+static bool     wasOn = false;
+static uint8_t  busOffCount = 0;        // 3 kez bus-off olursa OBD sorgusu kapanır
+
+// ---------------------------------------------------------------------------
+//  Kangoo CAN (TWAI)
+// ---------------------------------------------------------------------------
+static bool kangooStart(bool normal) {
+  twai_general_config_t g = TWAI_GENERAL_CONFIG_DEFAULT(
+      KANGOO_CAN_TX, KANGOO_CAN_RX, normal ? TWAI_MODE_NORMAL : TWAI_MODE_LISTEN_ONLY);
+  g.rx_queue_len = 64;
+  g.tx_queue_len = 4;
+  twai_timing_config_t t = TWAI_TIMING_CONFIG_500KBITS();
+  twai_filter_config_t f = TWAI_FILTER_CONFIG_ACCEPT_ALL();
+  if (twai_driver_install(&g, &t, &f) != ESP_OK) return false;
+  if (twai_start() != ESP_OK) {
+    twai_driver_uninstall();
+    return false;
+  }
+  twaiNormal = normal;
+  framesSinceStart = 0;
+  return true;
+}
+
+static void kangooStop() {
+  twai_stop();              // bus-off durumunda hata döner, sorun değil
+  twai_driver_uninstall();
+}
+
+static void kangooRestart(bool normal) {
+  kangooStop();
+  if (!kangooStart(normal)) Serial.println(F("! Kangoo CAN başlatılamadı"));
+  else Serial.printf("> Kangoo CAN: %s\n", normal ? "normal mod (OBD sorgusu açık)" : "sadece dinleme");
+}
+
+static void kangooReceive(uint32_t now) {
+  twai_message_t m;
+  while (twai_receive(&m, 0) == ESP_OK) {
+    rxTotal++;
+    framesSinceStart++;
+    lastRx = now;
+    if (!bench) decodeKangooFrame(m, st);
+  }
+}
+
+// Hata sayaçlarını izler; bus-off olursa güvenli tarafa (dinleme) döner.
+static void kangooCheckHealth() {
+  twai_status_info_t s;
+  if (twai_get_status_info(&s) != ESP_OK) return;
+  if (s.state == TWAI_STATE_BUS_OFF || s.state == TWAI_STATE_STOPPED) {
+    busOffCount++;
+    Serial.println(F("! Kangoo CAN bus-off, dinleme moduna dönülüyor"));
+    kangooRestart(false);
+  }
+}
+
+// ---------------------------------------------------------------------------
+//  BMW K-CAN (MCP2515)
+// ---------------------------------------------------------------------------
+static void bmwSend(const struct can_frame &f) {
+  if (mcp.sendMessage(&f) == MCP2515::ERROR_OK) txOk++;
+  else txErr++;   // gösterge bağlı değilse ACK gelmez, tamponlar dolar
+}
+
+static void bmwSendSlots(uint32_t now) {
+  for (int i = 0; i < S_TOTAL; i++) {
+    Slot &s = slots[i];
+    if (!s.enabled || s.id == 0 || s.periodMs == 0) continue;
+    uint32_t dt = now - s.last;
+    if (dt < s.periodMs) continue;
+    if (dt > 1000) dt = s.periodMs;
+    s.last = now;
+    if (i < S_STD_COUNT) buildSlot(i, st, dt);
+    struct can_frame f;
+    f.can_id = s.id;
+    f.can_dlc = s.dlc;
+    memcpy(f.data, s.data, 8);
+    bmwSend(f);
+  }
+}
+
+struct CcLamp {
+  const char *name;
+  bool *flag;
+  uint16_t *num;
+  bool prev;
+  uint32_t last;
+};
+
+static CcLamp lamps[] = {
+  {"aku",    &st.warnBattery, &ccBattery, false, 0},
+  {"yag",    &st.warnOil,     &ccOil,     false, 0},
+  {"motor",  &st.warnEngine,  &ccEngine,  false, 0},
+  {"abs",    &st.warnAbs,     &ccAbs,     false, 0},
+  {"airbag", &st.warnAirbag,  &ccAirbag,  false, 0},
+  {"fren",   &st.warnBrake,   &ccBrake,   false, 0},
+};
+
+static void bmwSendCheckControl(uint32_t now) {
+  for (auto &l : lamps) {
+    if (*l.num == 0) continue;
+    bool on = *l.flag;
+    if (on != l.prev || (on && now - l.last > 2000)) {
+      struct can_frame f;
+      fillCheckControl(f, *l.num, on);
+      bmwSend(f);
+      l.prev = on;
+      l.last = now;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+//  Seri komutlar
+// ---------------------------------------------------------------------------
+static void printHelp() {
+  Serial.println(F(
+    "\nKomutlar (sayılar onluk, ID ve baytlar onaltılık):\n"
+    "  help              bu yardım\n"
+    "  st                durum ve sayaçlar\n"
+    "  bench 1|0         masa modu: değerleri buradan verirsiniz (araç gerekmez)\n"
+    "  ign 1|0           kontak (masa modunda)\n"
+    "  rpm 3000          devir        spd 80    hız km/h\n"
+    "  tmp 90            motor suyu   fuel 50   yakıt %\n"
+    "  sol 1|0  sag 1|0  sinyaller    kisa 1|0  uzun 1|0  onsis 1|0  arkasis 1|0\n"
+    "  elfren 1|0        el freni\n"
+    "  uyari aku|yag|motor|abs|airbag|fren 1|0\n"
+    "  cc 34 1|0         Check Control numarasını doğrudan dene (onluk)\n"
+    "  raw 130 45 42 69 8F E2         tek seferlik çerçeve gönder\n"
+    "  rep 3B4 100 00 01 02           100 ms'de bir tekrarla  (rep 3B4 0 = sil)\n"
+    "  off 1D0 / on 1D0  standart bir mesajı kapat/aç\n"
+    "  cal 1.25          hız kalibrasyonu (şu anki değeri st ile görün)\n"
+    "  fcal 0000 1F40    yakıt ham değerleri: boş dolu (onaltılık)\n"));
+}
+
+static void printStatus() {
+  Serial.printf("\nMod: %s | Kangoo CAN: %s | hat %s\n",
+                bench ? "MASA" : "ARAÇ",
+                twaiNormal ? "normal" : "dinleme",
+                (millis() - lastRx < BUS_TIMEOUT_MS) ? "aktif" : "sessiz");
+  Serial.printf("Kontak: %s  Devir: %.0f  Hız: %.1f  Su: %d°C  Yakıt: %.0f%%\n",
+                st.ignitionOn ? "açık" : "kapalı", st.rpm, st.speedKmh, st.coolantC, st.fuelPct);
+  Serial.printf("Sinyal sol/sağ: %d/%d  Kısa/uzun: %d/%d  Sis ön/arka: %d/%d  El freni: %d\n",
+                st.turnLeft, st.turnRight, st.lowBeam, st.highBeam, st.frontFog, st.rearFog, st.handbrake);
+  Serial.printf("Uyarı akü/yağ/motor/abs/airbag/fren: %d/%d/%d/%d/%d/%d\n",
+                st.warnBattery, st.warnOil, st.warnEngine, st.warnAbs, st.warnAirbag, st.warnBrake);
+  Serial.printf("Kangoo alınan: %lu  OBD istek: %lu  BMW gönderilen: %lu  hata: %lu\n",
+                (unsigned long)rxTotal, (unsigned long)obdTx, (unsigned long)txOk, (unsigned long)txErr);
+  Serial.printf("Hız kalibrasyonu: %.3f  Yakıt boş/dolu: %04X/%04X\n", speedScale, fuelRawEmpty, fuelRawFull);
+  Serial.print("Açık mesajlar:");
+  for (int i = 0; i < S_TOTAL; i++)
+    if (slots[i].enabled && slots[i].id) Serial.printf(" %03X", slots[i].id);
+  Serial.println();
+}
+
+static int parseBytes(char **tokens, int count, uint8_t *out) {
+  int n = 0;
+  for (; n < count && n < 8; n++) out[n] = (uint8_t)strtoul(tokens[n], nullptr, 16);
+  return n;
+}
+
+static int findStdSlot(uint16_t id) {
+  for (int i = 0; i < S_STD_COUNT; i++)
+    if (slots[i].id == id) return i;
+  return -1;
+}
+
+static bool setFlag(const char *name, bool v) {
+  struct { const char *n; bool *f; } map[] = {
+    {"sol", &st.turnLeft}, {"sag", &st.turnRight}, {"kisa", &st.lowBeam},
+    {"uzun", &st.highBeam}, {"onsis", &st.frontFog}, {"arkasis", &st.rearFog},
+    {"elfren", &st.handbrake}, {"ign", &st.ignitionOn},
+  };
+  for (auto &e : map) {
+    if (!strcmp(name, e.n)) { *e.f = v; return true; }
+  }
+  return false;
+}
+
+static void handleCommand(char *line) {
+  char *argv[12];
+  int argc = 0;
+  for (char *tok = strtok(line, " "); tok && argc < 12; tok = strtok(nullptr, " "))
+    argv[argc++] = tok;
+  if (!argc) return;
+  const char *cmd = argv[0];
+  const char *a1 = argc > 1 ? argv[1] : nullptr;
+  const char *a2 = argc > 2 ? argv[2] : nullptr;
+
+  if (!strcmp(cmd, "help") || !strcmp(cmd, "?")) { printHelp(); return; }
+  if (!strcmp(cmd, "st")) { printStatus(); return; }
+
+  if (!strcmp(cmd, "bench") && a1) {
+    bench = atoi(a1);
+    if (bench) { st = VehicleState(); st.ignitionOn = true; }
+    Serial.printf("> Masa modu %s\n", bench ? "AÇIK (kontak açık)" : "kapalı");
+    return;
+  }
+  if (!strcmp(cmd, "rpm")  && a1) { st.rpm = atof(a1); return; }
+  if (!strcmp(cmd, "spd")  && a1) { st.speedKmh = atof(a1); return; }
+  if (!strcmp(cmd, "tmp")  && a1) { st.coolantC = atoi(a1); return; }
+  if (!strcmp(cmd, "fuel") && a1) { st.fuelPct = atof(a1); return; }
+  if (a1 && setFlag(cmd, atoi(a1))) return;
+
+  if (!strcmp(cmd, "uyari") && a2) {
+    for (auto &l : lamps) {
+      if (!strcmp(a1, l.name)) {
+        *l.flag = atoi(a2);
+        if (*l.num == 0) Serial.println(F("! Bu uyarının CC numarası bmw.h'da 0, önce 'cc' ile bulun"));
+        return;
+      }
+    }
+    Serial.println(F("? Bilinmeyen uyarı"));
+    return;
+  }
+  if (!strcmp(cmd, "cc") && a2) {
+    struct can_frame f;
+    fillCheckControl(f, (uint16_t)atoi(a1), atoi(a2));
+    bmwSend(f);
+    Serial.printf("> CC %d %s\n", atoi(a1), atoi(a2) ? "yak" : "söndür");
+    return;
+  }
+  if (!strcmp(cmd, "raw") && a1) {
+    struct can_frame f = {};
+    f.can_id = strtoul(a1, nullptr, 16);
+    f.can_dlc = parseBytes(argv + 2, argc - 2, f.data);
+    bmwSend(f);
+    Serial.printf("> %03lX gönderildi (%d bayt)\n", (unsigned long)f.can_id, f.can_dlc);
+    return;
+  }
+  if (!strcmp(cmd, "rep") && a2) {
+    uint16_t id = strtoul(a1, nullptr, 16);
+    uint16_t period = atoi(a2);
+    int std = findStdSlot(id);
+    if (std >= 0 && period) {
+      slots[std].enabled = false;
+      Serial.printf("> Standart %03X kapatıldı, yerine sizinki gönderilecek\n", id);
+    }
+    int freeIdx = -1;
+    for (int i = S_CUSTOM_FIRST; i < S_TOTAL; i++) {
+      if (slots[i].id == id) { freeIdx = i; break; }
+      if (slots[i].id == 0 && freeIdx < 0) freeIdx = i;
+    }
+    if (freeIdx < 0) { Serial.println(F("! Boş yuva yok")); return; }
+    Slot &s = slots[freeIdx];
+    s = Slot();
+    if (!period) {
+      if (std >= 0) slots[std].enabled = true;
+      Serial.printf("> %03X tekrarı silindi\n", id);
+      return;
+    }
+    s.id = id;
+    s.periodMs = period;
+    s.dlc = parseBytes(argv + 3, argc - 3, s.data);
+    s.enabled = true;
+    Serial.printf("> %03X her %u ms (%d bayt)\n", id, period, s.dlc);
+    return;
+  }
+  if ((!strcmp(cmd, "off") || !strcmp(cmd, "on")) && a1) {
+    int i = findStdSlot(strtoul(a1, nullptr, 16));
+    if (i < 0) { Serial.println(F("? Standart mesaj değil")); return; }
+    slots[i].enabled = !strcmp(cmd, "on");
+    Serial.printf("> %03X %s\n", slots[i].id, slots[i].enabled ? "açık" : "kapalı");
+    return;
+  }
+  if (!strcmp(cmd, "cal") && a1) { speedScale = atof(a1); Serial.printf("> Hız kalibrasyonu %.3f\n", speedScale); return; }
+  if (!strcmp(cmd, "fcal") && a2) {
+    fuelRawEmpty = strtoul(a1, nullptr, 16);
+    fuelRawFull = strtoul(a2, nullptr, 16);
+    Serial.printf("> Yakıt boş/dolu %04X/%04X\n", fuelRawEmpty, fuelRawFull);
+    return;
+  }
+  Serial.println(F("? Bilinmeyen komut, 'help' yazın"));
+}
+
+static void readSerial() {
+  static char buf[128];
+  static uint8_t len = 0;
+  while (Serial.available()) {
+    char ch = Serial.read();
+    if (ch == '\r') continue;
+    if (ch == '\n') {
+      buf[len] = 0;
+      if (len) handleCommand(buf);
+      len = 0;
+    } else if (len < sizeof(buf) - 1) {
+      buf[len++] = ch;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+void setup() {
+  Serial.begin(115200);
+  delay(300);
+  Serial.println(F("\nKangoo -> E70 KOMBI çevirici"));
+
+  SPI.begin();
+  mcp.reset();
+  if (mcp.setBitrate(CAN_100KBPS, BMW_MCP_CLOCK) != MCP2515::ERROR_OK)
+    Serial.println(F("! MCP2515 bulunamadı: SPI bağlantısını ve kristali kontrol edin"));
+  mcp.setNormalMode();
+
+  // Her zaman önce sadece dinleme: hız yanlışsa araç hattını bozmamak için.
+  if (!kangooStart(false)) Serial.println(F("! Kangoo CAN başlatılamadı"));
+
+#if USE_FUEL_ADC
+  analogReadResolution(12);
+#endif
+  printHelp();
+}
+
+void loop() {
+  uint32_t now = millis();
+  readSerial();
+  kangooReceive(now);
+
+  bool busAlive = rxTotal > 0 && (now - lastRx < BUS_TIMEOUT_MS);
+
+#if USE_OBD_POLLING
+  // Hattan yeterince düzgün mesaj geldiyse hız doğrudur, normal moda geç.
+  if (!twaiNormal && busOffCount < 3 && framesSinceStart >= FRAMES_BEFORE_TX) kangooRestart(true);
+  if (twaiNormal && !bench && busAlive && now - lastObd >= OBD_PERIOD_MS) {
+    lastObd = now;
+    if (obdSendNext()) obdTx++;
+  }
+#endif
+
+#if USE_FUEL_ADC
+  if (!bench && now - lastFuel >= 100) {
+    lastFuel = now;
+    float pct = 100.0f * (analogRead(FUEL_ADC_PIN) - FUEL_ADC_EMPTY) / (float)(FUEL_ADC_FULL - FUEL_ADC_EMPTY);
+    pct = constrain(pct, 0.0f, 100.0f);
+    st.fuelPct = st.fuelPct * 0.98f + pct * 0.02f;   // depodaki çalkalanmayı yumuşat
+  }
+#endif
+
+  if (now - lastStatus >= 500) {
+    lastStatus = now;
+    kangooCheckHealth();
+  }
+
+  if (!bench) st.ignitionOn = busAlive;
+  if (st.ignitionOn) {
+    bmwSendSlots(now);
+    bmwSendCheckControl(now);
+  } else if (wasOn) {
+    st.rpm = 0;
+    st.speedKmh = 0;
+    Serial.println(F("> Kontak kapalı, gösterge uyuyacak"));
+  }
+  wasOn = st.ignitionOn;
+}

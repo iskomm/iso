@@ -1,0 +1,233 @@
+# Kangoo 2 (2011, 1.5 dCi) → BMW E70 X5 göstergesi (KOMBI) — ESP32 CAN çevirici
+
+Kangoo'nun CAN hattındaki bilgileri (devir, hız, sıcaklık, sinyaller, uyarılar)
+okuyup BMW E70 göstergesinin anladığı K-CAN mesajlarına çeviren ESP32 projesi.
+
+```
+ Kangoo CAN (500 kbps)                                BMW E70 KOMBI
+ OBD pin 6 / 14   ──► SN65HVD230 ──► ESP32 ──► MCP2515 ──► K-CAN (100 kbps)
+                       (dinleme)     TWAI       SPI
+```
+
+| Klasör | Ne işe yarar |
+|---|---|
+| `sniffer/` | Kangoo hattını **sadece dinler**. Hangi ID'de hangi bilgi var, onu bulmak için |
+| `gateway/` | Asıl çevirici. Masada gösterge testi için komutlar da içerir |
+
+---
+
+## ⚠️ Başlamadan önce
+
+1. **Orijinal Kangoo göstergesini sökmeyin.** Torpidonun arkasında bağlı kalsın.
+   Yakıt şamandırası, uyarı sesi ve diğer modüllerle haberleşme ona bağlı olabilir.
+   BMW göstergesi sadece **ekran** görevi görecek.
+2. **Kilometre:** BMW göstergesi kendi kilometresini gösterir. Muayenede gerçek km
+   kayıtla karşılaştırılıyor. Göstergede aracın **gerçek kilometresi** görünmeli.
+   Gerekirse göstergenin kilometresini yetkili bir yerde aracın gerçek değerine ayarlatın.
+3. **Uyarı lambaları:** ABS, airbag, fren ve motor arıza lambaları muayenede kontrol
+   ediliyor. Bunlar BMW göstergesinde doğru yanmıyorsa orijinal gösterge görünür kalmalı.
+4. Bu projedeki BMW mesaj biçimleri **E90 gösterge projelerinden** bilinen değerler,
+   Kangoo ID'leri de **aday** değerler. İkisi de sizin parçalarınızda test edilerek
+   doğrulanacak. Adımlar aşağıda.
+
+---
+
+## Malzeme listesi
+
+| Parça | Adet | Not |
+|---|---|---|
+| ESP32 DevKit (ESP32-WROOM-32) | 1 | Klasik ESP32. C3/S3 de olur ama pinleri değiştirmeniz gerekir |
+| SN65HVD230 CAN modülü (3.3V) | 1 | Kangoo tarafı |
+| MCP2515 + TJA1050 CAN modülü | 1 | BMW tarafı. Kristalin üstünde yazan değeri not edin (8 ya da 16 MHz) |
+| 4 kanallı seviye dönüştürücü (BSS138) | 1 | ESP32 (3.3V) ↔ MCP2515 (5V) arasında |
+| 12V → 5V DC-DC çevirici (en az 1A) | 1 | Örneğin mini-360 ya da LM2596 |
+| 12V 2A adaptör | 1 | Masada test için |
+| Sigorta ve sigorta yuvası, 2A ve 5A | 1+1 | Araç montajı için |
+| Bükümlü kablo (CAN için) | | CAN-H ve CAN-L birbirine bükülü olmalı |
+
+---
+
+## Bağlantı şeması
+
+### ESP32 ↔ SN65HVD230 (Kangoo tarafı)
+| ESP32 | SN65HVD230 | Araç |
+|---|---|---|
+| 3V3 | 3V3 | |
+| GND | GND | OBD pin 4 ya da 5 (şasi) |
+| GPIO25 | CTX (D) | |
+| GPIO26 | CRX (R) | |
+| | CANH | **OBD pin 6** |
+| | CANL | **OBD pin 14** |
+
+> ⚠️ SN65HVD230 modülünün üzerinde **120 Ω'luk bir direnç** var (genelde "R2" ya da
+> "120" yazar). **Bu direnci sökün.** Aracın hattı zaten sonlandırılmış durumda,
+> üçüncü bir sonlandırma hattı bozar.
+
+### ESP32 ↔ seviye dönüştürücü ↔ MCP2515 (BMW tarafı)
+| ESP32 (3.3V tarafı) | Dönüştürücü | MCP2515 (5V tarafı) |
+|---|---|---|
+| 3V3 | LV | |
+| 5V (VIN) | HV | VCC |
+| GND | GND | GND |
+| GPIO18 | LV1 ↔ HV1 | SCK |
+| GPIO23 | LV2 ↔ HV2 | SI |
+| GPIO19 | LV3 ↔ HV3 | SO |
+| GPIO5 | LV4 ↔ HV4 | CS |
+| | | INT boş kalabilir |
+
+MCP2515'in **CANH / CANL** çıkışları BMW göstergesinin K-CAN H / K-CAN L pinlerine gider.
+MCP2515 modülündeki 120 Ω jumper'ı önce **takılı** bırakın. Haberleşme olmazsa çıkarıp deneyin.
+
+### Besleme
+```
+ 12V (kontakla gelen) ──[2A sigorta]──► DC-DC ──► 5V ──► ESP32 VIN + dönüştürücü HV + MCP2515 VCC
+ 12V (kontakla gelen) ──[5A sigorta]──► BMW göstergesi 12V (Kl.30) girişi
+ Şasi ─────────────────────────────────► hepsinin GND'si ortak
+```
+> OBD soketinin **16. pini sürekli 12V**. Oradan beslerseniz araç kapalıyken aküyü bitirir.
+> Kalıcı montajda **kontakla gelen 12V** kullanın (örneğin teyp ACC hattı ya da sigorta kutusu).
+
+---
+
+## BMW E70 göstergesinin pin bağlantıları
+
+E70 göstergesinin çalışması için **4 bağlantı** yeterli:
+
+| Bağlantı | Ne bağlanacak |
+|---|---|
+| **Kl.30** (12V sürekli) | 12V (projede kontakla gelen 12V) |
+| **Kl.31** (şasi) | GND |
+| **K-CAN H** | MCP2515 CANH |
+| **K-CAN L** | MCP2515 CANL |
+
+Kontak bilgisi (Kl.15) telden değil, **CAN'den 0x130 mesajıyla** geliyor. Onu ESP32 gönderiyor.
+
+**Pin numaraları:** Göstergenin parça numarasına ve yılına göre değişebildiği için burada
+kesin numara vermiyorum. Yanlış pine 12V vermek göstergeyi yakar. İki güvenilir yol var:
+
+1. **BMW bağlantı şeması:** ISTA ya da newTIS'te E70 → *Kombi (instrument cluster)* →
+   soket pin atamasına bakın. Göstergenin arkasındaki etikette yazan parça numarasını
+   (örneğin `9 xxx xxx`) ve yılı bilin.
+2. **Kartın üzerinden bulmak** (multimetre ile, gösterge söküldüyse):
+   - Kartta CAN transceiver entegresini bulun. E serisinin K-CAN'i düşük hızlı, hataya
+     dayanıklı CAN olduğu için genelde **TJA1055** ya da **TJA1054** kullanılır (entegrenin
+     üstünde yazar).
+   - TJA1054/1055'te **pin 12 = CANH**, **pin 11 = CANL**, **pin 14 = BAT** (12V),
+     **pin 13 = GND**. Entegrede farklı bir yazı varsa önce onun datasheet'ine bakın.
+   - Multimetreyi süreklilik (bip) konumuna alın, soketteki pinlerden hangisinin
+     entegrenin pin 12 ve 11'ine gittiğini bulun: bunlar K-CAN H ve L.
+   - 12V pini genelde bir diyot ya da koruma elemanı üzerinden besleme katına gider.
+     Şasi pinleri kartın geniş bakır alanına bağlıdır.
+
+Bulduğunuz pinleri buraya yazın:
+
+| Gösterge soketi pin no | Görev |
+|---|---|
+| | Kl.30 (12V) |
+| | Kl.31 (GND) |
+| | K-CAN H |
+| | K-CAN L |
+
+> Göstergenin arkasının ve soketin fotoğrafını çekerseniz pinleri birlikte bulabiliriz.
+
+---
+
+## Yazılım kurulumu
+
+1. **Arduino IDE 2.x** kurun.
+2. *Dosya → Tercihler → Ek kart yöneticisi URL'leri* alanına şunu ekleyin:
+   `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json`
+3. *Kart Yöneticisi*'nden **esp32 (Espressif Systems)** paketini kurun. Kart olarak **ESP32 Dev Module** seçin.
+4. *Kütüphane Yöneticisi*'nden **autowp-mcp2515** kütüphanesini kurun (gateway için, sürüm 1.2 ya da üstü).
+5. `sniffer/sniffer.ino` ya da `gateway/gateway.ino` dosyasını açıp yükleyin.
+
+`gateway/config.h` içinde **MCP2515 kristalini** (`MCP_8MHZ` / `MCP_16MHZ`) kendi modülünüze göre ayarlayın.
+
+---
+
+## Adım 1 — Masada gösterge testi (araç gerekmez)
+
+Önce BMW göstergesini masada çalıştırın. Böylece BMW tarafının doğru olduğundan emin olursunuz.
+
+1. Göstergeyi 12V adaptöre, MCP2515'i K-CAN'e bağlayın. `gateway`'i yükleyin.
+2. Seri monitörü açın (**115200 baud**, satır sonu **Newline**).
+3. Şu komutları sırayla deneyin:
+   ```
+   bench 1        -> masa modu, kontak açık (gösterge uyanmalı)
+   rpm 3000       -> devir ibresi
+   spd 100        -> hız ibresi
+   tmp 90         -> sıcaklık
+   fuel 50        -> yakıt
+   sol 1          -> sol sinyal
+   kisa 1         -> kısa far lambası
+   st             -> durum
+   ```
+4. Çalışmayan bir şey olursa:
+   - `off 1D0` → o mesajı kapatın, `rep 1D0 200 <baytlar>` → farklı baytlar deneyin.
+   - `raw <ID> <baytlar>` → tek seferlik mesaj gönderin.
+   - Doğru değeri bulunca `gateway/bmw.h` içine yazıp yeniden yükleyin.
+5. **Hız kalibrasyonu:** `spd 100` verin. İbre 100'ü göstermiyorsa `cal 1.2`, `cal 0.8` gibi
+   değerlerle ayarlayın. Bulduğunuz değeri `bmw.h` içindeki `speedScale`'e yazın.
+6. **Uyarı lambaları:** `cc 34 1` gibi komutlarla Check Control numaralarını deneyin. Hangi
+   numaranın hangi lambayı yaktığını not edip `bmw.h` içindeki `ccBattery`, `ccOil` gibi
+   değişkenlere yazın.
+
+---
+
+## Adım 2 — Kangoo sinyallerini bulma (sniffer)
+
+1. `sniffer`'ı yükleyin. ESP32 ve SN65HVD230'u OBD soketine bağlayın (pin 6, 14, 4/5).
+2. Seri monitör: **921600 baud**, satır sonu **Newline**.
+3. Kontağı açın. Ekrana `YENİ 186 [8] ...` gibi satırlar akmalı. Akmıyorsa `b 250` ile 250 kbps deneyin.
+4. **`n`** yazın ve 5 saniye **hiçbir şeye dokunmayın**. Bu sürede sayaçlar ve titreyen
+   sensörler "gürültü" olarak öğrenilir, sonra ekranda görünmez.
+5. **Tek bir şey yapın** ve ekrana bakın. Örneğin sol sinyali açtığınızda:
+   ```
+       12.345 5DE [8]  00 [04] 00 00 ...   B1 m04 0>1
+   ```
+   Bu, **ID 0x5DE, bayt 1, maske 0x04** demek (örnek değer, sizinki farklı olabilir).
+6. Bunu `gateway/kangoo.h` içine yazın:
+   ```cpp
+   static const BitSig SIG_TURN_LEFT = {0x5DE, 1, 0x04, false};
+   ```
+   Sinyal 1'den 0'a dönerek aktif oluyorsa son değer `true` olacak.
+7. Aynısını sağ sinyal, kısa/uzun far, sis, el freni ve uyarı lambaları için tekrarlayın.
+
+Diğer komutlar: `s` = bütün ID'lerin özeti, `f 5DE` = sadece bir ID'yi göster,
+`r` = ham kayıt (candump biçimi, **SavvyCAN** programına aktarılabilir).
+
+**Devir, hız ve sıcaklık için sniffer gerekmez:** `config.h` içinde `USE_OBD_POLLING 1`
+olduğu sürece bunlar standart OBD sorgusuyla (PID 0C, 0D, 05) okunur. ESP32 önce hattı
+sadece dinler, 200 düzgün mesaj gördükten sonra sorgu göndermeye başlar. Hatta sorun
+olursa (bus-off) kendiliğinden dinleme moduna döner, 3 kez olursa sorguyu tamamen kapatır.
+
+---
+
+## Adım 3 — Araca montaj
+
+1. Masada her şey çalıştıktan sonra ESP32'yi `gateway` ile araca bağlayın.
+2. Kontağı açın, seri monitörde `st` yazın:
+   - `Kangoo CAN: normal`, `hat aktif` görünmeli.
+   - Devir ve sıcaklık değerleri gerçekle uyuşmalı.
+3. Kontağı kapatın. 1.5 saniye sonra gösterge uyku moduna geçmeli (`Kontak kapalı` yazar).
+4. Kalıcı montajda CAN kablolarını OBD soketinin arkasından ya da göstergeye giden
+   CAN hattından alın. Bağlantıları lehimleyip makaronla kapatın.
+
+---
+
+## Sorun giderme
+
+| Belirti | Kontrol edin |
+|---|---|
+| `MCP2515 bulunamadı` | SPI kabloları, seviye dönüştürücü, `config.h`'daki kristal değeri |
+| Gösterge hiç uyanmıyor | 12V ve GND, K-CAN H/L yer değiştirmiş mi, 0x130 mesajı (`st` ile açık mesajlara bakın) |
+| `BMW gönderilen` artmıyor, `hata` artıyor | Gösterge ACK vermiyor: CAN kabloları, 120 Ω jumper'ı çıkarıp deneyin |
+| Sniffer'da hiç mesaj yok | Kontak açık mı, OBD pin 6/14 doğru mu, `b 250` deneyin |
+| İbreler titriyor ya da zıplıyor | `OBD_PERIOD_MS`'yi küçültün ya da devri yayın (broadcast) ID'sinden okuyun |
+| Yakıt göstergesi çalışmıyor | Kangoo'da yakıt CAN'de olmayabilir: `USE_FUEL_ADC 1` ile şamandıra gerilimini okuyun (aşağıda) |
+
+### Yakıt seviyesini şamandıradan okuma (opsiyonel)
+Şamandıra hattına **yüksek dirençli** bir gerilim bölücü bağlayın (örneğin 100 kΩ + 22 kΩ,
+ortası GPIO34'e, ESP32 pinine giden gerilim 3.3V'u geçmemeli). Orijinal göstergenin ölçümünü
+bozmamak için direnç değerleri yüksek olmalı. Depo boşken ve doluyken `analogRead` değerini
+ölçüp `config.h`'daki `FUEL_ADC_EMPTY` / `FUEL_ADC_FULL` alanlarına yazın.
