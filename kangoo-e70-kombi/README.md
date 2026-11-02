@@ -231,6 +231,8 @@ Bulduğunuz pinleri buraya yazın:
 |---|---|
 | `demo 1` | **Trafik taklidi.** Önce ibre testi, sonra kırmızı ışık, kalk-dur, şehir içi, dönüş (sinyal + yavaşlama), çevre yolu, ara sıra sert gaz. Vites büyütür/küçültür, motor ısınır, yakıt azalır. `demo 0` ile durur |
 | `rpmfmt 0` / `1` / `2` | Devir ibresi oynamıyorsa devir mesajının 3 farklı biçimini deneyin |
+| `devirscan` | **Devir taraması:** 4 ID × 7 bayt konumu × 2 ölçek × 2 bayt sırası = 112 denemeyi 3 sn arayla sırayla dener, devir 1000-4000 arasında gidip gelir. İbre oynayınca ekrandaki deneme numarasını not edin. `devirscan tut` = o denemede bekle, `devirscan 25` = 25'ten başla, `devirscan 0` = durdur |
+| `devirsec 17` | İbreyi oynatan denemeyi standart devir mesajı yapar ve **EEPROM'a kaydeder** (Nano kapanıp açılsa da kalır). `devirsec 0` = standart biçime dön |
 | `per 0AA 10` | Bir mesajın gönderim aralığını değiştirir (ms). Devir varsayılan olarak 20 ms'de bir gidiyor |
 | `ccscan 1 300` | Check Control numaralarını 2.5 sn arayla sırayla yakar. Ekranda numara yazar: hangi numarada **gong çaldığını** ve hangi lambanın yandığını not edin. `ccscan 0` ile durur |
 | `gong` | `bmw.h`'daki `ccGong` numarasıyla uyarı sesini çalar |

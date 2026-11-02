@@ -11,6 +11,7 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include <mcp2515.h>
+#include <EEPROM.h>
 #include "driver/twai.h"
 
 #include "config.h"
@@ -226,6 +227,68 @@ static void ccScanUpdate(uint32_t now) {
   scanOnPending = true;
 }
 
+// Devir taraması: devir değerini farklı ID / bayt konumu / ölçek / bayt sırası
+// kombinasyonlarında sırayla dener. Devir 1000-4000 arasında gidip gelir;
+// ibre oynadığında ekrandaki deneme numarasını not edin.
+#define RPMSCAN_STEP_MS 3000
+static uint8_t  rpmScan = 0;          // 0 = kapalı, yoksa 1..RPMSCAN_COUNT
+static bool     rpmScanHold = false;
+static uint32_t rpmScanStart = 0, rpmScanLastTx = 0;
+
+// Seçilen devir denemesi EEPROM'da saklanır: [0] = 0xA5 işaret, [1] = deneme no
+#define EE_MAGIC 0xA5
+
+static void rpmSelApply(uint8_t n) {
+  rpmSel = n <= RPMSCAN_COUNT ? n : 0;
+  slots[S_RPM].id = rpmSel ? rpmVariant(rpmSel).id : 0x0AA;
+}
+
+static void rpmSelSave() {
+  EEPROM.write(0, EE_MAGIC);
+  EEPROM.write(1, rpmSel);
+  EEPROM.commit();
+}
+
+static void rpmSelLoad() {
+  if (EEPROM.read(0) == EE_MAGIC) rpmSelApply(EEPROM.read(1));
+}
+
+static void rpmScanPrint() {
+  RpmVariant v = rpmVariant(rpmScan);
+  Serial.printf("> Devir denemesi %u/%u: ID %03X, bayt %u-%u, %s, %s\n", rpmScan, RPMSCAN_COUNT,
+     v.id, v.off, v.off + 1, v.x4 ? "x4" : "x1", v.be ? "büyük uç (BE)" : "küçük uç (LE)");
+}
+
+static void rpmScanStop() {
+  if (!rpmScan) return;
+  Serial.printf("> Devir taraması durdu (son deneme: %u)\n", rpmScan);
+  rpmScan = 0;
+  slots[S_RPM].enabled = true;
+}
+
+static void rpmScanUpdate(uint32_t now) {
+  if (!rpmScan) return;
+  if (!rpmScanHold && now - rpmScanStart >= RPMSCAN_STEP_MS) {
+    if (++rpmScan > RPMSCAN_COUNT) {
+      Serial.println(F("> Devir taraması bitti"));
+      rpmScan = 0;
+      slots[S_RPM].enabled = true;
+      return;
+    }
+    rpmScanStart = now;
+    rpmScanPrint();
+  }
+  if (now - rpmScanLastTx < 20) return;
+  rpmScanLastTx = now;
+  RpmVariant v = rpmVariant(rpmScan);
+  uint16_t rpm = 1000 + (uint16_t)(((now - rpmScanStart) % 2000) * 3 / 2);
+  struct can_frame f;
+  f.can_id = v.id;
+  f.can_dlc = 8;
+  putRpm(f.data, v, rpm);
+  bmwSend(f);
+}
+
 static void playGong() {
   if (!ccGong) {
     Serial.println(F("! Gong numarası bmw.h'da 0. 'ccscan 1 300' ile gong çalan numarayı bulun"));
@@ -261,6 +324,8 @@ static void printHelp() {
     "  gong              uyarı sesini çal (bmw.h'daki ccGong numarası)\n"
     "  per 0AA 10        standart bir mesajın gönderim aralığını değiştir (ms)\n"
     "  rpmfmt 0|1|2      devir mesajının biçimini değiştir (bkz. bmw.h)\n"
+    "  devirscan         devir mesajı için 112 farklı biçimi sırayla dene (3 sn arayla)\n"
+    "  devirsec 17       ibreyi oynatan denemeyi seç ve kalıcı kaydet (devirsec 0 = standart)\n"
     "  bmwkbps 100|500   BMW tarafının hızı (K-CAN 100, PT-CAN 500)\n"
     "  cal 1.25          hız kalibrasyonu (şu anki değeri st ile görün)\n"
     "  fcal 0000 1F40    yakıt ham değerleri: boş dolu (onaltılık)\n"));
@@ -278,6 +343,8 @@ static void printStatus() {
   Serial.printf("Uyarı akü/yağ/motor/abs/airbag/fren: %d/%d/%d/%d/%d/%d\n",
                 st.warnBattery, st.warnOil, st.warnEngine, st.warnAbs, st.warnAirbag, st.warnBrake);
   Serial.printf("Kangoo alınan: %lu  OBD istek: %lu\n", (unsigned long)rxTotal, (unsigned long)obdTx);
+  if (rpmSel) Serial.printf("Devir mesajı: deneme %u (ID %03X)\n", rpmSel, slots[S_RPM].id);
+  else Serial.printf("Devir mesajı: standart, rpmfmt %u\n", rpmFormat);
   // "tampon dolu" hata değildir: mesaj bir sonraki döngüde tekrar gönderilir.
   // TEC (gönderim hata sayacı) 0'a yakınsa gösterge mesajları alıyor (ACK veriyor);
   // 128 ve üstü ise kimse almıyor: kablolar, hız ya da kristal yanlış.
@@ -361,6 +428,39 @@ static void handleCommand(char *line) {
     scanOnPending = scanCur != 0;
     if (scanCur) Serial.println(F("> Tarama: numara ekranda yazarken göstergeye bakın, sesi dinleyin"));
     else Serial.println(F("> Tarama durdu"));
+    return;
+  }
+  if (!strcmp(cmd, "devirsec") && a1) {
+    rpmScanStop();
+    rpmSelApply(atoi(a1));
+    rpmSelSave();
+    if (rpmSel) {
+      rpmScan = rpmSel;      // açıklamayı yazdırmak için
+      Serial.print(F("> Seçildi ve kaydedildi. "));
+      rpmScanPrint();
+      rpmScan = 0;
+    } else {
+      Serial.printf("> Devir: standart biçim (rpmfmt %u), kaydedildi\n", rpmFormat);
+    }
+    return;
+  }
+  if (!strcmp(cmd, "devirscan")) {
+    if (a1 && !strcmp(a1, "tut")) {
+      rpmScanHold = !rpmScanHold;
+      Serial.println(rpmScanHold ? F("> Devir taraması bu denemede bekliyor ('devirscan tut' = devam)")
+                                 : F("> Devir taraması devam ediyor"));
+      return;
+    }
+    int n = a1 ? atoi(a1) : 1;
+    if (n <= 0) { rpmScanStop(); return; }
+    manualValue();
+    rpmScan = n > RPMSCAN_COUNT ? RPMSCAN_COUNT : n;
+    rpmScanHold = false;
+    rpmScanStart = millis();
+    slots[S_RPM].enabled = false;     // standart devir mesajı karışmasın
+    Serial.println(F("> Devir taraması: ibre oynayınca deneme numarasını not edin"));
+    Serial.println(F("  devirscan tut = bu denemede bekle, devirscan 0 = durdur, devirscan 25 = 25'ten başla"));
+    rpmScanPrint();
     return;
   }
   if (!strcmp(cmd, "gong")) { playGong(); return; }
@@ -514,6 +614,8 @@ void setup() {
   Serial.begin(115200);
   delay(300);
   Serial.println(F("\nKangoo -> E70 KOMBI çevirici"));
+  EEPROM.begin(16);
+  rpmSelLoad();
 
   SPI.begin();
   bmwSelfTest();   // sonunda normal moda geçer
@@ -571,6 +673,7 @@ void loop() {
     bmwSendSlots(now);
     bmwSendCheckControl(now);
     ccScanUpdate(now);
+    rpmScanUpdate(now);
   } else if (wasOn) {
     st.rpm = 0;
     st.speedKmh = 0;

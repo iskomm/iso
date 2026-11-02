@@ -97,6 +97,39 @@ static uint16_t ccGong    = 0;
 //  2: 5F 59 FF 00 [devir L]   [devir H]   80 99   (ölçeksiz)
 static uint8_t rpmFormat = 0;
 
+// ---- Devir taraması denemeleri ("devirscan") ve seçilen deneme ("devirsec") ----
+// Devir değerini farklı ID / bayt konumu / ölçek / bayt sırası kombinasyonlarında
+// dener. devirsec ile seçilen deneme EEPROM'a kaydedilir ve rpmFormat'ın yerine geçer.
+static const uint16_t RPMSCAN_IDS[] = {0x0AA, 0x0A5, 0x0A8, 0x0A9};
+static const uint8_t  RPMSCAN_OFFS[] = {4, 5, 2, 3, 0, 1, 6};
+static const uint8_t  RPM_TEMPLATE[8] = {0x5F, 0x59, 0xFF, 0x00, 0x00, 0x00, 0x80, 0x99};
+#define RPMSCAN_COUNT (uint8_t)(sizeof(RPMSCAN_IDS) / sizeof(RPMSCAN_IDS[0]) * sizeof(RPMSCAN_OFFS) * 4)
+static uint8_t rpmSel = 0;            // 0 = rpmFormat kullanılır, yoksa 1..RPMSCAN_COUNT
+
+struct RpmVariant {
+  uint16_t id;
+  uint8_t  off;
+  bool     x4, be;
+};
+
+static RpmVariant rpmVariant(uint8_t n) {
+  uint8_t i = n - 1;
+  RpmVariant v;
+  v.be = i & 1;            // sıra: x4 LE, x4 BE, x1 LE, x1 BE
+  v.x4 = !(i & 2);
+  i >>= 2;
+  v.off = RPMSCAN_OFFS[i % sizeof(RPMSCAN_OFFS)];
+  v.id = RPMSCAN_IDS[i / sizeof(RPMSCAN_OFFS)];
+  return v;
+}
+
+static void putRpm(uint8_t *d, const RpmVariant &v, uint16_t rpm) {
+  uint16_t val = v.x4 ? rpm * 4 : rpm;
+  memcpy(d, RPM_TEMPLATE, 8);
+  d[v.off]     = v.be ? val >> 8 : val & 0xFF;
+  d[v.off + 1] = v.be ? val & 0xFF : val >> 8;
+}
+
 // Sinyal: Kangoo'daki bit yanıp sönerken de sürekli "açık" sayılır, BMW'ye
 // TURN_PERIOD_MS aralıkla gönderilir. Durum değişince hemen gönderilir.
 static bool turnL = false, turnR = false;
@@ -126,6 +159,10 @@ static void buildSlot(int i, const VehicleState &st, uint32_t dtMs) {
   uint8_t *d = slots[i].data;
   switch (i) {
     case S_RPM: {
+      if (rpmSel) {
+        putRpm(d, rpmVariant(rpmSel), (uint16_t)st.rpm);
+        break;
+      }
       static const uint8_t head[2][4] = {{0x5F, 0x59, 0xFF, 0x00}, {0xFE, 0xFE, 0xFF, 0x00}};
       const uint8_t *h = head[rpmFormat == 1 ? 1 : 0];
       memcpy(d, h, 4);
