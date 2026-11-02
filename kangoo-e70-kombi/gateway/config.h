@@ -8,8 +8,8 @@
 #define KANGOO_CAN_RX   GPIO_NUM_26
 
 // ---- BMW tarafı: MCP2515 modülü (SPI) ----
-//  SCK=18  MISO(SO)=19  MOSI(SI)=23  CS=5
-#define BMW_CS_PIN      5
+//  SCK=18  MISO(SO)=19  MOSI(SI)=23  CS=4
+#define BMW_CS_PIN      4
 // Modül üzerindeki kristalin üstünde yazan değer: 8.000 -> MCP_8MHZ, 16.000 -> MCP_16MHZ
 #define BMW_MCP_CLOCK   MCP_8MHZ
 // Seviye dönüştürücü (BSS138) kullanıyorsanız 1 MHz yeterli ve güvenli.

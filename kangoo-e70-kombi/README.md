@@ -72,7 +72,7 @@ okuyup BMW E70 göstergesinin anladığı K-CAN mesajlarına çeviren ESP32 proj
 | GPIO18 | LV1 ↔ HV1 | SCK |
 | GPIO23 | LV2 ↔ HV2 | SI |
 | GPIO19 | LV3 ↔ HV3 | SO |
-| GPIO5 | LV4 ↔ HV4 | CS |
+| GPIO4 | LV4 ↔ HV4 | CS |
 | | | INT boş kalabilir |
 
 MCP2515'in **CANH / CANL** çıkışları BMW göstergesinin K-CAN H / K-CAN L pinlerine gider.
