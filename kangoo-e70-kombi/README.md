@@ -225,6 +225,27 @@ Bulduğunuz pinleri buraya yazın:
 
 ---
 
+### Test modu, uyarı sesi ve uyarı lambaları
+
+| Komut | Ne yapar |
+|---|---|
+| `demo 1` | **Trafik taklidi.** Önce ibre testi, sonra kırmızı ışık, kalk-dur, şehir içi, dönüş (sinyal + yavaşlama), çevre yolu, ara sıra sert gaz. Vites büyütür/küçültür, motor ısınır, yakıt azalır. `demo 0` ile durur |
+| `rpmfmt 0` / `1` / `2` | Devir ibresi oynamıyorsa devir mesajının 3 farklı biçimini deneyin |
+| `per 0AA 10` | Bir mesajın gönderim aralığını değiştirir (ms). Devir varsayılan olarak 20 ms'de bir gidiyor |
+| `ccscan 1 300` | Check Control numaralarını 2.5 sn arayla sırayla yakar. Ekranda numara yazar: hangi numarada **gong çaldığını** ve hangi lambanın yandığını not edin. `ccscan 0` ile durur |
+| `gong` | `bmw.h`'daki `ccGong` numarasıyla uyarı sesini çalar |
+
+**Uyarı lambalarını söndürmek ("gerçek araca bağlı" taklidi):** Gösterge ABS/DSC, airbag,
+akü gibi modüllerden düzenli mesaj alamayınca uyarı yakar. Program bu modüllerin yaşam
+mesajlarını da gönderir: `0x0C0` (ABS), `0x0D7` (airbag), `0x19E` (DSC), `0x3B4` (akü),
+`0x2CA` (dış sıcaklık). Bunlar E90 projelerinden alınmıştır. Hangi lambanın hangi mesajla
+söndüğünü görmek için `off 19E` / `on 19E` gibi komutlarla tek tek kapatıp açın.
+Hâlâ yanan lambalar varsa hangileri olduğunu not edin, eksik mesajı birlikte buluruz.
+
+> ⚠️ Araca takıldığında BMW göstergesindeki uyarılar **Kangoo'nun gerçek uyarılarını**
+> göstermeli (adım 2'de sniffer ile bulunacak). Sahte "her şey yolunda" mesajları sadece
+> eksik BMW modüllerinin yerini tutar, Kangoo'nun arızalarını gizlememeli.
+
 ## Adım 2 — Kangoo sinyallerini bulma (sniffer)
 
 1. `sniffer`'ı yükleyin. ESP32 ve SN65HVD230'u OBD soketine bağlayın (pin 6, 14, 4/5).

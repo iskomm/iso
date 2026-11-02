@@ -16,6 +16,7 @@
 #include "config.h"
 #include "kangoo.h"
 #include "bmw.h"
+#include "demo.h"
 
 static MCP2515 mcp(BMW_CS_PIN, BMW_SPI_HZ);
 static VehicleState st;
@@ -128,7 +129,7 @@ static void bmwSendSlots(uint32_t now) {
     // buildSlot sayaçları ilerletir; gönderilemezse geri alınır
     float sd = speedDist;
     uint16_t tk = speedTick;
-    uint8_t ac = aliveCnt;
+    uint8_t ac = aliveCnt, bc = airbagCnt, dc = dscCnt;
     if (i < S_STD_COUNT) buildSlot(i, st, dt);
     struct can_frame f;
     f.can_id = s.id;
@@ -138,6 +139,8 @@ static void bmwSendSlots(uint32_t now) {
       speedDist = sd;
       speedTick = tk;
       aliveCnt = ac;
+      airbagCnt = bc;
+      dscCnt = dc;
       return;   // tamponlar dolu: kalanlar bir sonraki döngüde
     }
     s.last = now;
@@ -175,6 +178,51 @@ static void bmwSendCheckControl(uint32_t now) {
   }
 }
 
+// Check Control taraması: numaraları sırayla yakar. Hangi numaranın hangi
+// lambayı yaktığını ya da gong (uyarı sesi) çaldığını bulmak için.
+static uint16_t scanCur = 0, scanEnd = 0, scanOff = 0;
+static bool     scanOnPending = false;
+static uint32_t scanNext = 0;
+#define SCAN_STEP_MS 2500
+
+// Gönderim tamponu doluysa mesaj kaybolmasın diye "söndür" ve "yak" ayrı
+// ayrı bekletilir, gönderilene kadar her döngüde tekrar denenir.
+static void ccScanUpdate(uint32_t now) {
+  struct can_frame f;
+  if (scanOff) {
+    fillCheckControl(f, scanOff, false);
+    if (!bmwSend(f)) return;
+    scanOff = 0;
+  }
+  if (!scanCur) return;
+  if (scanOnPending) {
+    fillCheckControl(f, scanCur, true);
+    if (!bmwSend(f)) return;
+    scanOnPending = false;
+    scanNext = now + SCAN_STEP_MS;
+    Serial.printf("> CC %u\n", scanCur);
+    return;
+  }
+  if ((int32_t)(now - scanNext) < 0) return;
+  scanOff = scanCur;
+  if (++scanCur > scanEnd) {
+    Serial.println(F("> CC taraması bitti"));
+    scanCur = 0;
+    return;
+  }
+  scanOnPending = true;
+}
+
+static void playGong() {
+  if (!ccGong) {
+    Serial.println(F("! Gong numarası bmw.h'da 0. 'ccscan 1 300' ile gong çalan numarayı bulun"));
+    return;
+  }
+  struct can_frame f;
+  fillCheckControl(f, ccGong, true);
+  bmwSend(f);
+}
+
 // ---------------------------------------------------------------------------
 //  Seri komutlar
 // ---------------------------------------------------------------------------
@@ -195,6 +243,11 @@ static void printHelp() {
     "  raw 130 45 42 69 8F E2         tek seferlik çerçeve gönder\n"
     "  rep 3B4 100 00 01 02           100 ms'de bir tekrarla  (rep 3B4 0 = sil)\n"
     "  off 1D0 / on 1D0  standart bir mesajı kapat/aç\n"
+    "  demo 1|0          test modu: trafikteymiş gibi sürüş (masa modunu açar)\n"
+    "  ccscan 1 300      Check Control numaralarını 2.5 sn arayla sırayla dene (ccscan 0 = dur)\n"
+    "  gong              uyarı sesini çal (bmw.h'daki ccGong numarası)\n"
+    "  per 0AA 10        standart bir mesajın gönderim aralığını değiştir (ms)\n"
+    "  rpmfmt 0|1|2      devir mesajının biçimini değiştir (bkz. bmw.h)\n"
     "  cal 1.25          hız kalibrasyonu (şu anki değeri st ile görün)\n"
     "  fcal 0000 1F40    yakıt ham değerleri: boş dolu (onaltılık)\n"));
 }
@@ -257,7 +310,43 @@ static void handleCommand(char *line) {
   if (!strcmp(cmd, "st")) { printStatus(); return; }
   if (!strcmp(cmd, "test")) { bmwSelfTest(); return; }
 
+  if (!strcmp(cmd, "demo") && a1) {
+    if (atoi(a1)) {
+      bench = true;
+      demoStart(st, millis());
+      Serial.println(F("> Test modu: trafik taklidi başladı (durdurmak için demo 0)"));
+    } else {
+      demo.on = false;
+      st.rpm = st.speedKmh = 0;
+      st.turnLeft = st.turnRight = false;
+      Serial.println(F("> Test modu kapandı"));
+    }
+    return;
+  }
+  if (!strcmp(cmd, "ccscan") && a1) {
+    if (scanCur && !scanOnPending) scanOff = scanCur;   // yanık kalanı söndür
+    scanCur = atoi(a1);
+    scanEnd = a2 ? atoi(a2) : scanCur + 100;
+    scanOnPending = scanCur != 0;
+    if (scanCur) Serial.println(F("> Tarama: numara ekranda yazarken göstergeye bakın, sesi dinleyin"));
+    else Serial.println(F("> Tarama durdu"));
+    return;
+  }
+  if (!strcmp(cmd, "gong")) { playGong(); return; }
+  if (!strcmp(cmd, "per") && a2) {
+    int i = findStdSlot(strtoul(a1, nullptr, 16));
+    if (i < 0) { Serial.println(F("? Standart mesaj değil")); return; }
+    slots[i].periodMs = atoi(a2);
+    Serial.printf("> %03X her %u ms\n", slots[i].id, slots[i].periodMs);
+    return;
+  }
+  if (!strcmp(cmd, "rpmfmt") && a1) {
+    rpmFormat = atoi(a1) % 3;
+    Serial.printf("> Devir biçimi %u\n", rpmFormat);
+    return;
+  }
   if (!strcmp(cmd, "bench") && a1) {
+    demo.on = false;
     bench = atoi(a1);
     if (bench) { st = VehicleState(); st.ignitionOn = true; }
     Serial.printf("> Masa modu %s\n", bench ? "AÇIK (kontak açık)" : "kapalı");
@@ -405,9 +494,12 @@ void loop() {
   }
 
   if (!bench) st.ignitionOn = busAlive;
+  demoUpdate(st, now);
+  updateTurn(st, now);
   if (st.ignitionOn) {
     bmwSendSlots(now);
     bmwSendCheckControl(now);
+    ccScanUpdate(now);
   } else if (wasOn) {
     st.rpm = 0;
     st.speedKmh = 0;
