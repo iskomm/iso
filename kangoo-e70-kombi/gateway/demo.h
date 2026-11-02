@@ -8,8 +8,9 @@
 //  göre gaz/fren yapar, vites büyütür/küçültür, motor suyu ısınır, yakıt azalır.
 // ============================================================================
 
+// Dizel (Kangoo 1.5 dCi, dizel E70 göstergesi): düşük devirde vites, 5000'e kadar skala
 #define DEMO_IDLE_RPM   800
-#define DEMO_MAX_RPM    7000    // ibre testi için
+#define DEMO_MAX_RPM    5000    // ibre testi için
 #define DEMO_MAX_SPEED  260     // ibre testi için
 
 // Her viteste 1 km/h başına devir (Kangoo 1.5 dCi'ye yakın oranlar)
@@ -34,7 +35,7 @@ struct DemoState {
   float    target = 0;        // hedef hız
   float    accel = 10;        // km/h/s, birinci viteste
   float    brake = 12;        // km/h/s
-  uint16_t shiftUp = 2500;    // bu devirde vites büyütür
+  uint16_t shiftUp = 2000;    // bu devirde vites büyütür
   bool     turnLeftSide = true;
   float    coolant = 20;
 };
@@ -45,7 +46,7 @@ static void demoNextEvent(VehicleState &st, uint32_t now) {
   demo.evStart = now;
   demo.accel = random(7, 13);
   demo.brake = random(8, 16);
-  demo.shiftUp = random(2000, 3000);
+  demo.shiftUp = random(1700, 2500);
   st.turnLeft = st.turnRight = false;
   st.handbrake = false;
 
@@ -57,7 +58,7 @@ static void demoNextEvent(VehicleState &st, uint32_t now) {
                      demo.turnLeftSide = random(2); }
   else if (r < 93) { demo.ev = EV_RING_ROAD; demo.target = random(70, 101);   demo.evLen = random(10000, 16000); }
   else             { demo.ev = EV_SPORT;     demo.target = random(90, 121);   demo.evLen = random(8000, 11000);
-                     demo.accel = 16; demo.shiftUp = 4300; }
+                     demo.accel = 16; demo.shiftUp = 3800; }
 }
 
 static void demoStart(VehicleState &st, uint32_t now) {
@@ -129,13 +130,13 @@ static void demoUpdate(VehicleState &st, uint32_t now) {
   if (diff > 1.5f && rpm > demo.shiftUp && demo.gear < DEMO_TOP_GEAR) {
     demo.gear++;                                  // vites büyüt: devir düşer
     rpm = st.speedKmh * DEMO_RPM_PER_KMH[demo.gear];
-  } else if (rpm < 1250 && demo.gear > 1) {
+  } else if (rpm < 1100 && demo.gear > 1) {
     demo.gear--;                                  // vites küçült: devir zıplar
     rpm = st.speedKmh * DEMO_RPM_PER_KMH[demo.gear];
   }
-  if (demo.gear == 1 && rpm < 1100) {
+  if (demo.gear == 1 && rpm < 1000) {
     // birinci viteste kalkış (debriyaj kaydırma) ya da duruş (rölanti)
-    rpm = (diff > 1.5f) ? 1100 + random(0, 300) : DEMO_IDLE_RPM + random(-25, 26);
+    rpm = (diff > 1.5f) ? 1000 + random(0, 250) : DEMO_IDLE_RPM + random(-25, 26);
   }
   st.rpm = rpm;
 
