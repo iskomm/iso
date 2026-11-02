@@ -14,6 +14,7 @@ struct VehicleState {
   int   coolantC = 20;
   float fuelPct = 50;
   bool  turnLeft = false, turnRight = false;
+  bool  parkLights = false;
   bool  lowBeam = false, highBeam = false, frontFog = false, rearFog = false;
   bool  handbrake = false;
   bool  warnBattery = false, warnOil = false, warnEngine = false;
@@ -37,6 +38,7 @@ struct BitSig {
 // ---- Tek bitlik sinyaller: sniffer ile bulun ----
 static const BitSig SIG_TURN_LEFT  = {0x000, 0, 0x00, false};
 static const BitSig SIG_TURN_RIGHT = {0x000, 0, 0x00, false};
+static const BitSig SIG_PARK       = {0x000, 0, 0x00, false};
 static const BitSig SIG_LOW_BEAM   = {0x000, 0, 0x00, false};
 static const BitSig SIG_HIGH_BEAM  = {0x000, 0, 0x00, false};
 static const BitSig SIG_FRONT_FOG  = {0x000, 0, 0x00, false};
@@ -50,7 +52,7 @@ static const BitSig SIG_W_AIRBAG   = {0x000, 0, 0x00, false};
 static const BitSig SIG_W_BRAKE    = {0x000, 0, 0x00, false};
 
 static const BitSig *const ALL_SIGS[] = {
-  &SIG_TURN_LEFT, &SIG_TURN_RIGHT, &SIG_LOW_BEAM, &SIG_HIGH_BEAM, &SIG_FRONT_FOG,
+  &SIG_TURN_LEFT, &SIG_TURN_RIGHT, &SIG_PARK, &SIG_LOW_BEAM, &SIG_HIGH_BEAM, &SIG_FRONT_FOG,
   &SIG_REAR_FOG, &SIG_HANDBRAKE, &SIG_W_BATTERY, &SIG_W_OIL, &SIG_W_ENGINE,
   &SIG_W_ABS, &SIG_W_AIRBAG, &SIG_W_BRAKE,
 };
@@ -86,6 +88,7 @@ static void decodeKangooFrame(const can_frame &f, VehicleState &st) {
 
   applyBit(SIG_TURN_LEFT,  id, f, st.turnLeft);
   applyBit(SIG_TURN_RIGHT, id, f, st.turnRight);
+  applyBit(SIG_PARK,       id, f, st.parkLights);
   applyBit(SIG_LOW_BEAM,   id, f, st.lowBeam);
   applyBit(SIG_HIGH_BEAM,  id, f, st.highBeam);
   applyBit(SIG_FRONT_FOG,  id, f, st.frontFog);

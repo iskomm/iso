@@ -54,6 +54,10 @@ static uint16_t fuelRawEmpty = 0x0000;
 static uint16_t fuelRawFull  = 0x1F40;
 
 // ---- 0x21A far bitleri [doğrulanmalı] ----
+// Hangi bitin hangi lambayı yaktığını masada bulmak için:
+//   off 21A                 -> standart mesajı kapat
+//   rep 21A 100 01 00 F7    -> sırayla 01, 02, 04, 08, 10, 20, 40, 80 deneyin
+#define LIGHT_PARK       0x01
 #define LIGHT_LOW_BEAM   0x04
 #define LIGHT_HIGH_BEAM  0x02
 #define LIGHT_FRONT_FOG  0x20
@@ -106,7 +110,8 @@ static void buildSlot(int i, const VehicleState &st, uint32_t dtMs) {
       break;
     }
     case S_LIGHTS:
-      d[0] = (st.lowBeam  ? LIGHT_LOW_BEAM  : 0) | (st.highBeam ? LIGHT_HIGH_BEAM : 0) |
+      d[0] = (st.parkLights ? LIGHT_PARK : 0) |
+             (st.lowBeam  ? LIGHT_LOW_BEAM  : 0) | (st.highBeam ? LIGHT_HIGH_BEAM : 0) |
              (st.frontFog ? LIGHT_FRONT_FOG : 0) | (st.rearFog  ? LIGHT_REAR_FOG  : 0);
       break;
     case S_TURN:

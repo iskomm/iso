@@ -14,6 +14,7 @@ struct VehicleState {
   int   coolantC = 20;
   float fuelPct = 50;
   bool  turnLeft = false, turnRight = false;
+  bool  parkLights = false;
   bool  lowBeam = false, highBeam = false, frontFog = false, rearFog = false;
   bool  handbrake = false;
   bool  warnBattery = false, warnOil = false, warnEngine = false;
@@ -37,6 +38,7 @@ struct BitSig {
 // ---- Tek bitlik sinyaller: sniffer ile bulun ----
 static const BitSig SIG_TURN_LEFT  = {0x000, 0, 0x00, false};
 static const BitSig SIG_TURN_RIGHT = {0x000, 0, 0x00, false};
+static const BitSig SIG_PARK       = {0x000, 0, 0x00, false};
 static const BitSig SIG_LOW_BEAM   = {0x000, 0, 0x00, false};
 static const BitSig SIG_HIGH_BEAM  = {0x000, 0, 0x00, false};
 static const BitSig SIG_FRONT_FOG  = {0x000, 0, 0x00, false};
@@ -79,6 +81,7 @@ static void decodeKangooFrame(const twai_message_t &m, VehicleState &st) {
 
   applyBit(SIG_TURN_LEFT,  m, st.turnLeft);
   applyBit(SIG_TURN_RIGHT, m, st.turnRight);
+  applyBit(SIG_PARK,       m, st.parkLights);
   applyBit(SIG_LOW_BEAM,   m, st.lowBeam);
   applyBit(SIG_HIGH_BEAM,  m, st.highBeam);
   applyBit(SIG_FRONT_FOG,  m, st.frontFog);

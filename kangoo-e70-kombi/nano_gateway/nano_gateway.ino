@@ -113,9 +113,12 @@ static void kangooCheckHealth(uint32_t now) {
 // ---------------------------------------------------------------------------
 //  BMW K-CAN (birinci MCP2515)
 // ---------------------------------------------------------------------------
-static void bmwSend(const can_frame &f) {
-  if (bmw.sendMessage(&f) == MCP2515::ERROR_OK) txOk++;
-  else txErr++;   // gösterge bağlı değilse ACK gelmez, tamponlar dolar
+// MCP2515'in 3 gönderim tamponu var. Doluysa false döner; çağıran taraf
+// mesajı kaybetmeden bir sonraki döngüde tekrar dener.
+static bool bmwSend(const can_frame &f) {
+  if (bmw.sendMessage(&f) == MCP2515::ERROR_OK) { txOk++; return true; }
+  txErr++;   // tampon dolu ya da gösterge ACK vermiyor
+  return false;
 }
 
 // MCP2515'i iç geri döngü (loopback) moduna alıp bir çerçeve gönderir ve geri
@@ -151,13 +154,22 @@ static void bmwSendSlots(uint32_t now) {
     uint32_t dt = now - s.last;
     if (dt < s.periodMs) continue;
     if (dt > 1000) dt = s.periodMs;
-    s.last = now;
+    // buildSlot sayaçları ilerletir; gönderilemezse geri alınır
+    float sd = speedDist;
+    uint16_t tk = speedTick;
+    uint8_t ac = aliveCnt;
     if (i < S_STD_COUNT) buildSlot(i, st, dt);
     can_frame f;
     f.can_id = s.id;
     f.can_dlc = s.dlc;
     memcpy(f.data, s.data, 8);
-    bmwSend(f);
+    if (!bmwSend(f)) {
+      speedDist = sd;
+      speedTick = tk;
+      aliveCnt = ac;
+      return;   // tamponlar dolu: kalanlar bir sonraki döngüde
+    }
+    s.last = now;
   }
 }
 
@@ -185,7 +197,7 @@ static void bmwSendCheckControl(uint32_t now) {
     if (on != l.prev || (on && now - l.last > 2000)) {
       can_frame f;
       fillCheckControl(f, *l.num, on);
-      bmwSend(f);
+      if (!bmwSend(f)) return;
       l.prev = on;
       l.last = now;
     }
@@ -205,7 +217,7 @@ static void printHelp() {
     "  ign 1|0           kontak (masa modunda)\n"
     "  rpm 3000          devir        spd 80    hız km/h\n"
     "  tmp 90            motor suyu   fuel 50   yakıt %\n"
-    "  sol 1|0  sag 1|0  sinyaller    kisa 1|0  uzun 1|0  onsis 1|0  arkasis 1|0\n"
+    "  sol 1|0  sag 1|0  sinyaller    park 1|0  kisa 1|0  uzun 1|0  onsis 1|0  arkasis 1|0\n"
     "  elfren 1|0        el freni\n"
     "  uyari aku|yag|motor|abs|airbag|fren 1|0\n"
     "  cc 34 1|0         Check Control numarasını doğrudan dene (onluk)\n"
@@ -228,8 +240,8 @@ static void printStatus() {
   PF("  Su: %d C  Yakıt: ", st.coolantC);
   Serial.print(st.fuelPct, 0);
   Serial.println('%');
-  PF("Sinyal sol/sağ: %d/%d  Kısa/uzun: %d/%d  Sis ön/arka: %d/%d  El freni: %d\n",
-     st.turnLeft, st.turnRight, st.lowBeam, st.highBeam, st.frontFog, st.rearFog, st.handbrake);
+  PF("Sinyal sol/sağ: %d/%d  Park: %d  Kısa/uzun: %d/%d  Sis ön/arka: %d/%d  El freni: %d\n",
+     st.turnLeft, st.turnRight, st.parkLights, st.lowBeam, st.highBeam, st.frontFog, st.rearFog, st.handbrake);
   PF("Uyarı akü/yağ/motor/abs/airbag/fren: %d/%d/%d/%d/%d/%d\n",
      st.warnBattery, st.warnOil, st.warnEngine, st.warnAbs, st.warnAirbag, st.warnBrake);
   PF("Kangoo alınan: %lu  OBD istek: %lu  BMW gönderilen: %lu  hata: %lu\n",
@@ -257,7 +269,7 @@ static int findStdSlot(uint16_t id) {
 
 static bool setFlag(const char *name, bool v) {
   struct { const char *n; bool *f; } map[] = {
-    {"sol", &st.turnLeft}, {"sag", &st.turnRight}, {"kisa", &st.lowBeam},
+    {"sol", &st.turnLeft}, {"sag", &st.turnRight}, {"park", &st.parkLights}, {"kisa", &st.lowBeam},
     {"uzun", &st.highBeam}, {"onsis", &st.frontFog}, {"arkasis", &st.rearFog},
     {"elfren", &st.handbrake}, {"ign", &st.ignitionOn},
   };
