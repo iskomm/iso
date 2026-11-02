@@ -12,6 +12,15 @@
 #define BMW_MCP_CLOCK     MCP_8MHZ
 #define KANGOO_MCP_CLOCK  MCP_8MHZ
 
+// ---- BMW PT-CAN (opsiyonel, ayrı bir MCP2515) ----
+// E70 göstergesi devri PT-CAN'den (500 kbps) okuyorsa: göstergenin PT-CAN
+// pinlerine ayrı bir MCP2515 bağlayıp 1 yapın. Bütün BMW mesajları oraya da
+// kopyalanır. Masada Kangoo modülü yokken D9'daki modülü de kullanabilirsiniz
+// (KANGOO_ENABLED 0 ve BMW_PTCAN_CS 9).
+#define BMW_PTCAN_ENABLED 0
+#define BMW_PTCAN_CS      8
+#define BMW_PTCAN_CLOCK   MCP_8MHZ
+
 // Kangoo tarafındaki ikinci MCP2515 henüz bağlı değilse (masa testi) 0 yapın.
 // 1 iken modül bulunamazsa program yine çalışır, sadece uyarı verir.
 #define KANGOO_ENABLED    1

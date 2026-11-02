@@ -15,6 +15,13 @@
 // Seviye dönüştürücü (BSS138) kullanıyorsanız 1 MHz yeterli ve güvenli.
 #define BMW_SPI_HZ      1000000
 
+// ---- BMW PT-CAN (opsiyonel, ikinci MCP2515, aynı SPI hattı) ----
+// E70 göstergesi devri PT-CAN'den (500 kbps) okuyorsa 1 yapın. Bütün BMW
+// mesajları oraya da kopyalanır.
+#define BMW_PTCAN_ENABLED 0
+#define BMW_PTCAN_CS      27
+#define BMW_PTCAN_CLOCK   MCP_8MHZ
+
 // ---- Devir / hız / motor suyu sıcaklığı kaynağı ----
 // 1: Motor beynine standart OBD sorgusu gönderilir (PID 0C, 0D, 05).
 //    Tersine mühendislik gerektirmez, hemen çalışır. ESP32 araç hattına

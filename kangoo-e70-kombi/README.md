@@ -234,6 +234,16 @@ Bulduğunuz pinleri buraya yazın:
 | `per 0AA 10` | Bir mesajın gönderim aralığını değiştirir (ms). Devir varsayılan olarak 20 ms'de bir gidiyor |
 | `ccscan 1 300` | Check Control numaralarını 2.5 sn arayla sırayla yakar. Ekranda numara yazar: hangi numarada **gong çaldığını** ve hangi lambanın yandığını not edin. `ccscan 0` ile durur |
 | `gong` | `bmw.h`'daki `ccGong` numarasıyla uyarı sesini çalar |
+| `bmwkbps 500` | BMW tarafını 500 kbps'ye alır (PT-CAN denemesi için). `bmwkbps 100` ile K-CAN'e döner |
+
+**Devir ibresi oynamıyorsa (PT-CAN):** BMW'de devir bilgisi aslında PT-CAN'de (500 kbps)
+dolaşıyor. E70 göstergesi devri oradan okuyorsa K-CAN'e gönderilen 0x0AA işe yaramaz.
+Göstergenin kartında K-CAN entegresinden (TJA1055/TJA1054) başka bir CAN entegresi
+(TJA1040/1041/1042/1050/1051, 82C251 gibi) varsa o PT-CAN'dir; CANH = pin 7, CANL = pin 6.
+Ayrı bir MCP2515'i o pinlere bağlayıp `config.h`'da `BMW_PTCAN_ENABLED 1` yapın
+(Nano'da CS = D8; masada Kangoo modülü yokken D9'u da kullanabilirsiniz). Bütün BMW
+mesajları PT-CAN'e de kopyalanır. `st` çıktısında **TEC** değeri 0'a yakınsa o hatta
+mesajları alan biri var demektir; 128 ve üstü ise kimse almıyor.
 
 **Uyarı lambalarını söndürmek ("gerçek araca bağlı" taklidi):** Gösterge ABS/DSC, airbag,
 akü gibi modüllerden düzenli mesaj alamayınca uyarı yakar. Program bu modüllerin yaşam

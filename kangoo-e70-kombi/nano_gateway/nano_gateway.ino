@@ -20,6 +20,9 @@
 
 static MCP2515 bmw(BMW_CS_PIN);
 static MCP2515 kangoo(KANGOO_CS_PIN);
+#if BMW_PTCAN_ENABLED
+static MCP2515 ptcan(BMW_PTCAN_CS);
+#endif
 static VehicleState st;
 
 // Kangoo tarafının durumu:
@@ -33,6 +36,10 @@ static bool     bench = false;          // true: değerler seri monitörden geli
 static uint16_t framesSinceStart = 0;
 static uint32_t lastRx = 0;
 static uint32_t rxTotal = 0, txOk = 0, txErr = 0, obdTx = 0;
+#if BMW_PTCAN_ENABLED
+static uint32_t ptOk = 0;
+#endif
+static uint16_t bmwKbps = 100;          // K-CAN normalde 100 kbps; "bmwkbps" ile denenebilir
 static uint32_t lastObd = 0, lastStatus = 0, lastFuel = 0;
 static bool     wasOn = false;
 static uint8_t  busOffCount = 0;        // 3 kez bus-off olursa OBD sorgusu kapanır
@@ -40,7 +47,7 @@ static uint8_t  busOffCount = 0;        // 3 kez bus-off olursa OBD sorgusu kapa
 // printf benzeri yardımcı; biçim metni flash'ta durur (RAM harcamaz).
 // AVR'de %f yok: ondalıklı sayılar için Serial.print(x, basamak) kullanın.
 static void sp(const char *fmtP, ...) {
-  char buf[72];
+  char buf[100];
   va_list a;
   va_start(a, fmtP);
   vsnprintf_P(buf, sizeof(buf), fmtP, a);
@@ -117,7 +124,13 @@ static void kangooCheckHealth(uint32_t now) {
 // MCP2515'in 3 gönderim tamponu var. Doluysa false döner; çağıran taraf
 // mesajı kaybetmeden bir sonraki döngüde tekrar dener.
 static bool bmwSend(const can_frame &f) {
-  if (bmw.sendMessage(&f) == MCP2515::ERROR_OK) { txOk++; return true; }
+  if (bmw.sendMessage(&f) == MCP2515::ERROR_OK) {
+    txOk++;
+#if BMW_PTCAN_ENABLED
+    if (ptcan.sendMessage(&f) == MCP2515::ERROR_OK) ptOk++;
+#endif
+    return true;
+  }
   txErr++;   // tampon dolu ya da gösterge ACK vermiyor
   return false;
 }
@@ -126,7 +139,7 @@ static bool bmwSend(const can_frame &f) {
 // okur. Gösterge bağlı olmasa da Nano <-> MCP2515 bağlantısını doğrular.
 static bool bmwSelfTest() {
   bmw.reset();
-  bmw.setBitrate(CAN_100KBPS, BMW_MCP_CLOCK);
+  bmw.setBitrate(bmwKbps == 500 ? CAN_500KBPS : CAN_100KBPS, BMW_MCP_CLOCK);
   bmw.setLoopbackMode();
   can_frame f = {};
   f.can_id = 0x123;
@@ -277,6 +290,7 @@ static void printHelp() {
     "  gong              uyarı sesini çal (bmw.h'daki ccGong numarası)\n"
     "  per 0AA 10        standart bir mesajın gönderim aralığını değiştir (ms)\n"
     "  rpmfmt 0|1|2      devir mesajının biçimini değiştir (bkz. bmw.h)\n"
+    "  bmwkbps 100|500   BMW tarafının hızı (K-CAN 100, PT-CAN 500)\n"
     "  cal 1.25          hız kalibrasyonu (şu anki değeri st ile görün)\n"
     "  fcal 0000 1F40    yakıt ham değerleri: boş dolu (onaltılık)\n"));
 }
@@ -297,8 +311,15 @@ static void printStatus() {
      st.turnLeft, st.turnRight, st.parkLights, st.lowBeam, st.highBeam, st.frontFog, st.rearFog, st.handbrake);
   PF("Uyarı akü/yağ/motor/abs/airbag/fren: %d/%d/%d/%d/%d/%d\n",
      st.warnBattery, st.warnOil, st.warnEngine, st.warnAbs, st.warnAirbag, st.warnBrake);
-  PF("Kangoo alınan: %lu  OBD istek: %lu  BMW gönderilen: %lu  hata: %lu\n",
-     (unsigned long)rxTotal, (unsigned long)obdTx, (unsigned long)txOk, (unsigned long)txErr);
+  PF("Kangoo alınan: %lu  OBD istek: %lu\n", (unsigned long)rxTotal, (unsigned long)obdTx);
+  // "tampon dolu" hata değildir: mesaj bir sonraki döngüde tekrar gönderilir.
+  // TEC (gönderim hata sayacı) 0'a yakınsa gösterge mesajları alıyor (ACK veriyor);
+  // 128 ve üstü ise kimse almıyor: kablolar, hız ya da kristal yanlış.
+  PF("BMW K-CAN (%u kbps) gönderilen: %lu  tampon dolu: %lu  TEC: %u\n",
+     bmwKbps, (unsigned long)txOk, (unsigned long)txErr, bmw.errorCountTX());
+#if BMW_PTCAN_ENABLED
+  PF("BMW PT-CAN gönderilen: %lu  TEC: %u\n", (unsigned long)ptOk, ptcan.errorCountTX());
+#endif
   Serial.print(F("Hız kalibrasyonu: "));
   Serial.print(speedScale, 3);
   PF("  Yakıt boş/dolu: %04X/%04X\n", fuelRawEmpty, fuelRawFull);
@@ -369,6 +390,12 @@ static void handleCommand(char *line) {
     return;
   }
   if (!strcmp(cmd, "gong")) { playGong(); return; }
+  if (!strcmp(cmd, "bmwkbps") && a1) {
+    bmwKbps = atoi(a1) == 500 ? 500 : 100;
+    bmwSelfTest();
+    PF("> BMW tarafı %u kbps\n", bmwKbps);
+    return;
+  }
   if (!strcmp(cmd, "per") && a2) {
     int i = findStdSlot(strtoul(a1, nullptr, 16));
     if (i < 0) { Serial.println(F("? Standart mesaj değil")); return; }
@@ -492,6 +519,13 @@ void setup() {
   Serial.println(F("\nKangoo -> E70 KOMBI çevirici (Nano)"));
 
   bmwSelfTest();         // sonunda normal moda geçer
+#if BMW_PTCAN_ENABLED
+  ptcan.reset();
+  if (ptcan.setBitrate(CAN_500KBPS, BMW_PTCAN_CLOCK) == MCP2515::ERROR_OK && ptcan.setNormalMode() == MCP2515::ERROR_OK)
+    Serial.println(F("> BMW PT-CAN MCP2515 hazır (500 kbps)"));
+  else
+    Serial.println(F("! BMW PT-CAN MCP2515 bulunamadı"));
+#endif
   kangooBeginVerify();   // her zaman önce sadece dinleme
 
   printHelp();
