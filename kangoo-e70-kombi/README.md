@@ -1,7 +1,8 @@
-# Kangoo 2 (2011, 1.5 dCi) → BMW E70 X5 göstergesi (KOMBI) — ESP32 CAN çevirici
+# Kangoo 2 (2011, 1.5 dCi) → BMW E70 X5 göstergesi (KOMBI) — CAN çevirici
 
 Kangoo'nun CAN hattındaki bilgileri (devir, hız, sıcaklık, sinyaller, uyarılar)
-okuyup BMW E70 göstergesinin anladığı K-CAN mesajlarına çeviren ESP32 projesi.
+okuyup BMW E70 göstergesinin anladığı K-CAN mesajlarına çeviren proje.
+İki sürümü var: **Arduino Nano / Uno** (aşağıda) ve **ESP32** (devamında).
 
 ```
  Kangoo CAN (500 kbps)                                BMW E70 KOMBI
@@ -11,8 +12,54 @@ okuyup BMW E70 göstergesinin anladığı K-CAN mesajlarına çeviren ESP32 proj
 
 | Klasör | Ne işe yarar |
 |---|---|
-| `sniffer/` | Kangoo hattını **sadece dinler**. Hangi ID'de hangi bilgi var, onu bulmak için |
-| `gateway/` | Asıl çevirici. Masada gösterge testi için komutlar da içerir |
+| `nano_sniffer/` | **Nano/Uno:** Kangoo hattını **sadece dinler**. Hangi ID'de hangi bilgi var, onu bulmak için |
+| `nano_gateway/` | **Nano/Uno:** Asıl çevirici. Masada gösterge testi için komutlar da içerir |
+| `sniffer/` | ESP32 sürümü (sniffer) |
+| `gateway/` | ESP32 sürümü (çevirici) |
+
+---
+
+## Arduino Nano / Uno sürümü
+
+Nano 5V ile çalıştığı için MCP2515 modülleri **doğrudan** bağlanır, seviye dönüştürücü
+gerekmez. Kangoo ve BMW tarafı için **iki MCP2515** kullanılır, ikisi aynı SPI hattını
+paylaşır, sadece CS pinleri ayrıdır. Uno'da pinler aynıdır.
+
+```
+ Kangoo CAN (500k) ── MCP2515 #1 (CS=D9)  ──┐
+                                            ├── D11 / D12 / D13 ── Nano
+ BMW K-CAN  (100k) ── MCP2515 #2 (CS=D10) ──┘
+```
+
+### Nano ↔ MCP2515 bağlantıları
+| MCP2515 pini | BMW modülü (#2) | Kangoo modülü (#1) |
+|---|---|---|
+| VCC | 5V | 5V |
+| GND | GND | GND |
+| CS | **D10** | **D9** |
+| SO | D12 | D12 (ortak) |
+| SI | D11 | D11 (ortak) |
+| SCK | D13 | D13 (ortak) |
+| INT | boş | boş |
+| CANH / CANL | E70 K-CAN H / L | OBD pin 6 / pin 14 |
+| 120 Ω jumper | **takılı** (açık, haberleşme olmazsa çıkarıp deneyin) | **çıkarın** (araç hattı zaten sonlandırılmış) |
+
+- Masa testi için sadece **BMW modülü (#2)** yeterli. `nano_gateway/config.h` içinde
+  `KANGOO_ENABLED` değerini **0** yapın, araca geçerken tekrar **1** yapın.
+- Sniffer (`nano_sniffer`) **tek** MCP2515 ile çalışır, CS = **D10**. Kangoo'yu dinlerken
+  BMW modülünü sökmeden, Kangoo modülünü D10'a takarak da kullanabilirsiniz.
+- Kristal 16 MHz ise `config.h`'daki `BMW_MCP_CLOCK` / `KANGOO_MCP_CLOCK` (sniffer'da `MCP_CLOCK`) değerini `MCP_16MHZ` yapın.
+- Arduino IDE: kart **Arduino Nano**, işlemci **ATmega328P**. Yükleme hata verirse
+  **ATmega328P (Old Bootloader)** seçin (klon Nano'larda çoğu zaman bu gerekir).
+- Seri monitör: gateway **115200**, sniffer **115200** baud.
+
+### Nano besleme (araçta)
+Aracın 12V'u 14.4V'a kadar çıkar ve dalgalanır. Nano'nun kendi regülatörü bunda çok ısınır.
+**12V → 5V DC-DC çevirici** kullanıp çıkışını Nano'nun **5V** pinine verin. MCP2515'ler de
+aynı 5V'tan beslenir. Masada USB kablosu yeterli.
+
+Kalan adımlar (gösterge pinleri, masa testi komutları, sniffer kullanımı) iki sürümde aynıdır.
+Aşağıdaki ESP32 bağlantı bölümünü atlayabilirsiniz.
 
 ---
 

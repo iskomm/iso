@@ -85,6 +85,7 @@ static void buildSlot(int i, const VehicleState &st, uint32_t dtMs) {
     }
     case S_SPEED: {
       speedDist += st.speedKmh * speedScale * dtMs / 100.0f;
+      if (speedDist >= 65536.0f) speedDist -= 65536.0f;   // float hassasiyeti kaybolmasın
       speedTick += dtMs * 2;
       uint16_t c = (uint16_t)((uint32_t)speedDist & 0xFFFF);
       d[0] = d[2] = d[4] = c & 0xFF;
