@@ -149,8 +149,12 @@ Bulduğunuz pinleri buraya yazın:
 
 Önce BMW göstergesini masada çalıştırın. Böylece BMW tarafının doğru olduğundan emin olursunuz.
 
-1. Göstergeyi 12V adaptöre, MCP2515'i K-CAN'e bağlayın. `gateway`'i yükleyin.
-2. Seri monitörü açın (**115200 baud**, satır sonu **Newline**).
+1. **Önce göstergesiz:** ESP32 ve MCP2515'i bağlayıp `gateway`'i yükleyin. Seri monitörü açın
+   (**115200 baud**, satır sonu **Newline**). Açılışta `MCP2515 testi: TAMAM` yazmalı.
+   Yazmıyorsa göstergeye geçmeden SPI kablolarını ve kristal ayarını düzeltin. Testi
+   istediğiniz zaman `test` komutuyla tekrarlayabilirsiniz.
+2. Göstergeyi 12V adaptöre (ayarlı güç kaynağı varsa akım sınırı ~1A), MCP2515'in
+   CANH/CANL'ini göstergenin K-CAN H/L pinlerine bağlayın. ESP32'ye reset atın.
 3. Şu komutları sırayla deneyin:
    ```
    bench 1        -> masa modu, kontak açık (gösterge uyanmalı)

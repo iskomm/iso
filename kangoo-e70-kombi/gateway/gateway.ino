@@ -89,6 +89,32 @@ static void bmwSend(const struct can_frame &f) {
   else txErr++;   // gösterge bağlı değilse ACK gelmez, tamponlar dolar
 }
 
+// MCP2515'i iç geri döngü (loopback) moduna alıp bir çerçeve gönderir ve geri
+// okur. Gösterge bağlı olmasa da ESP32 <-> MCP2515 bağlantısını doğrular.
+static bool bmwSelfTest() {
+  mcp.reset();
+  mcp.setBitrate(CAN_100KBPS, BMW_MCP_CLOCK);
+  mcp.setLoopbackMode();
+  struct can_frame f = {};
+  f.can_id = 0x123;
+  f.can_dlc = 2;
+  f.data[0] = 0xAB;
+  f.data[1] = 0xCD;
+  bool ok = mcp.sendMessage(&f) == MCP2515::ERROR_OK;
+  bool got = false;
+  for (int i = 0; ok && i < 50 && !got; i++) {
+    struct can_frame r;
+    if (mcp.readMessage(&r) == MCP2515::ERROR_OK)
+      got = r.can_id == 0x123 && r.can_dlc == 2 && r.data[0] == 0xAB && r.data[1] == 0xCD;
+    else
+      delay(1);
+  }
+  mcp.setNormalMode();
+  Serial.println(got ? F("> MCP2515 testi: TAMAM (ESP32 <-> MCP2515 bağlantısı çalışıyor)")
+                     : F("! MCP2515 testi: BAŞARISIZ (SPI kabloları, besleme, seviye dönüştürücü, kristal)"));
+  return got;
+}
+
 static void bmwSendSlots(uint32_t now) {
   for (int i = 0; i < S_TOTAL; i++) {
     Slot &s = slots[i];
@@ -145,6 +171,7 @@ static void printHelp() {
     "\nKomutlar (sayılar onluk, ID ve baytlar onaltılık):\n"
     "  help              bu yardım\n"
     "  st                durum ve sayaçlar\n"
+    "  test              MCP2515 bağlantı testi (gösterge gerekmez)\n"
     "  bench 1|0         masa modu: değerleri buradan verirsiniz (araç gerekmez)\n"
     "  ign 1|0           kontak (masa modunda)\n"
     "  rpm 3000          devir        spd 80    hız km/h\n"
@@ -216,6 +243,7 @@ static void handleCommand(char *line) {
 
   if (!strcmp(cmd, "help") || !strcmp(cmd, "?")) { printHelp(); return; }
   if (!strcmp(cmd, "st")) { printStatus(); return; }
+  if (!strcmp(cmd, "test")) { bmwSelfTest(); return; }
 
   if (!strcmp(cmd, "bench") && a1) {
     bench = atoi(a1);
@@ -323,10 +351,7 @@ void setup() {
   Serial.println(F("\nKangoo -> E70 KOMBI çevirici"));
 
   SPI.begin();
-  mcp.reset();
-  if (mcp.setBitrate(CAN_100KBPS, BMW_MCP_CLOCK) != MCP2515::ERROR_OK)
-    Serial.println(F("! MCP2515 bulunamadı: SPI bağlantısını ve kristali kontrol edin"));
-  mcp.setNormalMode();
+  bmwSelfTest();   // sonunda normal moda geçer
 
   // Her zaman önce sadece dinleme: hız yanlışsa araç hattını bozmamak için.
   if (!kangooStart(false)) Serial.println(F("! Kangoo CAN başlatılamadı"));
