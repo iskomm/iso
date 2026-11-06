@@ -49,6 +49,27 @@ p{margin:0}
 .tile.dk .more{color:#5AB0FF}
 .ctas{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:center;align-items:center;margin-top:24px}
 
+
+/* Görsel katmanları: statik taban + hafif animasyon */
+.art{position:relative}
+.art .ov{position:absolute;inset:0;width:100%!important;height:100%!important;aspect-ratio:auto!important;object-fit:cover;pointer-events:none;border-radius:0!important;box-shadow:none!important;background:none!important}
+.lift-img .art .ov{object-fit:contain}
+.art .ov[hidden]{display:none}
+a,button,summary,label{-webkit-tap-highlight-color:transparent}
+
+/* Mobil menü */
+.mmenu{position:fixed;left:0;right:0;top:52px;bottom:0;z-index:49;background:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 32px calc(32px + env(safe-area-inset-bottom,0px));visibility:hidden;opacity:0;transition:opacity .25s ease,visibility 0s linear .25s}
+.mmenu.open{visibility:visible;opacity:1;transition:opacity .25s ease}
+.mmenu ul{list-style:none;margin:0;padding:0}
+.mmenu li{opacity:0;transform:translateY(-8px);transition:opacity .35s ease,transform .35s ease}
+.mmenu.open li{opacity:1;transform:none}
+.mmenu a.mlink{display:flex;align-items:center;justify-content:space-between;min-height:58px;font-size:26px;font-weight:600;letter-spacing:-.025em;color:var(--text);text-decoration:none;border-bottom:1px solid #E8E8ED}
+.mmenu a.mlink::after{content:"›";font-weight:400;color:var(--text3)}
+.mmenu a.mlink:active{color:var(--blue)}
+.mm-ctas{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+.mm-ctas .btn{min-height:52px}
+@media (min-width:901px){.mmenu{display:none}}
+
 /* Global menü */
 .gnav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}
 .gnav-in{max-width:var(--max);margin:0 auto;height:52px;padding:0 22px;display:flex;align-items:center;gap:8px}
@@ -61,9 +82,8 @@ p{margin:0}
 .gnav .btn{min-height:32px;padding:7px 15px;font-size:13px}
 .menu-btn{display:none;width:44px;height:44px;border:0;background:transparent;color:var(--text);cursor:pointer;place-items:center}
 @media (max-width:900px){
-  .links{display:none;position:fixed;top:52px;left:0;right:0;bottom:0;flex-direction:column;margin:0;padding:16px 40px;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-  .links.open{display:flex}
-  .links a{font-size:26px;font-weight:600;min-height:56px;padding:0;color:var(--text)}
+  .gnav{background:rgba(255,255,255,.97);backdrop-filter:none;-webkit-backdrop-filter:none}
+  .links{display:none}
   .menu-btn{display:grid}
   .gnav .btn{margin-left:auto}
 }
@@ -75,7 +95,7 @@ p{margin:0}
 .hero .sub{font-size:clamp(24px,3vw,32px);line-height:1.15;font-weight:600;margin-top:6px;letter-spacing:-.025em;color:var(--text2)}
 .hero .lead{font-size:clamp(17px,1.7vw,21px);color:var(--text2);max-width:640px;margin:18px auto 0;line-height:1.4}
 .hero-img{margin:56px auto 0;max-width:var(--wide);padding:0 22px}
-.hero-img img{width:100%;aspect-ratio:2.2/1;object-fit:cover;border-radius:28px;background:#000}
+.hero-img img{width:100%;aspect-ratio:2.2/1;object-fit:cover}
 
 /* Değerler */
 .values{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:72px 0 88px}
@@ -92,7 +112,8 @@ p{margin:0}
 .tile p{font-size:clamp(19px,1.8vw,24px);line-height:1.2;margin-top:8px;letter-spacing:-.015em}
 .tile .ctas{margin-top:14px}
 .tile.dk{background:var(--black);color:#F5F5F7}
-.tile .t-img{position:absolute;inset:0;z-index:-2;width:100%;height:100%!important;object-fit:cover}
+.tile .art{position:absolute;inset:0;z-index:-2}
+.tile .t-img{position:absolute;inset:0;width:100%;height:100%!important;object-fit:cover}
 .tile.dk::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.88) 0%,rgba(0,0,0,.5) 36%,rgba(0,0,0,0) 64%)}
 .tile.lt::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(245,245,247,.98) 0%,rgba(245,245,247,.8) 34%,rgba(245,245,247,0) 60%)}
 
@@ -141,6 +162,8 @@ section{padding:110px 0}
 /* Kart tamiri (koyu) */
 .wide-img{max-width:var(--wide);margin:0 auto;padding:0 22px}
 .wide-img img{width:100%;aspect-ratio:2.1/1;object-fit:cover;border-radius:28px}
+.wide-img .art{border-radius:28px;overflow:hidden}
+.lift-img .art{width:100%}
 .steps{list-style:none;margin:64px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;counter-reset:s}
 .steps li{counter-increment:s;padding-top:22px;border-top:1px solid #424245}
 .steps li::before{content:counter(s,decimal-leading-zero);display:block;font-size:15px;font-weight:600;color:var(--link-d);margin-bottom:10px}
@@ -179,7 +202,7 @@ section{padding:110px 0}
 /* Forklift */
 .lift{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .lift-img{border-radius:28px;overflow:hidden;background:#ececf0}
-.lift-img{display:flex;align-items:center;background:linear-gradient(180deg,#f5f5f7,#e3e3e8)}
+.lift-img{display:flex;align-items:center;background:transparent}
 .lift-img img{width:100%;height:auto;object-fit:contain}
 .feat{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .feat .card{padding:28px}
@@ -194,7 +217,7 @@ section{padding:110px 0}
 .ab .card img{width:100%;aspect-ratio:16/10;object-fit:cover}
 .ab .cb{padding:36px 40px 40px}
 .ab .cb p{color:var(--text2);margin-top:10px}
-.ab-vis{aspect-ratio:16/10;background:#E8E8ED;display:flex;gap:10px;align-items:center;justify-content:center;padding:28px}
+.ab-vis{aspect-ratio:16/10;background:transparent;display:flex;gap:10px;align-items:center;justify-content:center;padding:28px}
 .plc{display:flex;gap:6px;height:160px}
 .plc div{width:44px;border-radius:8px;background:#2C2C2E;position:relative}
 .plc div::before{content:"";position:absolute;left:8px;right:8px;top:10px;height:6px;border-radius:2px;background:#48484A}
@@ -274,7 +297,9 @@ footer .copy a{color:var(--link)}
 }
 @media (max-width:560px){
   .hero{padding-top:52px}
-  .hero-img img,.wide-img img{aspect-ratio:4/3;border-radius:20px}
+  .wide-img img{aspect-ratio:4/3;border-radius:20px}
+  .wide-img .art{border-radius:20px}
+  .hero-img{padding:0 8px;margin-top:36px}
   .mods{grid-template-columns:repeat(3,1fr)}
   .mod{padding:18px 6px}
   .mod b{font-size:18px}
@@ -296,10 +321,10 @@ footer .copy a{color:var(--link)}
 
 /* ===== Animasyonlar ===== */
 .progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:70;background:linear-gradient(90deg,#0071E3,#5AB0FF);transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
-.hero h1 .w{display:inline-block;opacity:0;transform:translateY(.35em);filter:blur(10px);animation:wIn 1s cubic-bezier(.2,.7,.2,1) forwards}
-@keyframes wIn{to{opacity:1;transform:none;filter:blur(0)}}
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(.35em);animation:wIn .9s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes wIn{to{opacity:1;transform:none}}
 .hero-img{perspective:1200px}
-.hero-img img{will-change:transform;transform-origin:50% 0;transition:box-shadow .3s}
+.hero-img .art{will-change:transform;transform-origin:50% 0}
 .statement{padding:140px 0 120px}
 .quote{font-size:clamp(34px,5.4vw,68px);line-height:1.08;font-weight:600;letter-spacing:-.035em;text-align:center;max-width:980px;margin:0 auto}
 .quote span{color:#D2D2D7;transition:color .35s ease}
@@ -311,30 +336,30 @@ footer .copy a{color:var(--link)}
 .marquee{overflow:hidden;padding:18px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
 .mq{display:flex;gap:12px;width:max-content;animation:mq 46s linear infinite}
 .mq.rev{animation-direction:reverse;animation-duration:52s}
-.marquee:hover .mq{animation-play-state:paused}
+.marquee:hover .mq,.mq-wrap.paused .mq{animation-play-state:paused}
 .mq span{flex:none;font-size:17px;padding:12px 22px;border-radius:980px;background:var(--bg2);color:var(--text);white-space:nowrap}
 .mq span:nth-child(3n){background:#1D1D1F;color:#F5F5F7}
 .mq span:nth-child(5n){background:#E8F1FD;color:#0060C0}
 @keyframes mq{to{transform:translateX(-50%)}}
 .mq-wrap{padding:28px 0 40px}
-.tile .t-img{transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
-.tile:hover .t-img{transform:scale(1.045)}
+.tile .art{transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+@media (hover:hover){.tile:hover .art{transform:scale(1.045)}}
 .tile.rv{transform:scale(.96) translateY(30px)}
 .tile.rv.in{transform:none}
 .mod,.feat .card,.brand-list li{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,background-color .35s,opacity .7s}
-.mod:hover,.feat .card:hover,.brand-list li:hover{transform:translateY(-6px);box-shadow:0 18px 40px -18px rgba(0,0,0,.25)}
-.mod:hover b{color:var(--blue)}
+@media (hover:hover){.mod:hover,.feat .card:hover,.brand-list li:hover{transform:translateY(-6px);box-shadow:0 18px 40px -18px rgba(0,0,0,.25)}.mod:hover b{color:var(--blue)}}
 .steps li{position:relative}
 .steps li::after{content:"";position:absolute;top:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,#2997FF,#5AB0FF);transform:scaleX(0);transform-origin:0 50%;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
 .steps li.in::after{transform:scaleX(1)}
-.pkt{position:absolute;left:5px;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #0071E3,0 0 14px 4px rgba(0,113,227,.6);animation:pkt 3.2s linear infinite;top:0}
+.pkt{position:absolute;left:5px;top:0;bottom:9px;width:9px;animation:pkt 3.2s linear infinite;opacity:0}
+.pkt::before{content:"";position:absolute;top:0;left:0;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #0071E3,0 0 12px 3px rgba(0,113,227,.55)}
 .pkt:nth-child(2){animation-delay:1.06s}.pkt:nth-child(3){animation-delay:2.13s}
-@keyframes pkt{0%{top:0;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:calc(100% - 9px);opacity:0}}
-.node.bad{animation:bad 1.6s ease-in-out infinite}
-@keyframes bad{50%{box-shadow:0 0 0 6px rgba(255,59,48,.18)}}
+@keyframes pkt{0%{transform:translateY(0);opacity:0}8%,92%{opacity:1}100%{transform:translateY(100%);opacity:0}}
+.node.bad::after{content:"";position:absolute;inset:-5px;border-radius:14px;border:2px solid rgba(255,59,48,.45);animation:bad 1.6s ease-out infinite}
+@keyframes bad{0%{opacity:1;transform:scale(.97)}100%{opacity:0;transform:scale(1.05)}}
 .region .btn,.gnav .btn-blue{position:relative}
-.ring::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 rgba(0,113,227,.55);animation:ring 2.4s ease-out infinite}
-@keyframes ring{70%,100%{box-shadow:0 0 0 14px rgba(0,113,227,0)}}
+.ring::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid rgba(0,113,227,.55);animation:ring 2.4s ease-out infinite;pointer-events:none}
+@keyframes ring{0%{transform:scale(1);opacity:.9}70%,100%{transform:scale(1.4,1.6);opacity:0}}
 @media (max-width:860px){.stats{grid-template-columns:1fr 1fr;row-gap:44px}.statement{padding:100px 0 90px}}
 @media (prefers-reduced-motion:reduce){
   .hero h1 .w{opacity:1;transform:none;filter:none;animation:none}
@@ -393,9 +418,27 @@ footer .copy a{color:var(--link)}
       <li><a href="#iletisim">İletişim</a></li>
     </ul>
     <a class="btn btn-blue ring" data-tel href="tel:+905531153694" aria-label="Ara: 0553 115 36 94">Ara</a>
-    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="links" aria-label="Menüyü aç"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mmenu" aria-label="Menüyü aç"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
   </nav>
 </header>
+<div class="mmenu" id="mmenu" aria-hidden="true">
+  <nav aria-label="Mobil menü">
+    <ul>
+      <li style="transition-delay:40ms"><a class="mlink" href="#tezgah">Tezgâhlar</a></li>
+      <li style="transition-delay:75ms"><a class="mlink" href="#kartlar">Kartlar</a></li>
+      <li style="transition-delay:110ms"><a class="mlink" href="#kart-tamiri">Kart Tamiri</a></li>
+      <li style="transition-delay:145ms"><a class="mlink" href="#ekran">Ekran · CAN Bus</a></li>
+      <li style="transition-delay:180ms"><a class="mlink" href="#saha">Saha Servis</a></li>
+      <li style="transition-delay:215ms"><a class="mlink" href="#forklift">Forklift</a></li>
+      <li style="transition-delay:250ms"><a class="mlink" href="#plc-ecu">PLC · ECU</a></li>
+      <li style="transition-delay:285ms"><a class="mlink" href="#iletisim">İletişim</a></li>
+    </ul>
+    <div class="mm-ctas">
+      <a class="btn btn-blue" data-tel href="tel:+905531153694"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Hemen ara</a>
+      <a class="btn btn-wa" data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+    </div>
+  </nav>
+</div>
 
 <main id="main">
   <!-- HERO -->
@@ -411,7 +454,7 @@ footer .copy a{color:var(--link)}
       </div>
     </div>
     <div class="hero-img rv" id="heroImg">
-      <img src="assets/pcb.svg" width="2400" height="1100" alt="Endüstriyel elektronik kontrol kartı" fetchpriority="high">
+      <div class="art"><img src="assets/pcb.svg" width="2400" height="1100" alt="Endüstriyel elektronik kontrol kartı" fetchpriority="high"><img class="ov" src="assets/pcb-anim.svg" alt="" aria-hidden="true"></div>
     </div>
   </div>
 
@@ -442,31 +485,31 @@ footer .copy a{color:var(--link)}
   <!-- KARO IZGARASI -->
   <div class="tiles">
     <article class="tile dk full rv">
-      <img class="t-img" src="assets/pcb-tamir.svg" width="2400" height="1140" alt="" loading="lazy">
+      <div class="art"><img class="t-img" src="assets/pcb-tamir.svg" width="2400" height="1140" alt="" loading="lazy"><img class="ov" src="assets/pcb-tamir-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
       <h2>Elektronik kart tamiri</h2>
       <p>Değiştirmeden önce onarın.</p>
       <div class="ctas"><a class="more" href="#kart-tamiri">Daha fazla bilgi</a><a class="more" href="#iletisim">Arıza bildirin</a></div>
     </article>
     <article class="tile lt rv">
-      <img class="t-img" src="assets/tezgah.svg" width="1400" height="1160" alt="" loading="lazy">
+      <div class="art"><img class="t-img" src="assets/tezgah.svg" width="1400" height="1160" alt="" loading="lazy"><img class="ov" src="assets/tezgah-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
       <h2>Dokuma tezgâhı elektroniği</h2>
       <p>Kancalı ve hava jetli tezgâhlar.</p>
       <div class="ctas"><a class="more" href="#tezgah">Daha fazla bilgi</a></div>
     </article>
     <article class="tile dk rv">
-      <img class="t-img" src="assets/saha-kare.svg" width="1400" height="1160" alt="" loading="lazy">
+      <div class="art"><img class="t-img" src="assets/saha-kare.svg" width="1400" height="1160" alt="" loading="lazy"><img class="ov" src="assets/saha-kare-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
       <h2>Saha servis</h2>
       <p>Tezgâh başında, tüm Türkiye'de.</p>
       <div class="ctas"><a class="more" href="#saha">Daha fazla bilgi</a></div>
     </article>
     <article class="tile lt rv">
-      <img class="t-img" src="assets/forklift.svg" width="1200" height="1160" alt="" loading="lazy">
+      <div class="art"><img class="t-img" src="assets/forklift.svg" width="1200" height="1160" alt="" loading="lazy"><img class="ov" src="assets/forklift-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
       <h2>Forklift ve transpalet</h2>
       <p>Kontrolörü atmadan önce bize gösterin.</p>
       <div class="ctas"><a class="more" href="#forklift">Daha fazla bilgi</a></div>
     </article>
     <article class="tile dk rv">
-      <img class="t-img" src="assets/ecu.svg" width="1400" height="1000" alt="" loading="lazy">
+      <div class="art"><img class="t-img" src="assets/ecu.svg" width="1400" height="1000" alt="" loading="lazy"><img class="ov" src="assets/ecu-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
       <h2>PLC, sürücü ve ECU</h2>
       <p>Otomasyondan otomotive.</p>
       <div class="ctas"><a class="more" href="#plc-ecu">Daha fazla bilgi</a></div>
@@ -546,7 +589,7 @@ footer .copy a{color:var(--link)}
         <p>Arızalı kartı komponent seviyesinde inceliyor, test ederek teslim ediyoruz. Onarmak; maliyeti düşürür, bekleme süresini kısaltır.</p>
       </div>
     </div>
-    <div class="wide-img rv"><img src="assets/pcb-tamir.svg" width="2400" height="1140" alt="Havya ile elektronik kart üzerinde komponent seviyesinde lehimleme" loading="lazy"></div>
+    <div class="wide-img rv"><div class="art"><img src="assets/pcb-tamir.svg" width="2400" height="1140" alt="Havya ile elektronik kart üzerinde komponent seviyesinde lehimleme" loading="lazy"><img class="ov" src="assets/pcb-tamir-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></div>
     <div class="wrap">
       <ol class="steps rv">
         <li><strong>Kabul ve kayıt</strong><span>Arıza bilgisi ve kart kimliği kayda alınır.</span></li>
@@ -606,7 +649,7 @@ footer .copy a{color:var(--link)}
   <!-- SAHA SERVİS -->
   <section class="dark" id="saha">
     <div class="wrap split">
-      <img class="rv" src="assets/saha.svg" width="1200" height="1500" alt="Tezgâh başında CAN Bus hattını ölçen el tipi osiloskop" loading="lazy">
+      <div class="art rv"><img src="assets/saha.svg" width="1200" height="1500" alt="Tezgâh başında CAN Bus hattını ölçen el tipi osiloskop" loading="lazy"><img class="ov" src="assets/saha-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
       <div class="rv">
         <div class="sec-h">
           <p class="eyebrow" style="color:#FF453A">Tezgâh başında destek</p>
@@ -634,7 +677,7 @@ footer .copy a{color:var(--link)}
         <h2>Elektrikli forklift ve transpalet elektroniği.</h2>
       </div>
       <div class="lift">
-        <div class="lift-img rv"><img src="assets/forklift.svg" width="1200" height="1160" alt="Elektrikli forklift ve kontrol ünitesi" loading="lazy"></div>
+        <div class="lift-img rv"><div class="art"><img src="assets/forklift.svg" width="1200" height="1160" alt="Elektrikli forklift ve kontrol ünitesi" loading="lazy"><img class="ov" src="assets/forklift-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></div>
         <div class="feat">
           <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg><b>Motor kontrol üniteleri</b><span>Sürüş ve kaldırma kontrolörleri</span></div>
           <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-monitor"/></svg><b>Gösterge ve kumanda</b><span>Ekran, tuş takımı, kumanda kolu</span></div>
@@ -665,7 +708,7 @@ footer .copy a{color:var(--link)}
           </div>
         </article>
         <article class="card alt rv">
-          <img src="assets/ecu.svg" width="1400" height="1000" alt="Otomotiv elektronik kontrol ünitesi (ECU)" loading="lazy">
+          <div class="art"><img src="assets/ecu.svg" width="1400" height="1000" alt="Otomotiv elektronik kontrol ünitesi (ECU)" loading="lazy"><img class="ov" src="assets/ecu-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
           <div class="cb">
             <small>Otomotiv elektroniği</small><h3>Otomotiv ECU onarımı</h3>
             <p>Araç elektronik kontrol ünitelerinde donanım arızalarının tespiti ve onarımı.</p>
@@ -777,9 +820,10 @@ document.querySelectorAll("[data-mail-text]").forEach(el => el.textContent = ISL
 document.getElementById("yil").textContent = new Date().getFullYear();
 
 /* Mobil menü */
-const menuBtn = document.getElementById("menuBtn"), links = document.getElementById("links");
+const menuBtn = document.getElementById("menuBtn"), links = document.getElementById("mmenu");
 const setMenu = open => {
   links.classList.toggle("open", open);
+  links.setAttribute("aria-hidden", !open);
   document.body.style.overflow = open ? "hidden" : "";
   menuBtn.setAttribute("aria-expanded", open);
   menuBtn.setAttribute("aria-label", open ? "Menüyü kapat" : "Menüyü aç");
@@ -852,25 +896,39 @@ if ("IntersectionObserver" in window) {
 } else counters.forEach(runCount);
 
 // Kaydırmaya bağlı efektler
-const prog = document.getElementById("prog"), heroImg = document.querySelector("#heroImg img"), statement = document.getElementById("statement");
+const prog = document.getElementById("prog"), heroImg = document.querySelector("#heroImg .art"), statement = document.getElementById("statement");
+let lastN = -1;
 let ticking = false;
 const onScroll = () => {
   const y = scrollY, vh = innerHeight, max = document.documentElement.scrollHeight - vh;
   prog.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
   if (!reduce) {
-    const p = Math.min(1, y / (vh * 0.9));
-    heroImg.style.transform = `scale(${0.9 + 0.1 * p}) rotateX(${(1 - p) * 8}deg)`;
-    heroImg.style.boxShadow = `0 ${40 * p}px ${90 * p}px -30px rgba(0,0,0,${0.45 * p})`;
+    if (y < vh * 1.3) {
+      const p = Math.min(1, y / (vh * 0.9));
+      heroImg.style.transform = `scale(${(0.9 + 0.1 * p).toFixed(4)}) rotateX(${((1 - p) * 8).toFixed(2)}deg)`;
+    }
     const r = statement.getBoundingClientRect();
-    const q = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.25)));
-    const n = Math.round(q * qWords.length);
-    qWords.forEach((w, i) => w.classList.toggle("on", i < n));
-  } else qWords.forEach(w => w.classList.add("on"));
+    if (r.bottom > -100 && r.top < vh + 100) {
+      const q = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.25)));
+      const n = Math.round(q * qWords.length);
+      if (n !== lastN) { qWords.forEach((w, i) => w.classList.toggle("on", i < n)); lastN = n; }
+    }
+  } else if (lastN < 0) { qWords.forEach(w => w.classList.add("on")); lastN = qWords.length; }
   ticking = false;
 };
 addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 addEventListener("resize", onScroll);
 onScroll();
+
+// Animasyon katmanları ve akan şeritler yalnızca ekrandayken çalışsın
+if ("IntersectionObserver" in window) {
+  const vis = new IntersectionObserver(es => es.forEach(en => {
+    const ov = en.target.querySelector(".ov");
+    if (ov) ov.hidden = !en.isIntersecting;
+    if (en.target.classList.contains("mq-wrap")) en.target.classList.toggle("paused", !en.isIntersecting);
+  }), { rootMargin: "120px 0px" });
+  document.querySelectorAll(".art, .mq-wrap").forEach(el => vis.observe(el));
+}
 
 /* Kaydırınca beliren içerik */
 if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
