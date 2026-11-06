@@ -1,4 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 1100" width="2400" height="1100"><defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 1100" width="2400" height="1100"><style>
+.pulse{stroke-dasharray:9 120;stroke-dashoffset:9;animation:run 3.4s linear infinite;filter:drop-shadow(0 0 6px currentColor)}
+@keyframes run{to{stroke-dashoffset:-120}}
+.led{animation:blink 2.4s ease-in-out infinite}
+@keyframes blink{50%{opacity:.08}}
+.hot{animation:hot 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes hot{50%{opacity:.55;transform:scale(.8)}}
+.smk{animation:smk 4.5s ease-out infinite;opacity:0}
+@keyframes smk{0%{opacity:0;transform:translateY(20px)}25%{opacity:1}100%{opacity:0;transform:translateY(-160px)}}
+.spark{animation:spark 1.2s ease-out infinite;opacity:0;transform-box:fill-box;transform-origin:center}
+@keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.pulse{display:none}}
+</style><defs>
 <clipPath id="bclip"><rect x="320" y="170" width="1760" height="840" rx="20"/></clipPath>
 <radialGradient id="bg" cx="50%" cy="45%" r="75%"><stop offset="0" stop-color="#1b1f24"/><stop offset=".6" stop-color="#08090b"/><stop offset="1" stop-color="#000"/></radialGradient>
 <linearGradient id="board" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14382f"/><stop offset=".55" stop-color="#0d2720"/><stop offset="1" stop-color="#081a15"/></linearGradient>
@@ -742,16 +754,49 @@
 <text x="1780" y="775" font-family="Helvetica,Arial,sans-serif" font-size="20" fill="#e8f3ef" fill-opacity=".55" letter-spacing="1">J4</text>
 <text x="760" y="180" font-family="Helvetica,Arial,sans-serif" font-size="20" fill="#e8f3ef" fill-opacity=".55" letter-spacing="1">J1</text>
 <rect x="1780" y="790" width="260" height="170" rx="14" fill="none" stroke="#e8f3ef" stroke-opacity=".35" stroke-width="2" stroke-dasharray="6 6"/>
-<circle cx="1900" cy="330" r="26" fill="#2997FF" opacity=".5" filter="url(#glow)"/>
+<circle class="led" style="animation-delay:0.00s" cx="1900" cy="330" r="26" fill="#2997FF" opacity=".5" filter="url(#glow)"/>
 <rect x="1890" y="323" width="20" height="14" rx="3" fill="#2997FF"/>
 <rect x="1894" y="326" width="8" height="5" rx="2" fill="#fff" opacity=".7"/>
-<circle cx="1950" cy="330" r="26" fill="#30D158" opacity=".5" filter="url(#glow)"/>
+<circle class="led" style="animation-delay:0.45s" cx="1950" cy="330" r="26" fill="#30D158" opacity=".5" filter="url(#glow)"/>
 <rect x="1940" y="323" width="20" height="14" rx="3" fill="#30D158"/>
 <rect x="1944" y="326" width="8" height="5" rx="2" fill="#fff" opacity=".7"/>
-<circle cx="2000" cy="330" r="26" fill="#30D158" opacity=".5" filter="url(#glow)"/>
+<circle class="led" style="animation-delay:0.90s" cx="2000" cy="330" r="26" fill="#30D158" opacity=".5" filter="url(#glow)"/>
 <rect x="1990" y="323" width="20" height="14" rx="3" fill="#30D158"/>
 <rect x="1994" y="326" width="8" height="5" rx="2" fill="#fff" opacity=".7"/>
-<circle cx="1900" cy="380" r="26" fill="#FF9F0A" opacity=".5" filter="url(#glow)"/>
+<circle class="led" style="animation-delay:1.35s" cx="1900" cy="380" r="26" fill="#FF9F0A" opacity=".5" filter="url(#glow)"/>
 <rect x="1890" y="373" width="20" height="14" rx="3" fill="#FF9F0A"/>
 <rect x="1894" y="376" width="8" height="5" rx="2" fill="#fff" opacity=".7"/>
+<g class="pulses">
+<path class="pulse" pathLength="100" style="animation-delay:3.46s;animation-duration:3.97s" d="M1440 510L1560 510L1620 570L1780 570" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:1.81s;animation-duration:3.97s" d="M1440 538L1560 538L1620 598L1780 598" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:0.74s;animation-duration:3.42s" d="M1440 566L1560 566L1620 626L1780 626" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:2.46s;animation-duration:2.90s" d="M1440 594L1560 594L1620 654L1780 654" stroke="#5AB0FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:1.21s;animation-duration:2.75s" d="M1440 622L1560 622L1620 682L1780 682" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:2.54s;animation-duration:3.55s" d="M1080 510L970 510L900 440L750 440" stroke="#5AB0FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:3.86s;animation-duration:3.65s" d="M1080 538L970 538L900 468L750 468" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:2.60s;animation-duration:3.60s" d="M1080 566L970 566L900 496L750 496" stroke="#5AB0FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:0.25s;animation-duration:2.66s" d="M1080 594L970 594L900 524L750 524" stroke="#5AB0FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:2.40s;animation-duration:3.84s" d="M1080 622L970 622L900 552L750 552" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:1.76s;animation-duration:3.95s" d="M1150 440L1150 380L1200 330L1200 260" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:0.93s;animation-duration:3.07s" d="M1178 440L1178 380L1228 330L1228 260" stroke="#5AB0FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:2.65s;animation-duration:3.33s" d="M1206 440L1206 380L1256 330L1256 260" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:1.63s;animation-duration:3.48s" d="M1234 440L1234 380L1284 330L1284 260" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:2.83s;animation-duration:3.10s" d="M1262 440L1262 380L1312 330L1312 260" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:2.05s;animation-duration:2.65s" d="M1290 440L1290 380L1340 330L1340 260" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:3.07s;animation-duration:3.24s" d="M1150 800L1150 870L1090 930L1090 1020" stroke="#5AB0FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:1.55s;animation-duration:4.13s" d="M1178 800L1178 870L1118 930L1118 1020" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:0.00s;animation-duration:2.94s" d="M1206 800L1206 870L1146 930L1146 1020" stroke="#5AB0FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:1.88s;animation-duration:4.17s" d="M1234 800L1234 870L1174 930L1174 1020" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:1.68s;animation-duration:3.51s" d="M1262 800L1262 870L1202 930L1202 1020" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:3.11s;animation-duration:3.03s" d="M1290 800L1290 870L1230 930L1230 1020" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:1.24s;animation-duration:2.62s" d="M560 330L500 330L460 370L380 370" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:3.03s;animation-duration:2.79s" d="M560 358L500 358L460 398L380 398" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:2.83s;animation-duration:2.62s" d="M560 386L500 386L460 426L380 426" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:3.19s;animation-duration:2.88s" d="M1640 310L1730 310L1780 360L1900 360" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:0.75s;animation-duration:3.41s" d="M1640 338L1730 338L1780 388L1900 388" stroke="#5AB0FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:3.08s;animation-duration:3.27s" d="M1640 366L1730 366L1780 416L1900 416" stroke="#5AB0FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:0.47s;animation-duration:3.27s" d="M1640 640L1730 640L1780 590L1900 590" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:0.00s;animation-duration:3.98s" d="M1640 668L1730 668L1780 618L1900 618" stroke="#7CF5D2" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path class="pulse" pathLength="100" style="animation-delay:1.22s;animation-duration:4.02s" d="M1640 696L1730 696L1780 646L1900 646" stroke="#5AB0FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+</g>
 <rect x="300" y="150" width="1800" height="880" rx="30" fill="url(#sheen)"/></g></svg>

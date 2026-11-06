@@ -293,6 +293,56 @@ footer .copy a{color:var(--link)}
   .drv{width:92px;height:120px;font-size:15px}
 }
 
+
+/* ===== Animasyonlar ===== */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:70;background:linear-gradient(90deg,#0071E3,#5AB0FF);transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(.35em);filter:blur(10px);animation:wIn 1s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes wIn{to{opacity:1;transform:none;filter:blur(0)}}
+.hero-img{perspective:1200px}
+.hero-img img{will-change:transform;transform-origin:50% 0;transition:box-shadow .3s}
+.statement{padding:140px 0 120px}
+.quote{font-size:clamp(34px,5.4vw,68px);line-height:1.08;font-weight:600;letter-spacing:-.035em;text-align:center;max-width:980px;margin:0 auto}
+.quote span{color:#D2D2D7;transition:color .35s ease}
+.quote span.on{color:var(--text)}
+.quote span.hl.on{background:linear-gradient(90deg,#0071E3,#5AB0FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:0 0 120px;text-align:center}
+.stat b{display:block;font-size:clamp(48px,6vw,80px);line-height:1;font-weight:700;letter-spacing:-.04em;background:linear-gradient(180deg,#1D1D1F 30%,#6E6E73);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:10px;font-size:17px;color:var(--text2)}
+.marquee{overflow:hidden;padding:18px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.mq{display:flex;gap:12px;width:max-content;animation:mq 46s linear infinite}
+.mq.rev{animation-direction:reverse;animation-duration:52s}
+.marquee:hover .mq{animation-play-state:paused}
+.mq span{flex:none;font-size:17px;padding:12px 22px;border-radius:980px;background:var(--bg2);color:var(--text);white-space:nowrap}
+.mq span:nth-child(3n){background:#1D1D1F;color:#F5F5F7}
+.mq span:nth-child(5n){background:#E8F1FD;color:#0060C0}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mq-wrap{padding:28px 0 40px}
+.tile .t-img{transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.tile:hover .t-img{transform:scale(1.045)}
+.tile.rv{transform:scale(.96) translateY(30px)}
+.tile.rv.in{transform:none}
+.mod,.feat .card,.brand-list li{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,background-color .35s,opacity .7s}
+.mod:hover,.feat .card:hover,.brand-list li:hover{transform:translateY(-6px);box-shadow:0 18px 40px -18px rgba(0,0,0,.25)}
+.mod:hover b{color:var(--blue)}
+.steps li{position:relative}
+.steps li::after{content:"";position:absolute;top:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,#2997FF,#5AB0FF);transform:scaleX(0);transform-origin:0 50%;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.steps li.in::after{transform:scaleX(1)}
+.pkt{position:absolute;left:5px;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #0071E3,0 0 14px 4px rgba(0,113,227,.6);animation:pkt 3.2s linear infinite;top:0}
+.pkt:nth-child(2){animation-delay:1.06s}.pkt:nth-child(3){animation-delay:2.13s}
+@keyframes pkt{0%{top:0;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:calc(100% - 9px);opacity:0}}
+.node.bad{animation:bad 1.6s ease-in-out infinite}
+@keyframes bad{50%{box-shadow:0 0 0 6px rgba(255,59,48,.18)}}
+.region .btn,.gnav .btn-blue{position:relative}
+.ring::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 rgba(0,113,227,.55);animation:ring 2.4s ease-out infinite}
+@keyframes ring{70%,100%{box-shadow:0 0 0 14px rgba(0,113,227,0)}}
+@media (max-width:860px){.stats{grid-template-columns:1fr 1fr;row-gap:44px}.statement{padding:100px 0 90px}}
+@media (prefers-reduced-motion:reduce){
+  .hero h1 .w{opacity:1;transform:none;filter:none;animation:none}
+  .quote span{color:var(--text)}
+  .mq{animation:none}.pkt{display:none}.progress{display:none}
+  .steps li::after{transform:scaleX(1)}
+}
+
 /* Kaydırınca belirme */
 .rv{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.28,.11,.32,1),transform .8s cubic-bezier(.28,.11,.32,1)}
 .rv.in{opacity:1;transform:none}
@@ -305,6 +355,7 @@ footer .copy a{color:var(--link)}
 </head>
 <body>
 <a class="skip" href="#main">İçeriğe geç</a>
+<div class="progress" id="prog" aria-hidden="true"></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
@@ -341,7 +392,7 @@ footer .copy a{color:var(--link)}
       <li><a href="#plc-ecu">PLC · ECU</a></li>
       <li><a href="#iletisim">İletişim</a></li>
     </ul>
-    <a class="btn btn-blue" data-tel href="tel:+905531153694" aria-label="Ara: 0553 115 36 94">Ara</a>
+    <a class="btn btn-blue ring" data-tel href="tel:+905531153694" aria-label="Ara: 0553 115 36 94">Ara</a>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="links" aria-label="Menüyü aç"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
   </nav>
 </header>
@@ -351,7 +402,7 @@ footer .copy a{color:var(--link)}
   <div class="hero" id="top">
     <div class="wrap">
       <p class="eyebrow rv">Koç Elektronik</p>
-      <h1 class="rv">Üretiminiz durmasın.</h1>
+      <h1 id="h1">Üretiminiz durmasın.</h1>
       <p class="sub rv">Kartınız yeniden çalışsın.</p>
       <p class="lead rv">Dokuma tezgâhları başta olmak üzere endüstriyel elektronik sistemler için bağımsız elektronik servis ve onarım. Tüm Türkiye'de.</p>
       <div class="ctas rv">
@@ -359,7 +410,7 @@ footer .copy a{color:var(--link)}
         <a class="more" data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener">WhatsApp'tan yazın</a>
       </div>
     </div>
-    <div class="hero-img rv">
+    <div class="hero-img rv" id="heroImg">
       <img src="assets/pcb.svg" width="2400" height="1100" alt="Endüstriyel elektronik kontrol kartı" fetchpriority="high">
     </div>
   </div>
@@ -370,6 +421,21 @@ footer .copy a{color:var(--link)}
       <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><b>Güvenilir hizmet</b><span>Test edilmiş, raporlu teslim</span></div>
       <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-zap"/></svg><b>Hızlı çözüm</b><span>Duruş süresini kısaltan planlama</span></div>
       <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><b>Tüm Türkiye</b><span>Yerinde tespit ve müdahale</span></div>
+    </div>
+  </div>
+
+  <div class="statement" id="statement">
+    <div class="wrap">
+      <p class="quote" id="quote">Yenisini almadan önce, <em>onarılabilir mi</em> bakalım. Arızalı kartı değiştirmek yerine onarmak; <em>maliyeti düşürür</em>, bekleme süresini kısaltır.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat rv"><b data-count="11" data-suffix="+">0</b><span>Kart ve modül tipi</span></div>
+      <div class="stat rv"><b data-count="5">0</b><span>Adımlı onarım süreci</span></div>
+      <div class="stat rv"><b data-count="81">0</b><span>İlde saha servis</span></div>
+      <div class="stat rv"><b data-count="100" data-prefix="%">0</b><span>Test edilerek teslim</span></div>
     </div>
   </div>
 
@@ -405,6 +471,11 @@ footer .copy a{color:var(--link)}
       <p>Otomasyondan otomotive.</p>
       <div class="ctas"><a class="more" href="#plc-ecu">Daha fazla bilgi</a></div>
     </article>
+  </div>
+
+  <div class="mq-wrap" aria-hidden="true">
+    <div class="marquee"><div class="mq"><span>Elektronik kart tamiri</span><span>SMD rework</span><span>THT lehimleme</span><span>Osiloskop analizi</span><span>CAN Bus</span><span>RS-485</span><span>Operatör ekranı</span><span>Servo sürücü</span><span>Frekans invertörü</span><span>PLC CPU ve I/O</span><span>Otomotiv ECU</span><span>Güç katı onarımı</span><span>Elektronik kart tamiri</span><span>SMD rework</span><span>THT lehimleme</span><span>Osiloskop analizi</span><span>CAN Bus</span><span>RS-485</span><span>Operatör ekranı</span><span>Servo sürücü</span><span>Frekans invertörü</span><span>PLC CPU ve I/O</span><span>Otomotiv ECU</span><span>Güç katı onarımı</span></div></div>
+    <div class="marquee"><div class="mq rev"><span>Saha servis</span><span>Yük altında test</span><span>Lityum batarya BMS</span><span>Şarj cihazları</span><span>Motor kontrol ünitesi</span><span>Arızalı node tespiti</span><span>Sonlandırma kontrolü</span><span>Önleyici bakım</span><span>Teknik danışmanlık</span><span>Hata kodu analizi</span><span>Kart değişimi ve devreye alma</span><span>Raporlu teslim</span><span>Saha servis</span><span>Yük altında test</span><span>Lityum batarya BMS</span><span>Şarj cihazları</span><span>Motor kontrol ünitesi</span><span>Arızalı node tespiti</span><span>Sonlandırma kontrolü</span><span>Önleyici bakım</span><span>Teknik danışmanlık</span><span>Hata kodu analizi</span><span>Kart değişimi ve devreye alma</span><span>Raporlu teslim</span></div></div>
   </div>
 
   <!-- TEZGÂHLAR -->
@@ -517,7 +588,7 @@ footer .copy a{color:var(--link)}
           <div class="bus" role="img" aria-label="Şematik: tezgâh haberleşme hattı. İki ucunda 120 ohm sonlandırma; hat üzerinde operatör ekranı, MCB, PowerBox, LDEC ve SUMO sürücü düğümleri. Örnekte MCB arızalı düğüm olarak işaretli.">
             <small>Tezgâh haberleşme hattı · şematik</small>
             <div class="bus-grid">
-              <div class="bus-line"></div>
+              <div class="bus-line"><span class="pkt"></span><span class="pkt"></span><span class="pkt"></span></div>
               <div class="node term">120Ω sonlandırma</div>
               <div class="node">Operatör ekranı</div>
               <div class="node bad">MCB — arızalı node</div>
@@ -736,6 +807,70 @@ form.addEventListener("submit", e => {
               satir("Ekipman", f.ekipman) + satir("Kart / model", f.model) + satir("Arıza", f.ariza) + satir("Talep", f.hizmet);
   window.open(waBase + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
 });
+
+
+/* ===== Animasyonlar ===== */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Başlık kelime kelime
+const h1 = document.getElementById("h1");
+if (!reduce) {
+  h1.innerHTML = h1.textContent.trim().split(/\s+/).map((w, i) => `<span class="w" style="animation-delay:${0.15 + i * 0.12}s">${w}</span>`).join(" ");
+}
+
+// Büyük cümle: kelimeler kaydırdıkça yanar
+const quote = document.getElementById("quote");
+const qWords = [];
+quote.querySelectorAll("em").forEach(em => em.replaceWith(...em.textContent.split(/(\s+)/).map(t => { if (/^\s+$/.test(t)) return document.createTextNode(t); const s = document.createElement("span"); s.className = "hl"; s.textContent = t; return s; })));
+[...quote.childNodes].forEach(n => {
+  if (n.nodeType === 3) {
+    const frag = document.createDocumentFragment();
+    n.textContent.split(/(\s+)/).forEach(t => { if (!t) return; if (/^\s+$/.test(t)) frag.append(t); else { const s = document.createElement("span"); s.textContent = t; frag.append(s); } });
+    n.replaceWith(frag);
+  }
+});
+quote.querySelectorAll("span").forEach(s => qWords.push(s));
+
+// Sırayla beliren öğeler
+const stagger = (sel, step) => document.querySelectorAll(sel).forEach((el, i) => { el.classList.add("rv"); el.style.transitionDelay = (i * step) + "ms"; });
+stagger(".mods .mod", 45); stagger(".steps li", 120); stagger(".brand-list li", 80);
+document.querySelectorAll(".mods").forEach(el => el.classList.remove("rv"));
+document.querySelectorAll(".steps").forEach(el => el.classList.remove("rv"));
+
+// Sayaçlar
+const counters = document.querySelectorAll("[data-count]");
+const runCount = el => {
+  const end = +el.dataset.count, pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
+  if (reduce) { el.textContent = pre + end + suf; return; }
+  const t0 = performance.now(), dur = 1600;
+  const tick = t => { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 4); el.textContent = pre + Math.round(end * e) + suf; if (p < 1) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+};
+if ("IntersectionObserver" in window) {
+  const co = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { runCount(en.target); co.unobserve(en.target); } }), { threshold: .6 });
+  counters.forEach(c => co.observe(c));
+} else counters.forEach(runCount);
+
+// Kaydırmaya bağlı efektler
+const prog = document.getElementById("prog"), heroImg = document.querySelector("#heroImg img"), statement = document.getElementById("statement");
+let ticking = false;
+const onScroll = () => {
+  const y = scrollY, vh = innerHeight, max = document.documentElement.scrollHeight - vh;
+  prog.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+  if (!reduce) {
+    const p = Math.min(1, y / (vh * 0.9));
+    heroImg.style.transform = `scale(${0.9 + 0.1 * p}) rotateX(${(1 - p) * 8}deg)`;
+    heroImg.style.boxShadow = `0 ${40 * p}px ${90 * p}px -30px rgba(0,0,0,${0.45 * p})`;
+    const r = statement.getBoundingClientRect();
+    const q = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.25)));
+    const n = Math.round(q * qWords.length);
+    qWords.forEach((w, i) => w.classList.toggle("on", i < n));
+  } else qWords.forEach(w => w.classList.add("on"));
+  ticking = false;
+};
+addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+addEventListener("resize", onScroll);
+onScroll();
 
 /* Kaydırınca beliren içerik */
 if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
