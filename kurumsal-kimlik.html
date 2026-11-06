@@ -163,6 +163,24 @@ footer{padding:36px 0 48px;border-top:1px solid var(--line2);font-size:13px;colo
   section{padding:64px 0}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast{transition:none}}
+
+/* Kurumsal sade tasarım (ana sayfa ile aynı dil) */
+:root{--rule:#1D1D1F;--kicker:#C8102E;--btn:#0E2248;--btn-fg:#fff;--r:6px}
+@media (prefers-color-scheme:dark){:root{--rule:#F5F5F7;--kicker:#FF5A5F;--btn:#F5F5F7;--btn-fg:#0E2248}}
+.wrap,.gnav-in{max-width:1180px}
+.eyebrow,.num{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--kicker)}
+.hero{text-align:left;padding:88px 0 56px}
+.hero p.lead{margin:18px 0 0}
+section{border-top:2px solid var(--rule)}
+.card,.type,.say,.sig{background:none;border-radius:0;padding:24px 0 0;border-top:2px solid var(--rule)}
+.type .trow{border-color:var(--line)}
+.logo-stage,.ill figure,.icons span,.sw,.bcard{border-radius:var(--r)}
+.sw .chip{border-radius:0}
+.btn{border-radius:var(--r);background:var(--btn);color:var(--btn-fg)}
+.btn:hover{background:var(--btn);opacity:.9}
+.btn.ghost{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+.ratio{border-radius:var(--r)}
+.card[style*="linear-gradient"]{border-top:0;border-radius:var(--r);padding:36px}
 </style>
 </head>
 <body>
@@ -230,12 +248,12 @@ footer{padding:36px 0 48px;border-top:1px solid var(--line2);font-size:13px;colo
     <div class="wrap">
       <p class="num">02 · Renkler</p>
       <h2>Lacivert güven, kırmızı enerji.</h2>
-      <p class="intro">Ana renklerimiz kurumsal lacivert ve koç kırmızısıdır. Web sitesinde etkileşim (buton, bağlantı) için vurgu mavisi kullanılır. Renk koduna tıklayarak kopyalayabilirsiniz.</p>
+      <p class="intro">Ana renklerimiz kurumsal lacivert ve koç kırmızısıdır. Butonlar kurumsal lacivert; web sitesindeki metin bağlantıları için vurgu mavisi kullanılır. Renk koduna tıklayarak kopyalayabilirsiniz.</p>
       <div class="swatches">
         <button class="sw" data-hex="#0E2248"><div class="chip" style="background:#0E2248;color:#fff">Ana renk</div><div class="meta"><b>Kurumsal lacivert</b><code>#0E2248 · RGB 14 34 72</code><span>Logo, kurumsal zeminler, kartvizit, katalog.</span></div></button>
         <button class="sw" data-hex="#07152E"><div class="chip" style="background:#07152E;color:#fff">Koyu ton</div><div class="meta"><b>Gece laciverti</b><code>#07152E · RGB 7 21 46</code><span>Koyu zeminler, kapaklar, araç giydirme.</span></div></button>
         <button class="sw" data-hex="#E30613"><div class="chip" style="background:#E30613;color:#fff">Vurgu</div><div class="meta"><b>Koç kırmızısı</b><code>#E30613 · RGB 227 6 19</code><span>Küçük vurgular: çizgiler, ikonlar, başlık üstleri.</span></div></button>
-        <button class="sw" data-hex="#0071E3"><div class="chip" style="background:#0071E3;color:#fff">Dijital</div><div class="meta"><b>Etkileşim mavisi</b><code>#0071E3 · RGB 0 113 227</code><span>Web’de butonlar ve bağlantılar.</span></div></button>
+        <button class="sw" data-hex="#0071E3"><div class="chip" style="background:#0071E3;color:#fff">Dijital</div><div class="meta"><b>Etkileşim mavisi</b><code>#0071E3 · RGB 0 113 227</code><span>Web’de metin bağlantıları.</span></div></button>
         <button class="sw" data-hex="#1D1D1F"><div class="chip" style="background:#1D1D1F;color:#fff">Metin</div><div class="meta"><b>Grafit</b><code>#1D1D1F · RGB 29 29 31</code><span>Ana metin rengi, koyu kartlar.</span></div></button>
         <button class="sw" data-hex="#F5F5F7"><div class="chip" style="background:#F5F5F7;color:#1D1D1F;box-shadow:inset 0 -1px 0 #E8E8ED">Zemin</div><div class="meta"><b>Açık gri</b><code>#F5F5F7 · RGB 245 245 247</code><span>Bölüm zeminleri, kartlar.</span></div></button>
       </div>
