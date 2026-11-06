@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Koç Elektronik | Elektronik Teknik Servis ve Onarım</title>
+<meta name="description" content="Koç Elektronik: TV, bilgisayar, telefon, ses sistemi ve uydu cihazları için ücretsiz arıza tespiti, şeffaf fiyat ve garantili onarım.">
+<meta name="theme-color" content="#07131F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#07131F; --navy2:#0D2030; --ink:#0F172A; --muted:#475569; --line:#E2E8F0;
+  --bg:#F0F9FF; --card:#FFFFFF; --sky:#0EA5E9; --sky-l:#38BDF8; --sky-d:#0369A1;
+  --cta:#F97316; --cta-h:#FB923C; --cta-ink:#1C0D02; --wa:#25D366; --wa-ink:#052E16;
+  --radius:18px; --max:1180px;
+  --display:"Outfit",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --body:"Work Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --shadow:0 1px 2px rgba(15,23,42,.06),0 8px 24px -8px rgba(15,23,42,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--body);font-size:17px;line-height:1.6;color:var(--ink);background:var(--bg)}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);line-height:1.12;margin:0;letter-spacing:-.02em;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+.ic{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+:focus-visible{outline:3px solid var(--sky-l);outline-offset:3px;border-radius:8px}
+.skip{position:absolute;left:-999px;top:12px;z-index:60;background:#fff;color:var(--ink);padding:10px 16px;border-radius:10px}
+.skip:focus{left:12px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 22px;border-radius:999px;border:0;
+  font:600 16px/1 var(--body);text-decoration:none;cursor:pointer;transition:background-color .2s,box-shadow .2s,color .2s}
+.btn-cta{background:var(--cta);color:var(--cta-ink);box-shadow:0 8px 24px -8px rgba(249,115,22,.6)}
+.btn-cta:hover{background:var(--cta-h)}
+.btn-wa{background:var(--wa);color:var(--wa-ink)}
+.btn-wa:hover{background:#4ADE80}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.btn-ghost:hover{background:rgba(255,255,255,.16)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:#1E293B}
+
+/* Nav */
+.nav{position:fixed;top:12px;left:12px;right:12px;z-index:50}
+.nav-in{max-width:var(--max);margin:0 auto;display:flex;align-items:center;gap:16px;padding:10px 10px 10px 18px;border-radius:999px;
+  background:rgba(7,19,31,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 10px 30px -10px rgba(0,0,0,.5);color:#fff}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 19px/1 var(--display);letter-spacing:-.01em;margin-right:auto}
+.brand-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--sky),#2563EB);font-size:14px;font-weight:800;box-shadow:inset 0 -3px 0 var(--cta)}
+.brand small{display:block;font:500 11px/1.2 var(--body);color:#94A3B8;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+.links{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.links a{display:block;padding:10px 14px;border-radius:999px;text-decoration:none;font-size:15px;color:#CBD5E1;transition:color .2s,background-color .2s}
+.links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.nav .btn{min-height:44px;padding:10px 18px;font-size:15px}
+.menu-btn{display:none;width:44px;height:44px;border-radius:999px;border:0;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;place-items:center}
+@media (max-width:900px){
+  .links{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;flex-direction:column;padding:10px;border-radius:22px;background:rgba(7,19,31,.96);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 20px 40px -10px rgba(0,0,0,.6)}
+  .links.open{display:flex}
+  .links a{padding:14px 16px;font-size:17px}
+  .menu-btn{display:grid}
+  .nav .call-txt{display:none}
+  .nav .btn{padding:10px 14px}
+}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;background:var(--navy);color:#fff;padding:150px 0 96px;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;
+  background-image:linear-gradient(rgba(56,189,248,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.07) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:radial-gradient(ellipse 80% 70% at 60% 30%,#000 30%,transparent 75%)}
+.hero::after{content:"";position:absolute;z-index:-1;width:720px;height:720px;right:-200px;top:-220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(14,165,233,.35),transparent 65%)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px 7px 8px;border-radius:999px;background:rgba(14,165,233,.12);box-shadow:inset 0 0 0 1px rgba(56,189,248,.3);color:#BAE6FD;font-size:14px;font-weight:500}
+.pill .dot{width:20px;height:20px;border-radius:50%;background:var(--sky);display:grid;place-items:center}
+.pill .dot svg{width:12px;height:12px;stroke:#fff;stroke-width:3}
+.hero h1{font-size:clamp(38px,5.6vw,66px);font-weight:800;margin:22px 0 20px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--sky-l),#A5F3FC);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{font-size:clamp(17px,1.6vw,20px);color:#CBD5E1;max-width:34em}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.badges{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:36px;padding:0;list-style:none;color:#CBD5E1;font-size:15px}
+.badges li{display:flex;align-items:center;gap:8px}
+.badges .ic{width:20px;height:20px;color:var(--sky-l)}
+
+/* Hero card */
+.track{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.04));border-radius:26px;padding:24px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 40px 80px -30px rgba(0,0,0,.7);backdrop-filter:blur(8px)}
+.track-h{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.track-h b{font:600 17px var(--display)}
+.track-h span{font-size:13px;color:#94A3B8;font-variant-numeric:tabular-nums}
+.device{display:flex;gap:14px;align-items:center;padding:14px;border-radius:16px;background:rgba(7,19,31,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.device .ic{width:44px;height:44px;padding:10px;border-radius:12px;background:rgba(14,165,233,.16);color:var(--sky-l)}
+.device b{display:block;font-weight:600}
+.device small{color:#94A3B8;font-size:14px}
+.steps-mini{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:4px}
+.steps-mini li{display:flex;align-items:center;gap:12px;padding:9px 4px;font-size:15px;color:#94A3B8}
+.steps-mini .s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(148,163,184,.35)}
+.steps-mini .s svg{width:14px;height:14px;stroke-width:3}
+.steps-mini li.done{color:#E2E8F0}
+.steps-mini li.done .s{background:var(--sky);box-shadow:none;color:#fff}
+.steps-mini li.now{color:#fff;font-weight:600}
+.steps-mini li.now .s{box-shadow:inset 0 0 0 2px var(--cta)}
+.steps-mini li.now .s::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--cta);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.notify{margin-top:16px;display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:rgba(37,211,102,.12);box-shadow:inset 0 0 0 1px rgba(37,211,102,.3);font-size:14px;color:#BBF7D0}
+.notify .ic{color:var(--wa)}
+
+/* Sections */
+section{padding:96px 0}
+.eyebrow{display:inline-block;font:600 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--sky-d);margin-bottom:14px}
+.sec-h{max-width:640px;margin-bottom:48px}
+.sec-h h2{font-size:clamp(30px,3.6vw,44px);font-weight:700}
+.sec-h p{margin-top:14px;color:var(--muted);font-size:18px}
+.center{text-align:center;margin-left:auto;margin-right:auto}
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc{background:var(--card);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);border:1px solid var(--line);transition:border-color .2s,box-shadow .2s}
+.svc:hover{border-color:#7DD3FC;box-shadow:0 1px 2px rgba(15,23,42,.06),0 18px 40px -16px rgba(3,105,161,.35)}
+.svc .ic{width:52px;height:52px;padding:13px;border-radius:14px;background:#E0F2FE;color:var(--sky-d);margin-bottom:20px}
+.svc h3{font-size:21px;font-weight:600;margin-bottom:8px}
+.svc p{color:var(--muted);font-size:16px}
+.svc ul{margin:16px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.svc li{font-size:13px;font-weight:500;padding:5px 11px;border-radius:999px;background:#F1F5F9;color:#334155}
+
+/* Process */
+.process{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:st}
+.step{position:relative;padding:28px 24px;border-radius:var(--radius);background:var(--bg);counter-increment:st}
+.step::before{content:counter(st,decimal-leading-zero);font:800 44px/1 var(--display);color:#BAE6FD;display:block;margin-bottom:18px}
+.step h3{font-size:19px;font-weight:600;margin-bottom:8px}
+.step p{color:var(--muted);font-size:15.5px}
+
+/* Why */
+.why{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+.why-list{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.why-item{display:flex;gap:14px;padding:20px;border-radius:16px;background:#fff;border:1px solid var(--line)}
+.why-item .ic{color:var(--sky-d);margin-top:2px}
+.why-item h3{font-size:17px;font-weight:600;margin-bottom:4px;font-family:var(--body);letter-spacing:0}
+.why-item p{font-size:15px;color:var(--muted)}
+.why-aside{position:sticky;top:110px;background:var(--navy);color:#fff;border-radius:24px;padding:36px;overflow:hidden;isolation:isolate}
+.why-aside::after{content:"";position:absolute;inset:auto -120px -160px auto;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,233,.35),transparent 65%);z-index:-1}
+.why-aside h2{font-size:clamp(28px,3vw,38px)}
+.why-aside p{color:#CBD5E1;margin:16px 0 26px}
+.why-aside .btn{width:100%}
+.why-aside .btn+.btn{margin-top:10px}
+
+/* FAQ */
+.faq{max-width:820px;margin:0 auto;display:grid;gap:12px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:16px;transition:border-color .2s}
+.faq details[open]{border-color:#7DD3FC}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 22px;font:600 17px/1.4 var(--body);min-height:56px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .ic{color:var(--sky-d);transition:transform .2s}
+.faq details[open] summary .ic{transform:rotate(45deg)}
+.faq details p{padding:0 22px 20px;color:var(--muted)}
+
+/* Contact */
+.contact{background:var(--navy);color:#fff;position:relative;overflow:hidden;isolation:isolate}
+.contact::before{content:"";position:absolute;z-index:-1;left:-200px;bottom:-300px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,233,.25),transparent 65%)}
+.contact .eyebrow{color:var(--sky-l)}
+.contact .sec-h p{color:#CBD5E1}
+.c-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:28px}
+.c-info{display:grid;gap:12px;align-content:start}
+.c-row{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;border-radius:16px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);text-decoration:none;transition:background-color .2s}
+a.c-row:hover{background:rgba(255,255,255,.1)}
+.c-row .ic{color:var(--sky-l);margin-top:2px}
+.c-row small{display:block;color:#94A3B8;font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.c-row span{font-size:17px;font-weight:500}
+.form{background:#fff;color:var(--ink);border-radius:24px;padding:32px;display:grid;gap:16px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6)}
+.form h3{font-size:24px}
+.form .sub{color:var(--muted);font-size:15px;margin-top:-8px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:grid;gap:6px}
+.field label{font-size:14px;font-weight:600;color:#334155}
+.field input,.field select,.field textarea{font:inherit;font-size:16px;color:var(--ink);width:100%;min-height:48px;padding:12px 14px;border-radius:12px;border:1px solid #CBD5E1;background:#F8FAFC;transition:border-color .2s,box-shadow .2s}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 4px rgba(14,165,233,.2);background:#fff}
+.field .err{font-size:13px;color:#B91C1C;min-height:0}
+.field [aria-invalid="true"]{border-color:#DC2626}
+.form .btn{width:100%}
+.form .note{font-size:13px;color:var(--muted);text-align:center}
+
+footer{background:#040B12;color:#94A3B8;padding:36px 0;font-size:14px}
+.f-in{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+footer .brand{color:#fff;margin:0}
+
+/* Mobile sticky actions */
+.m-bar{display:none}
+@media (max-width:640px){
+  .m-bar{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:40}
+  .m-bar .btn{box-shadow:0 10px 30px -8px rgba(0,0,0,.45)}
+  footer{padding-bottom:100px}
+}
+
+@media (max-width:1000px){
+  .hero-grid,.why,.c-grid{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .why-aside{position:relative;top:auto}
+}
+@media (max-width:640px){
+  section{padding:72px 0}
+  .hero{padding:124px 0 72px}
+  .grid3,.steps,.why-list,.f2{grid-template-columns:1fr}
+  .form{padding:24px}
+  .hero-ctas .btn{flex:1 1 100%}
+}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">İçeriğe geç</a>
+
+<!-- SVG ikonlar (Lucide tarzı) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="m17 2-5 5-5-5"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55A1 1 0 0 1 20.38 20H3.62a1 1 0 0 1-.9-1.45L4 16"/></symbol>
+  <symbol id="i-mobile" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+  <symbol id="i-speaker" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4"/><path d="M12 6h.01"/></symbol>
+  <symbol id="i-sat" viewBox="0 0 24 24"><path d="M4 10a7.31 7.31 0 0 0 10 10Z"/><path d="m9 15 3-3"/><path d="M17 13a6 6 0 0 0-6-6"/><path d="M21 13A10 10 0 0 0 11 3"/></symbol>
+  <symbol id="i-game" viewBox="0 0 24 24"><path d="M6 12h4M8 10v4M15 13h.01M18 11h.01"/><rect x="2" y="6" width="20" height="12" rx="4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6M16 12H8M13 16H8"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+</svg>
+
+<header class="nav">
+  <nav class="nav-in" aria-label="Ana menü">
+    <a class="brand" href="#top" aria-label="Koç Elektronik ana sayfa">
+      <span class="brand-mark" aria-hidden="true">KE</span>
+      <span>Koç Elektronik<small>Teknik Servis</small></span>
+    </a>
+    <ul class="links" id="links">
+      <li><a href="#hizmetler">Hizmetler</a></li>
+      <li><a href="#surec">Nasıl Çalışır</a></li>
+      <li><a href="#neden">Neden Biz</a></li>
+      <li><a href="#sss">SSS</a></li>
+      <li><a href="#iletisim">İletişim</a></li>
+    </ul>
+    <a class="btn btn-cta" data-tel href="#iletisim" aria-label="Hemen ara"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span class="call-txt">Hemen Ara</span></a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="links" aria-label="Menüyü aç"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <div class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="pill"><span class="dot"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>Ücretsiz arıza tespiti</span>
+        <h1>Cihazınız bozuldu mu? <em>Biz onarırız.</em></h1>
+        <p class="lead">Televizyondan bilgisayara, telefondan ses sistemine kadar tüm elektronik cihazlarınız için hızlı, şeffaf ve garantili teknik servis.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-wa" data-wa href="#iletisim"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp'tan Yaz</a>
+          <a class="btn btn-ghost" data-tel href="#iletisim"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span data-phone-text>Hemen Ara</span></a>
+        </div>
+        <ul class="badges">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>Garantili onarım</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-tag"/></svg>Onaysız işlem yok</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-receipt"/></svg>Servis fişi ile takip</li>
+        </ul>
+      </div>
+
+      <div class="track" role="img" aria-label="Örnek servis takibi: cihaz onarımda, tamamlanınca WhatsApp ile bilgilendirme yapılır">
+        <div class="track-h"><b>Servis Takibi</b><span>Fiş No: KE-0000</span></div>
+        <div class="device">
+          <svg class="ic" aria-hidden="true"><use href="#i-tv"/></svg>
+          <div><b>LED Televizyon</b><small>Arıza: Görüntü gelmiyor</small></div>
+        </div>
+        <ol class="steps-mini">
+          <li class="done"><span class="s"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>Cihaz teslim alındı</li>
+          <li class="done"><span class="s"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>Arıza tespit edildi, fiyat onaylandı</li>
+          <li class="now"><span class="s"></span>Onarım yapılıyor</li>
+          <li><span class="s"></span>Test ve teslime hazır</li>
+        </ol>
+        <div class="notify"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg>Cihazınız hazır olunca WhatsApp'tan haber veriyoruz.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HİZMETLER -->
+  <section id="hizmetler">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <span class="eyebrow">Hizmetlerimiz</span>
+        <h2>Hangi cihaz olursa olsun, arızayı bulup çözüyoruz</h2>
+        <p>Kart seviyesinde onarımdan parça değişimine kadar, cihazınızı yenisini almadan önce bir de bize gösterin.</p>
+      </div>
+      <div class="grid3">
+        <article class="svc rv"><svg class="ic" aria-hidden="true"><use href="#i-tv"/></svg><h3>TV ve Monitör</h3><p>LED, LCD, OLED ve Smart TV'lerde görüntü, ses ve güç arızaları.</p><ul><li>Panel / LED bar</li><li>Anakart</li><li>Güç kartı</li></ul></article>
+        <article class="svc rv"><svg class="ic" aria-hidden="true"><use href="#i-laptop"/></svg><h3>Bilgisayar ve Laptop</h3><p>Açılmayan, ısınan, yavaşlayan bilgisayarlar için donanım ve yazılım çözümleri.</p><ul><li>Ekran / klavye</li><li>Format</li><li>SSD yükseltme</li></ul></article>
+        <article class="svc rv"><svg class="ic" aria-hidden="true"><use href="#i-mobile"/></svg><h3>Telefon ve Tablet</h3><p>Kırık ekran, şarj sorunu, batarya ve kamera arızalarında hızlı müdahale.</p><ul><li>Ekran değişimi</li><li>Batarya</li><li>Şarj soketi</li></ul></article>
+        <article class="svc rv"><svg class="ic" aria-hidden="true"><use href="#i-speaker"/></svg><h3>Ses Sistemleri</h3><p>Amfi, hoparlör, soundbar ve müzik setlerinde ses ve güç onarımı.</p><ul><li>Amfi</li><li>Soundbar</li><li>Hoparlör</li></ul></article>
+        <article class="svc rv"><svg class="ic" aria-hidden="true"><use href="#i-sat"/></svg><h3>Uydu ve Anten</h3><p>Uydu alıcısı onarımı, çanak ayarı ve sinyal sorunlarının giderilmesi.</p><ul><li>Uydu alıcısı</li><li>Çanak ayarı</li><li>Kurulum</li></ul></article>
+        <article class="svc rv"><svg class="ic" aria-hidden="true"><use href="#i-game"/></svg><h3>Oyun Konsolu ve Diğer</h3><p>Konsollar, kumandalar ve küçük elektronik cihazlar için arıza tespiti.</p><ul><li>HDMI port</li><li>Fan / ısınma</li><li>Kumanda</li></ul></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SÜREÇ -->
+  <section class="process" id="surec">
+    <div class="wrap">
+      <div class="sec-h center rv" style="text-align:center">
+        <span class="eyebrow">Nasıl Çalışır</span>
+        <h2>4 adımda sorunsuz servis</h2>
+        <p>Cihazınızın her aşamasından haberdar olursunuz. Onayınız olmadan hiçbir işlem yapılmaz.</p>
+      </div>
+      <ol class="steps">
+        <li class="step rv"><h3>Cihazı getirin</h3><p>Dükkanımıza getirin, servis fişinizi hemen alın.</p></li>
+        <li class="step rv"><h3>Ücretsiz tespit</h3><p>Arızayı inceleyip size net fiyat ve süre bildiririz.</p></li>
+        <li class="step rv"><h3>Onay ve onarım</h3><p>Onayınızla kaliteli parçalarla onarıma başlarız.</p></li>
+        <li class="step rv"><h3>Garantili teslim</h3><p>Test edilmiş cihazınızı garanti belgesiyle teslim alın.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- NEDEN BİZ -->
+  <section id="neden">
+    <div class="wrap why">
+      <aside class="why-aside rv">
+        <span class="eyebrow" style="color:var(--sky-l)">Neden Koç Elektronik</span>
+        <h2>Güvenle teslim edin, içiniz rahat olsun</h2>
+        <p>Her cihaz kayıt altına alınır, her işlem fişe işlenir. Ne yapıldığını, ne kadar tuttuğunu baştan bilirsiniz.</p>
+        <a class="btn btn-cta" data-tel href="#iletisim"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Bizi Arayın</a>
+        <a class="btn btn-ghost" href="#iletisim">Arıza Bildir</a>
+      </aside>
+      <div class="why-list">
+        <div class="why-item rv"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><div><h3>Ücretsiz arıza tespiti</h3><p>Önce sorunu buluruz, sonra karar sizin.</p></div></div>
+        <div class="why-item rv"><svg class="ic" aria-hidden="true"><use href="#i-tag"/></svg><div><h3>Şeffaf fiyat</h3><p>Sürpriz ücret yok; onay vermeden işlem yapılmaz.</p></div></div>
+        <div class="why-item rv"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><div><h3>Garantili işçilik</h3><p>Yapılan onarım ve değişen parçalar garanti kapsamında.</p></div></div>
+        <div class="why-item rv"><svg class="ic" aria-hidden="true"><use href="#i-chip"/></svg><div><h3>Kart seviyesinde onarım</h3><p>Sadece parça değiştirmeyiz, elektronik kartı onarırız.</p></div></div>
+        <div class="why-item rv"><svg class="ic" aria-hidden="true"><use href="#i-receipt"/></svg><div><h3>Fişli kayıt sistemi</h3><p>Her cihaz numaralı servis fişiyle kayıt altında.</p></div></div>
+        <div class="why-item rv"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><div><h3>WhatsApp bilgilendirme</h3><p>Cihazınız hazır olunca anında mesaj alırsınız.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SSS -->
+  <section id="sss" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-h center rv" style="text-align:center">
+        <span class="eyebrow">Sıkça Sorulan Sorular</span>
+        <h2>Aklınıza takılanlar</h2>
+      </div>
+      <div class="faq">
+        <details class="rv"><summary>Arıza tespiti ücretli mi?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Hayır. Cihazınızı inceleyip arızayı ve onarım fiyatını ücretsiz bildiriyoruz. Onarımı onaylamazsanız cihazınızı aynen teslim alırsınız.</p></details>
+        <details class="rv"><summary>Onarım ne kadar sürer?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Süre arızaya ve parça durumuna göre değişir. Tespit sonrası size net bir süre bildiririz; birçok onarım aynı gün ya da birkaç gün içinde tamamlanır.</p></details>
+        <details class="rv"><summary>Yapılan onarımın garantisi var mı?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Evet. Yapılan işçilik ve değişen parçalar için garanti veriyoruz; garanti süresi servis fişinizde yazılıdır.</p></details>
+        <details class="rv"><summary>Cihazımın durumunu nasıl öğrenirim?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Servis fişinizdeki numara ile bizi arayabilir ya da WhatsApp'tan yazabilirsiniz. Cihazınız hazır olduğunda size biz de haber veriyoruz.</p></details>
+        <details class="rv"><summary>Telefondaki verilerim silinir mi?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Donanım onarımlarında verileriniz korunur. Format gerektiren durumlarda işlemden önce mutlaka size danışırız; yine de önemli verilerinizi yedeklemenizi öneririz.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section class="contact" id="iletisim">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <span class="eyebrow">İletişim</span>
+        <h2>Arızayı anlatın, hemen dönüş yapalım</h2>
+        <p>Formu doldurun, mesajınız hazır şekilde WhatsApp'ta açılsın. Ya da doğrudan arayın.</p>
+      </div>
+      <div class="c-grid">
+        <div class="c-info">
+          <a class="c-row" data-tel href="#iletisim"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><div><small>Telefon</small><span data-phone-text>Telefon numarası</span></div></a>
+          <a class="c-row" data-wa href="#iletisim" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg><div><small>WhatsApp</small><span>Mesaj gönderin</span></div></a>
+          <a class="c-row" data-map href="#iletisim" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><div><small>Adres</small><span data-address>Adres</span></div></a>
+          <div class="c-row"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><div><small>Çalışma Saatleri</small><span data-hours>Çalışma saatleri</span></div></div>
+        </div>
+
+        <form class="form" id="form" novalidate>
+          <h3>Arıza Bildir</h3>
+          <p class="sub">Bilgileriniz yalnızca WhatsApp mesajınızı hazırlamak için kullanılır.</p>
+          <div class="f2">
+            <div class="field"><label for="ad">Adınız</label><input id="ad" name="ad" autocomplete="name" required aria-describedby="ad-err"><span class="err" id="ad-err" role="alert"></span></div>
+            <div class="field"><label for="tel">Telefonunuz</label><input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="05xx xxx xx xx"></div>
+          </div>
+          <div class="field"><label for="cihaz">Cihaz</label>
+            <select id="cihaz" name="cihaz">
+              <option>Televizyon / Monitör</option><option>Bilgisayar / Laptop</option><option>Telefon / Tablet</option>
+              <option>Ses Sistemi</option><option>Uydu Alıcısı / Anten</option><option>Oyun Konsolu</option><option>Diğer</option>
+            </select>
+          </div>
+          <div class="field"><label for="ariza">Arıza açıklaması</label><textarea id="ariza" name="ariza" required placeholder="Örn: Televizyon açılıyor ama görüntü gelmiyor" aria-describedby="ariza-err"></textarea><span class="err" id="ariza-err" role="alert"></span></div>
+          <button class="btn btn-wa" type="submit"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>WhatsApp ile Gönder</button>
+          <p class="note">Gönder'e basınca WhatsApp açılır; mesajı kontrol edip gönderebilirsiniz.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap f-in">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">KE</span><span>Koç Elektronik</span></a>
+    <span>© <span id="yil"></span> Koç Elektronik. Tüm hakları saklıdır.</span>
+  </div>
+</footer>
+
+<div class="m-bar">
+  <a class="btn btn-cta" data-tel href="#iletisim"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Ara</a>
+  <a class="btn btn-wa" data-wa href="#iletisim" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+</div>
+
+<script>
+/* ===== İŞLETME BİLGİLERİ: Sadece burayı düzenleyin ===== */
+const ISLETME = {
+  telefon:  "",            // örn: "0532 123 45 67"
+  whatsapp: "",            // ülke koduyla, boşluksuz: örn "905321234567"
+  adres:    "",            // örn: "Atatürk Cad. No:12, Merkez / Şehir"
+  saatler:  "Pzt–Cmt 09:00–19:00",
+};
+/* ======================================================== */
+
+const digits = s => (s || "").replace(/\D/g, "");
+const toIntl = d => d.startsWith("90") ? "+" + d : "+90" + d.replace(/^0/, "");
+const telHref = ISLETME.telefon ? "tel:" + toIntl(digits(ISLETME.telefon)) : "#iletisim";
+const waBase  = ISLETME.whatsapp ? "https://wa.me/" + digits(ISLETME.whatsapp) : "";
+
+document.querySelectorAll("[data-tel]").forEach(a => a.href = telHref);
+document.querySelectorAll("[data-wa]").forEach(a => {
+  if (waBase) a.href = waBase + "?text=" + encodeURIComponent("Merhaba Koç Elektronik, cihazım için bilgi almak istiyorum.");
+  else { a.href = "#iletisim"; a.removeAttribute("target"); }
+});
+document.querySelectorAll("[data-phone-text]").forEach(el => { if (ISLETME.telefon) el.textContent = ISLETME.telefon; });
+document.querySelectorAll("[data-address]").forEach(el => { if (ISLETME.adres) el.textContent = ISLETME.adres; });
+document.querySelectorAll("[data-hours]").forEach(el => el.textContent = ISLETME.saatler);
+document.querySelectorAll("[data-map]").forEach(a => {
+  if (ISLETME.adres) a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Koç Elektronik " + ISLETME.adres);
+  else { a.removeAttribute("target"); }
+});
+document.getElementById("yil").textContent = new Date().getFullYear();
+
+/* Mobil menü */
+const menuBtn = document.getElementById("menuBtn"), links = document.getElementById("links");
+const setMenu = open => {
+  links.classList.toggle("open", open);
+  menuBtn.setAttribute("aria-expanded", open);
+  menuBtn.setAttribute("aria-label", open ? "Menüyü kapat" : "Menüyü aç");
+  menuBtn.querySelector("use").setAttribute("href", open ? "#i-x" : "#i-menu");
+};
+menuBtn.addEventListener("click", () => setMenu(!links.classList.contains("open")));
+links.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+
+/* Arıza formu -> WhatsApp */
+const form = document.getElementById("form");
+const setErr = (id, msg) => {
+  const el = document.getElementById(id);
+  el.setAttribute("aria-invalid", msg ? "true" : "false");
+  document.getElementById(id + "-err").textContent = msg;
+  return !msg;
+};
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const f = Object.fromEntries(new FormData(form));
+  const ok = [setErr("ad", f.ad.trim() ? "" : "Lütfen adınızı yazın."),
+              setErr("ariza", f.ariza.trim() ? "" : "Lütfen arızayı kısaca anlatın.")].every(Boolean);
+  if (!ok) { form.querySelector('[aria-invalid="true"]').focus(); return; }
+  const msg = `Merhaba Koç Elektronik,\n\nAd: ${f.ad.trim()}${f.tel ? "\nTelefon: " + f.tel.trim() : ""}\nCihaz: ${f.cihaz}\nArıza: ${f.ariza.trim()}`;
+  const url = (waBase || "https://wa.me/") + "?text=" + encodeURIComponent(msg);
+  window.open(url, "_blank", "noopener");
+});
+
+/* Kaydırınca beliren içerik */
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".rv").forEach(el => io.observe(el));
+} else document.querySelectorAll(".rv").forEach(el => el.classList.add("in"));
+</script>
+</body>
+</html>
