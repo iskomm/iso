@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Koç Elektronik | Dokuma Tezgâhı ve Endüstriyel Elektronik Onarımı</title>
+<meta name="description" content="Dokuma tezgâhı ve endüstriyel elektronik kart tamiri, operatör ekranı, CAN Bus / RS-485, forklift, PLC, sürücü ve ECU onarımı. Tüm Türkiye'de saha servis. 0553 115 36 94">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" type="image/png" href="assets/logo-lacivert.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --text:#1D1D1F; --text2:#6E6E73; --text3:#86868B; --bg:#FFFFFF; --bg2:#F5F5F7; --line:#D2D2D7;
+  --blue:#0071E3; --blue-h:#0077ED; --link:#0066CC; --link-d:#2997FF;
+  --black:#000000; --dark:#161617; --dark2:#1D1D1F; --red:#E30613;
+  --wa:#25D366; --wa-ink:#052E16;
+  --max:1024px; --wide:1200px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:56px;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);font-size:17px;line-height:1.47;letter-spacing:-.022em;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.025em;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+.ic{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:8px;z-index:60;background:#fff;padding:8px 14px;border-radius:8px}
+.skip:focus{left:8px}
+
+/* Butonlar ve bağlantılar */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 22px;border-radius:980px;border:0;
+  font:400 17px/1 var(--font);letter-spacing:-.022em;text-decoration:none;cursor:pointer;transition:background-color .2s,color .2s}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:var(--blue-h)}
+.btn-wa{background:var(--wa);color:var(--wa-ink)}
+.btn-wa:hover{background:#4ADE80}
+.btn .ic{width:18px;height:18px}
+.more{display:inline-flex;align-items:center;color:var(--link);text-decoration:none;font-size:17px;min-height:44px;cursor:pointer}
+.more:hover{text-decoration:underline}
+.more::after{content:"›";font-size:1.3em;line-height:1;margin-left:5px;transform:translateY(-1px)}
+.dark .more,.tile.dk .more{color:var(--link-d)}
+.tile.dk h2,.tile.dk p,.tile.dk .more{text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.tile.dk .more{color:#5AB0FF}
+.ctas{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:center;align-items:center;margin-top:24px}
+
+/* Global menü */
+.gnav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.08)}
+.gnav-in{max-width:var(--max);margin:0 auto;height:52px;padding:0 22px;display:flex;align-items:center;gap:8px}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;min-height:44px}
+.brand img{width:26px;height:25px}
+.brand span{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.links{display:flex;list-style:none;margin:0 auto;padding:0}
+.links a{display:flex;align-items:center;min-height:44px;padding:0 9px;text-decoration:none;font-size:12.5px;color:rgba(0,0,0,.8);letter-spacing:-.01em;transition:color .2s}
+.links a:hover{color:#000}
+.gnav .btn{min-height:32px;padding:7px 15px;font-size:13px}
+.menu-btn{display:none;width:44px;height:44px;border:0;background:transparent;color:var(--text);cursor:pointer;place-items:center}
+@media (max-width:900px){
+  .links{display:none;position:fixed;top:52px;left:0;right:0;bottom:0;flex-direction:column;margin:0;padding:16px 40px;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+  .links.open{display:flex}
+  .links a{font-size:26px;font-weight:600;min-height:56px;padding:0;color:var(--text)}
+  .menu-btn{display:grid}
+  .gnav .btn{margin-left:auto}
+}
+
+/* Hero */
+.hero{padding:76px 0 0;text-align:center;overflow:hidden}
+.eyebrow{font-size:21px;font-weight:600;color:var(--red);letter-spacing:-.01em}
+.hero h1{font-size:clamp(46px,8vw,96px);line-height:1.04;font-weight:700;letter-spacing:-.035em;margin-top:8px}
+.hero .sub{font-size:clamp(24px,3vw,32px);line-height:1.15;font-weight:600;margin-top:6px;letter-spacing:-.025em;color:var(--text2)}
+.hero .lead{font-size:clamp(17px,1.7vw,21px);color:var(--text2);max-width:640px;margin:18px auto 0;line-height:1.4}
+.hero-img{margin:56px auto 0;max-width:var(--wide);padding:0 22px}
+.hero-img img{width:100%;aspect-ratio:2.2/1;object-fit:cover;border-radius:28px;background:#000}
+
+/* Değerler */
+.values{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:72px 0 88px}
+.val{text-align:center}
+.val .ic{width:40px;height:40px;margin:0 auto 14px;stroke-width:1.5}
+.val b{display:block;font-size:19px;font-weight:600;letter-spacing:-.02em}
+.val span{display:block;margin-top:4px;font-size:15px;color:var(--text2);line-height:1.4}
+
+/* Karo ızgarası */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 12px 12px;max-width:1440px;margin:0 auto}
+.tile{position:relative;overflow:hidden;background:var(--bg2);text-align:center;padding:52px 28px 40px;min-height:580px;display:flex;flex-direction:column;align-items:center;isolation:isolate}
+.tile.full{grid-column:1/-1;min-height:640px}
+.tile h2{font-size:clamp(32px,4vw,48px);line-height:1.08;font-weight:600}
+.tile p{font-size:clamp(19px,1.8vw,24px);line-height:1.2;margin-top:8px;letter-spacing:-.015em}
+.tile .ctas{margin-top:14px}
+.tile.dk{background:var(--black);color:#F5F5F7}
+.tile .t-img{position:absolute;inset:0;z-index:-2;width:100%;height:100%!important;object-fit:cover}
+.tile.dk::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.88) 0%,rgba(0,0,0,.5) 36%,rgba(0,0,0,0) 64%)}
+.tile.lt::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(245,245,247,.98) 0%,rgba(245,245,247,.8) 34%,rgba(245,245,247,0) 60%)}
+
+/* Bölüm başlıkları */
+section{padding:110px 0}
+.sec-h{text-align:center;max-width:820px;margin:0 auto 56px}
+.sec-h .eyebrow{font-size:19px}
+.sec-h h2{font-size:clamp(36px,5vw,56px);line-height:1.07;font-weight:600;margin-top:6px}
+.sec-h p{font-size:clamp(19px,1.8vw,21px);color:var(--text2);margin-top:16px;line-height:1.42}
+.gray{background:var(--bg2)}
+.dark{background:var(--black);color:#F5F5F7}
+.dark .sec-h p{color:#A1A1A6}
+
+/* Kartlar */
+.card{background:#fff;border-radius:28px;padding:40px}
+.card.alt{background:var(--bg2)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card small{display:block;font-size:14px;font-weight:600;color:var(--text3);letter-spacing:-.01em}
+.card h3{font-size:28px;line-height:1.14;margin-top:6px}
+.card ul{list-style:none;margin:20px 0 0;padding:0}
+.card li{padding:12px 0;border-top:1px solid #E8E8ED;font-size:17px}
+.card.alt li{border-color:#DCDCE0}
+.card li:first-child{border-top:0}
+.card li span{display:block;font-size:15px;color:var(--text2);margin-top:2px}
+
+/* Markalar */
+.brands{margin-top:20px;display:grid;grid-template-columns:1.2fr 2fr;gap:28px;align-items:center}
+.brands h3{font-size:28px}
+.brands p{font-size:17px;color:var(--text2);margin-top:10px}
+.brand-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.brand-list li{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;border-radius:18px;background:var(--bg2);font-size:22px;font-weight:600;letter-spacing:-.02em;text-align:center;padding:12px}
+.brand-list li small{font-size:13px;font-weight:400;color:var(--text2);letter-spacing:0;margin-top:2px}
+
+/* Modüller */
+.mods{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.mod{background:#fff;border-radius:18px;padding:22px 12px;text-align:center}
+.mod b{display:block;font-size:24px;font-weight:600;letter-spacing:-.02em}
+.mod small{display:block;font-size:13px;color:var(--text2);margin-top:4px}
+.mod.plus{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.flow{margin-top:64px;display:grid;grid-template-columns:repeat(4,1fr);gap:28px;text-align:center}
+.flow b{display:block;font-size:48px;line-height:1;font-weight:600;letter-spacing:-.03em;background:linear-gradient(180deg,#1D1D1F,#86868B);-webkit-background-clip:text;background-clip:text;color:transparent}
+.flow strong{display:block;font-size:19px;font-weight:600;margin-top:12px}
+.flow span{display:block;font-size:15px;color:var(--text2);margin-top:2px}
+
+/* Kart tamiri (koyu) */
+.wide-img{max-width:var(--wide);margin:0 auto;padding:0 22px}
+.wide-img img{width:100%;aspect-ratio:2.1/1;object-fit:cover;border-radius:28px}
+.steps{list-style:none;margin:64px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;counter-reset:s}
+.steps li{counter-increment:s;padding-top:22px;border-top:1px solid #424245}
+.steps li::before{content:counter(s,decimal-leading-zero);display:block;font-size:15px;font-weight:600;color:var(--link-d);margin-bottom:10px}
+.steps strong{display:block;font-size:19px;font-weight:600}
+.steps span{display:block;font-size:15px;color:#A1A1A6;margin-top:4px}
+.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:56px}
+.pills span{font-size:15px;padding:9px 18px;border-radius:980px;background:var(--dark2);color:#F5F5F7;box-shadow:inset 0 0 0 1px #424245}
+
+/* CAN şeması */
+.bus{margin-top:24px;border-radius:18px;background:#fff;padding:22px}
+.bus small{font-size:13px;color:var(--text2);font-weight:600}
+.bus-grid{display:grid;grid-template-columns:30px 1fr;gap:0 14px;margin-top:14px}
+.bus-line{grid-column:1;grid-row:1/span 7;position:relative}
+.bus-line::before,.bus-line::after{content:"";position:absolute;top:6px;bottom:6px;width:3px;border-radius:2px}
+.bus-line::before{left:8px;background:#FF3B30}
+.bus-line::after{left:18px;background:var(--blue)}
+.node{grid-column:2;position:relative;font-size:15px;padding:9px 14px;margin:4px 0;border-radius:10px;background:var(--bg2)}
+.node::before{content:"";position:absolute;right:100%;top:50%;width:22px;height:1px;background:#AEAEB2}
+.node.bad{background:#FF3B30;color:#fff}
+.node.term{background:transparent;color:var(--text2);font-size:13px;padding:2px 14px}
+.node.term::before{display:none}
+
+/* Saha */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.split img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:28px}
+.split .sec-h{text-align:left;margin:0 0 28px}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:grid;grid-template-columns:32px 1fr;gap:14px;padding:18px 0;border-top:1px solid #424245}
+.list .ic{color:var(--link-d)}
+.list strong{display:block;font-size:19px;font-weight:600}
+.list span{display:block;font-size:15px;color:#A1A1A6;margin-top:2px}
+.region{margin-top:28px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:22px 26px;border-radius:18px;background:var(--dark2)}
+.region small{display:block;font-size:13px;color:#A1A1A6}
+.region b{font-size:24px;font-weight:600;letter-spacing:-.02em}
+
+/* Forklift */
+.lift{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.lift-img{border-radius:28px;overflow:hidden;background:#ececf0}
+.lift-img{display:flex;align-items:center;background:linear-gradient(180deg,#f5f5f7,#e3e3e8)}
+.lift-img img{width:100%;height:auto;object-fit:contain}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.feat .card{padding:28px}
+.feat .ic{width:32px;height:32px;color:var(--blue);margin-bottom:14px;stroke-width:1.6}
+.feat b{display:block;font-size:19px;font-weight:600}
+.feat span{display:block;font-size:15px;color:var(--text2);margin-top:4px}
+.note{margin-top:56px;text-align:center;font-size:clamp(24px,2.8vw,32px);font-weight:600;letter-spacing:-.025em;line-height:1.15}
+.note span{display:block;font-size:19px;font-weight:400;color:var(--text2);margin-top:8px;letter-spacing:-.022em}
+
+/* PLC ECU */
+.ab .card{padding:0;overflow:hidden;display:flex;flex-direction:column}
+.ab .card img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.ab .cb{padding:36px 40px 40px}
+.ab .cb p{color:var(--text2);margin-top:10px}
+.ab-vis{aspect-ratio:16/10;background:#E8E8ED;display:flex;gap:10px;align-items:center;justify-content:center;padding:28px}
+.plc{display:flex;gap:6px;height:160px}
+.plc div{width:44px;border-radius:8px;background:#2C2C2E;position:relative}
+.plc div::before{content:"";position:absolute;left:8px;right:8px;top:10px;height:6px;border-radius:2px;background:#48484A}
+.plc div::after{content:"";position:absolute;left:10px;top:26px;width:6px;height:6px;border-radius:50%;background:#30D158;box-shadow:0 12px 0 #30D158,0 24px 0 #FF453A,12px 0 0 #30D158,12px 12px 0 #FFD60A}
+.plc .cpu{width:62px;background:#1C1C1E}
+.drv{width:128px;height:160px;border-radius:12px;background:#1C1C1E;color:#30D158;display:grid;place-items:center;font:600 20px/1 ui-monospace,Menlo,monospace;position:relative}
+.drv::after{content:"SÜRÜCÜ";position:absolute;bottom:14px;font:600 10px/1 var(--font);letter-spacing:.14em;color:#8E8E93}
+
+/* SSS */
+.faq{max-width:820px;margin:0 auto}
+.faq details{border-bottom:1px solid var(--line)}
+.faq details:first-child{border-top:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 4px;font-size:21px;font-weight:600;letter-spacing:-.02em;min-height:56px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .ic{color:var(--text2);transition:transform .25s}
+.faq details[open] summary .ic{transform:rotate(45deg)}
+.faq details p{padding:0 4px 24px;font-size:17px;color:var(--text2);max-width:680px}
+
+/* İletişim */
+.c-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:20px;align-items:start}
+.c-info{display:grid;gap:12px}
+.c-row{display:flex;gap:16px;align-items:center;padding:20px 22px;border-radius:18px;background:#fff;text-decoration:none;transition:background-color .2s}
+a.c-row:hover{background:#FBFBFD}
+.c-row .ic{width:44px;height:44px;padding:11px;border-radius:50%;background:var(--bg2);color:var(--blue)}
+.c-row.wa .ic{background:var(--wa);color:var(--wa-ink)}
+.c-row small{display:block;font-size:13px;color:var(--text2)}
+.c-row span{display:block;font-size:19px;font-weight:600;letter-spacing:-.02em;word-break:break-word}
+.form{background:#fff;border-radius:28px;padding:40px;display:grid;gap:16px}
+.form h3{font-size:28px}
+.form .sub{color:var(--text2);font-size:15px;margin-top:-8px}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fld{display:grid;gap:6px;align-content:start}
+.fld label,.fld legend{font-size:14px;font-weight:600;padding:0}
+.fld input,.fld select,.fld textarea{font:inherit;font-size:17px;letter-spacing:-.022em;color:var(--text);width:100%;min-height:52px;padding:14px 16px;border-radius:12px;border:1px solid #D2D2D7;background:#fff;transition:border-color .2s,box-shadow .2s}
+.fld textarea{min-height:120px;resize:vertical}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,113,227,.18)}
+.fld .err{font-size:13px;color:#E30000}
+.fld [aria-invalid="true"]{border-color:#E30000}
+fieldset.fld{border:0;margin:0;padding:0}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.seg label{display:flex;align-items:center;gap:10px;min-height:52px;padding:12px 16px;border-radius:12px;border:1px solid #D2D2D7;cursor:pointer;font-size:16px;transition:border-color .2s,box-shadow .2s}
+.seg input{width:18px;height:18px;margin:0;accent-color:var(--blue)}
+.seg label:has(input:checked){border-color:var(--blue);box-shadow:0 0 0 1px var(--blue)}
+.form .btn{width:100%;min-height:52px}
+.form .hint{font-size:13px;color:var(--text2);text-align:center}
+
+/* Footer */
+footer{background:var(--bg2);color:var(--text2);font-size:12px;line-height:1.5;padding:28px 0 32px;border-top:1px solid #E8E8ED}
+.f-top{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--line)}
+footer .brand span{color:var(--text)}
+footer .slogan{font-size:14px;color:var(--text)}
+footer .disc{margin-top:16px;max-width:860px}
+footer .copy{margin-top:10px}
+footer .copy a{color:var(--link)}
+
+/* Mobil alt çubuk */
+.m-bar{display:none}
+@media (max-width:640px){
+  .m-bar{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:40}
+  .m-bar .btn{box-shadow:0 8px 24px -8px rgba(0,0,0,.35)}
+  footer{padding-bottom:96px}
+}
+
+@media (max-width:1068px){
+  .mods{grid-template-columns:repeat(4,1fr)}
+  .steps{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:860px){
+  section{padding:80px 0}
+  .tiles{grid-template-columns:1fr}
+  .tile{min-height:520px}
+  .values{grid-template-columns:1fr 1fr;row-gap:40px}
+  .grid3,.grid2,.split,.lift,.c-grid,.brands{grid-template-columns:1fr}
+  .brand-list{grid-template-columns:1fr 1fr}
+  .flow{grid-template-columns:1fr 1fr;row-gap:36px}
+  .split img{aspect-ratio:4/3}
+}
+@media (max-width:560px){
+  .hero{padding-top:52px}
+  .hero-img img,.wide-img img{aspect-ratio:4/3;border-radius:20px}
+  .mods{grid-template-columns:repeat(3,1fr)}
+  .mod{padding:18px 6px}
+  .mod b{font-size:18px}
+  .steps{grid-template-columns:1fr 1fr}
+  .feat,.f2,.seg{grid-template-columns:1fr}
+  .card,.form{padding:28px 24px;border-radius:22px}
+  .ab .cb{padding:28px 24px}
+  .faq summary{font-size:18px}
+  .tile{min-height:480px;padding:44px 20px 32px}
+  .ab-vis{gap:8px;padding:18px}
+  .plc{height:120px;gap:4px}
+  .plc div{width:30px}
+  .plc .cpu{width:40px}
+  .plc div::before{left:6px;right:6px}
+  .plc div::after{left:7px}
+  .drv{width:92px;height:120px;font-size:15px}
+}
+
+
+/* ===== Animasyonlar ===== */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:70;background:linear-gradient(90deg,#0071E3,#5AB0FF);transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(.35em);filter:blur(10px);animation:wIn 1s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes wIn{to{opacity:1;transform:none;filter:blur(0)}}
+.hero-img{perspective:1200px}
+.hero-img img{will-change:transform;transform-origin:50% 0;transition:box-shadow .3s}
+.statement{padding:140px 0 120px}
+.quote{font-size:clamp(34px,5.4vw,68px);line-height:1.08;font-weight:600;letter-spacing:-.035em;text-align:center;max-width:980px;margin:0 auto}
+.quote span{color:#D2D2D7;transition:color .35s ease}
+.quote span.on{color:var(--text)}
+.quote span.hl.on{background:linear-gradient(90deg,#0071E3,#5AB0FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:0 0 120px;text-align:center}
+.stat b{display:block;font-size:clamp(48px,6vw,80px);line-height:1;font-weight:700;letter-spacing:-.04em;background:linear-gradient(180deg,#1D1D1F 30%,#6E6E73);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:10px;font-size:17px;color:var(--text2)}
+.marquee{overflow:hidden;padding:18px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.mq{display:flex;gap:12px;width:max-content;animation:mq 46s linear infinite}
+.mq.rev{animation-direction:reverse;animation-duration:52s}
+.marquee:hover .mq{animation-play-state:paused}
+.mq span{flex:none;font-size:17px;padding:12px 22px;border-radius:980px;background:var(--bg2);color:var(--text);white-space:nowrap}
+.mq span:nth-child(3n){background:#1D1D1F;color:#F5F5F7}
+.mq span:nth-child(5n){background:#E8F1FD;color:#0060C0}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mq-wrap{padding:28px 0 40px}
+.tile .t-img{transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.tile:hover .t-img{transform:scale(1.045)}
+.tile.rv{transform:scale(.96) translateY(30px)}
+.tile.rv.in{transform:none}
+.mod,.feat .card,.brand-list li{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,background-color .35s,opacity .7s}
+.mod:hover,.feat .card:hover,.brand-list li:hover{transform:translateY(-6px);box-shadow:0 18px 40px -18px rgba(0,0,0,.25)}
+.mod:hover b{color:var(--blue)}
+.steps li{position:relative}
+.steps li::after{content:"";position:absolute;top:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,#2997FF,#5AB0FF);transform:scaleX(0);transform-origin:0 50%;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.steps li.in::after{transform:scaleX(1)}
+.pkt{position:absolute;left:5px;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #0071E3,0 0 14px 4px rgba(0,113,227,.6);animation:pkt 3.2s linear infinite;top:0}
+.pkt:nth-child(2){animation-delay:1.06s}.pkt:nth-child(3){animation-delay:2.13s}
+@keyframes pkt{0%{top:0;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:calc(100% - 9px);opacity:0}}
+.node.bad{animation:bad 1.6s ease-in-out infinite}
+@keyframes bad{50%{box-shadow:0 0 0 6px rgba(255,59,48,.18)}}
+.region .btn,.gnav .btn-blue{position:relative}
+.ring::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 rgba(0,113,227,.55);animation:ring 2.4s ease-out infinite}
+@keyframes ring{70%,100%{box-shadow:0 0 0 14px rgba(0,113,227,0)}}
+@media (max-width:860px){.stats{grid-template-columns:1fr 1fr;row-gap:44px}.statement{padding:100px 0 90px}}
+@media (prefers-reduced-motion:reduce){
+  .hero h1 .w{opacity:1;transform:none;filter:none;animation:none}
+  .quote span{color:var(--text)}
+  .mq{animation:none}.pkt{display:none}.progress{display:none}
+  .steps li::after{transform:scaleX(1)}
+}
+
+/* Kaydırınca belirme */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.28,.11,.32,1),transform .8s cubic-bezier(.28,.11,.32,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">İçeriğe geç</a>
+<div class="progress" id="prog" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+  <symbol id="i-battery" viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2M6 11v2M10 11v2"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></symbol>
+  <symbol id="i-cable" viewBox="0 0 24 24"><path d="M17 21v-2a1 1 0 0 1-1-1v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1M19 15V6.5a1 1 0 0 0-7 0v11a1 1 0 0 1-7 0V9M21 21v-2h-4M3 5h4V3M7 5a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1V3"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+</svg>
+
+<header class="gnav" id="nav">
+  <nav class="gnav-in" aria-label="Ana menü">
+    <a class="brand" href="#top" aria-label="Koç Elektronik ana sayfa"><img src="assets/logo-lacivert.png" width="26" height="25" alt=""><span>Koç Elektronik</span></a>
+    <ul class="links" id="links">
+      <li><a href="#tezgah">Tezgâhlar</a></li>
+      <li><a href="#kartlar">Kartlar</a></li>
+      <li><a href="#kart-tamiri">Kart Tamiri</a></li>
+      <li><a href="#ekran">Ekran · CAN Bus</a></li>
+      <li><a href="#saha">Saha Servis</a></li>
+      <li><a href="#forklift">Forklift</a></li>
+      <li><a href="#plc-ecu">PLC · ECU</a></li>
+      <li><a href="#iletisim">İletişim</a></li>
+    </ul>
+    <a class="btn btn-blue ring" data-tel href="tel:+905531153694" aria-label="Ara: 0553 115 36 94">Ara</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="links" aria-label="Menüyü aç"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+  </nav>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <div class="hero" id="top">
+    <div class="wrap">
+      <p class="eyebrow rv">Koç Elektronik</p>
+      <h1 id="h1">Üretiminiz durmasın.</h1>
+      <p class="sub rv">Kartınız yeniden çalışsın.</p>
+      <p class="lead rv">Dokuma tezgâhları başta olmak üzere endüstriyel elektronik sistemler için bağımsız elektronik servis ve onarım. Tüm Türkiye'de.</p>
+      <div class="ctas rv">
+        <a class="btn btn-blue" data-tel href="tel:+905531153694">Arızayı bildirin</a>
+        <a class="more" data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener">WhatsApp'tan yazın</a>
+      </div>
+    </div>
+    <div class="hero-img rv" id="heroImg">
+      <img src="assets/pcb.svg" width="2400" height="1100" alt="Endüstriyel elektronik kontrol kartı" fetchpriority="high">
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="values">
+      <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-award"/></svg><b>Tecrübe ve uzmanlık</b><span>Tezgâh elektroniğinde saha deneyimi</span></div>
+      <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><b>Güvenilir hizmet</b><span>Test edilmiş, raporlu teslim</span></div>
+      <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-zap"/></svg><b>Hızlı çözüm</b><span>Duruş süresini kısaltan planlama</span></div>
+      <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><b>Tüm Türkiye</b><span>Yerinde tespit ve müdahale</span></div>
+    </div>
+  </div>
+
+  <div class="statement" id="statement">
+    <div class="wrap">
+      <p class="quote" id="quote">Yenisini almadan önce, <em>onarılabilir mi</em> bakalım. Arızalı kartı değiştirmek yerine onarmak; <em>maliyeti düşürür</em>, bekleme süresini kısaltır.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat rv"><b data-count="11" data-suffix="+">0</b><span>Kart ve modül tipi</span></div>
+      <div class="stat rv"><b data-count="5">0</b><span>Adımlı onarım süreci</span></div>
+      <div class="stat rv"><b data-count="81">0</b><span>İlde saha servis</span></div>
+      <div class="stat rv"><b data-count="100" data-prefix="%">0</b><span>Test edilerek teslim</span></div>
+    </div>
+  </div>
+
+  <!-- KARO IZGARASI -->
+  <div class="tiles">
+    <article class="tile dk full rv">
+      <img class="t-img" src="assets/pcb-tamir.svg" width="2400" height="1140" alt="" loading="lazy">
+      <h2>Elektronik kart tamiri</h2>
+      <p>Değiştirmeden önce onarın.</p>
+      <div class="ctas"><a class="more" href="#kart-tamiri">Daha fazla bilgi</a><a class="more" href="#iletisim">Arıza bildirin</a></div>
+    </article>
+    <article class="tile lt rv">
+      <img class="t-img" src="assets/tezgah.svg" width="1400" height="1160" alt="" loading="lazy">
+      <h2>Dokuma tezgâhı elektroniği</h2>
+      <p>Kancalı ve hava jetli tezgâhlar.</p>
+      <div class="ctas"><a class="more" href="#tezgah">Daha fazla bilgi</a></div>
+    </article>
+    <article class="tile dk rv">
+      <img class="t-img" src="assets/saha-kare.svg" width="1400" height="1160" alt="" loading="lazy">
+      <h2>Saha servis</h2>
+      <p>Tezgâh başında, tüm Türkiye'de.</p>
+      <div class="ctas"><a class="more" href="#saha">Daha fazla bilgi</a></div>
+    </article>
+    <article class="tile lt rv">
+      <img class="t-img" src="assets/forklift.svg" width="1200" height="1160" alt="" loading="lazy">
+      <h2>Forklift ve transpalet</h2>
+      <p>Kontrolörü atmadan önce bize gösterin.</p>
+      <div class="ctas"><a class="more" href="#forklift">Daha fazla bilgi</a></div>
+    </article>
+    <article class="tile dk rv">
+      <img class="t-img" src="assets/ecu.svg" width="1400" height="1000" alt="" loading="lazy">
+      <h2>PLC, sürücü ve ECU</h2>
+      <p>Otomasyondan otomotive.</p>
+      <div class="ctas"><a class="more" href="#plc-ecu">Daha fazla bilgi</a></div>
+    </article>
+  </div>
+
+  <div class="mq-wrap" aria-hidden="true">
+    <div class="marquee"><div class="mq"><span>Elektronik kart tamiri</span><span>SMD rework</span><span>THT lehimleme</span><span>Osiloskop analizi</span><span>CAN Bus</span><span>RS-485</span><span>Operatör ekranı</span><span>Servo sürücü</span><span>Frekans invertörü</span><span>PLC CPU ve I/O</span><span>Otomotiv ECU</span><span>Güç katı onarımı</span><span>Elektronik kart tamiri</span><span>SMD rework</span><span>THT lehimleme</span><span>Osiloskop analizi</span><span>CAN Bus</span><span>RS-485</span><span>Operatör ekranı</span><span>Servo sürücü</span><span>Frekans invertörü</span><span>PLC CPU ve I/O</span><span>Otomotiv ECU</span><span>Güç katı onarımı</span></div></div>
+    <div class="marquee"><div class="mq rev"><span>Saha servis</span><span>Yük altında test</span><span>Lityum batarya BMS</span><span>Şarj cihazları</span><span>Motor kontrol ünitesi</span><span>Arızalı node tespiti</span><span>Sonlandırma kontrolü</span><span>Önleyici bakım</span><span>Teknik danışmanlık</span><span>Hata kodu analizi</span><span>Kart değişimi ve devreye alma</span><span>Raporlu teslim</span><span>Saha servis</span><span>Yük altında test</span><span>Lityum batarya BMS</span><span>Şarj cihazları</span><span>Motor kontrol ünitesi</span><span>Arızalı node tespiti</span><span>Sonlandırma kontrolü</span><span>Önleyici bakım</span><span>Teknik danışmanlık</span><span>Hata kodu analizi</span><span>Kart değişimi ve devreye alma</span><span>Raporlu teslim</span></div></div>
+  </div>
+
+  <!-- TEZGÂHLAR -->
+  <section class="gray" id="tezgah">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <p class="eyebrow">Ana uzmanlık alanımız</p>
+        <h2>Dokuma tezgâhı elektroniği.</h2>
+        <p>Kancalı ve hava jetli dokuma tezgâhlarının kart, sürücü, sensör ve haberleşme arızalarında uçtan uca onarım.</p>
+      </div>
+      <div class="grid3">
+        <div class="card rv"><small>Kancalı (Rapier)</small><h3>Kancalı tezgâhlar</h3>
+          <ul><li>Kontrol kartları (MCB · MB)</li><li>Güç modülü ve sürücüler</li><li>Sensör ve haberleşme</li></ul></div>
+        <div class="card rv"><small>Hava Jetli (Air-Jet)</small><h3>Hava jetli tezgâhlar</h3>
+          <ul><li>Kontrol ve sürücü kartları</li><li>Valf ve sensör elektroniği</li><li>CAN Bus / RS-485 hatları</li></ul></div>
+        <div class="card rv"><small>Tüm tezgâh tipleri</small><h3>Ortak arızalar</h3>
+          <ul><li>Elektronik kart onarımı</li><li>Besleme ve güç arızaları</li><li>Operatör ekranı</li></ul></div>
+      </div>
+      <div class="card brands rv">
+        <div>
+          <h3>Başlıca destek verdiğimiz tezgâhlar.</h3>
+          <p>Farklı marka kancalı ve hava jetli dokuma tezgâhlarında arıza tespiti, onarım ve saha servisi. Listede olmayan tezgâhlar için de bize ulaşın.</p>
+        </div>
+        <ul class="brand-list" aria-label="Başlıca destek verdiğimiz tezgâh markaları">
+          <li>Picanol</li><li>Itema</li><li>Leonardo</li><li>vb.<small>Diğer markalar</small></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- KARTLAR -->
+  <section class="gray" id="kartlar" style="padding-top:20px">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <p class="eyebrow">Tezgâh elektroniği</p>
+        <h2>Onardığımız kart ve modüller.</h2>
+        <p>Dokuma tezgâhlarındaki kontrol, güç ve sürücü kartlarında arıza tespiti, onarım ve fonksiyon testi. Listede olmayan kartlar için de bize ulaşın.</p>
+      </div>
+      <div class="mods rv">
+        <div class="mod"><b>MCB</b><small>Kart onarımı</small></div>
+        <div class="mod"><b>MB</b><small>Kart onarımı</small></div>
+        <div class="mod"><b>CBMP</b><small>Kart onarımı</small></div>
+        <div class="mod"><b>PowerBox</b><small>Güç modülü</small></div>
+        <div class="mod"><b>LDEC</b><small>Sürücü onarımı</small></div>
+        <div class="mod"><b>TRIAX</b><small>Kart onarımı</small></div>
+        <div class="mod"><b>TUPULO</b><small>Kart onarımı</small></div>
+        <div class="mod"><b>SUMO</b><small>Tahrik elektroniği</small></div>
+        <div class="mod"><b>DDMP</b><small>Kart onarımı</small></div>
+        <div class="mod"><b>ETU</b><small>Kart onarımı</small></div>
+        <div class="mod"><b>ELOFA</b><small>Kart onarımı</small></div>
+        <div class="mod plus"><b>+</b><small>Diğer kart ve sürücüler</small></div>
+      </div>
+      <div class="flow rv" aria-label="Her modül için süreç">
+        <div><b>01</b><strong>Ön kontrol</strong><span>Görsel ve ölçümsel inceleme</span></div>
+        <div><b>02</b><strong>Arıza tespiti</strong><span>Sinyal ve besleme analizi</span></div>
+        <div><b>03</b><strong>Onarım</strong><span>Komponent seviyesinde</span></div>
+        <div><b>04</b><strong>Test ve teslim</strong><span>Fonksiyon testi, raporlu</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KART TAMİRİ -->
+  <section class="dark" id="kart-tamiri">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <p class="eyebrow" style="color:#FF453A">Elektronik kart tamiri</p>
+        <h2>Değiştirmeden önce onarın.</h2>
+        <p>Arızalı kartı komponent seviyesinde inceliyor, test ederek teslim ediyoruz. Onarmak; maliyeti düşürür, bekleme süresini kısaltır.</p>
+      </div>
+    </div>
+    <div class="wide-img rv"><img src="assets/pcb-tamir.svg" width="2400" height="1140" alt="Havya ile elektronik kart üzerinde komponent seviyesinde lehimleme" loading="lazy"></div>
+    <div class="wrap">
+      <ol class="steps rv">
+        <li><strong>Kabul ve kayıt</strong><span>Arıza bilgisi ve kart kimliği kayda alınır.</span></li>
+        <li><strong>Ön inceleme</strong><span>Yanık, korozyon, çatlak lehim kontrolü.</span></li>
+        <li><strong>Arıza tespiti</strong><span>Besleme, sinyal ve komponent ölçümleri.</span></li>
+        <li><strong>Onarım</strong><span>SMD / THT komponent değişimi ve rework.</span></li>
+        <li><strong>Test ve teslim</strong><span>Fonksiyon testi, raporla teslim.</span></li>
+      </ol>
+      <div class="pills rv" aria-label="Yetkinlikler"><span>SMD rework</span><span>THT lehimleme</span><span>Osiloskop analizi</span><span>Güç katı onarımı</span><span>Yük altında test</span></div>
+    </div>
+  </section>
+
+  <!-- EKRAN + CAN -->
+  <section id="ekran">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <p class="eyebrow">Arayüz ve iletişim</p>
+        <h2>Operatör ekranları, CAN Bus ve RS-485.</h2>
+      </div>
+      <div class="grid2">
+        <div class="card alt rv">
+          <small>Operatör ekranları</small><h3>Ekran ve dokunmatik panel</h3>
+          <ul>
+            <li>Dokunmatik panel<span>Tepkisiz veya kayık dokunma arızaları</span></li>
+            <li>Görüntü ve arka aydınlatma<span>Karanlık, soluk veya çizgili ekran</span></li>
+            <li>Besleme kartı<span>Açılmayan, kendiliğinden kapanan ekran</span></li>
+            <li>Bağlantı hataları<span>Tezgâh ile iletişim kuramayan panel</span></li>
+          </ul>
+        </div>
+        <div class="card alt rv">
+          <small>CAN Bus / RS-485</small><h3>Haberleşme hattı</h3>
+          <ul>
+            <li>Hat analizi<span>Sinyal seviyesi ve dalga şekli ölçümü</span></li>
+            <li>Sonlandırma kontrolü<span>Eksik ya da hatalı uç direnci</span></li>
+            <li>Arızalı node tespiti<span>Hattı kilitleyen modülün bulunması</span></li>
+            <li>Kablo ve konnektör<span>Kopuk, kısa devre, oksitli bağlantı</span></li>
+            <li>Transceiver onarımı<span>Kart üzerindeki haberleşme katı</span></li>
+          </ul>
+          <div class="bus" role="img" aria-label="Şematik: tezgâh haberleşme hattı. İki ucunda 120 ohm sonlandırma; hat üzerinde operatör ekranı, MCB, PowerBox, LDEC ve SUMO sürücü düğümleri. Örnekte MCB arızalı düğüm olarak işaretli.">
+            <small>Tezgâh haberleşme hattı · şematik</small>
+            <div class="bus-grid">
+              <div class="bus-line"><span class="pkt"></span><span class="pkt"></span><span class="pkt"></span></div>
+              <div class="node term">120Ω sonlandırma</div>
+              <div class="node">Operatör ekranı</div>
+              <div class="node bad">MCB — arızalı node</div>
+              <div class="node">PowerBox</div>
+              <div class="node">LDEC sürücü</div>
+              <div class="node">SUMO sürücü</div>
+              <div class="node term">120Ω sonlandırma</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAHA SERVİS -->
+  <section class="dark" id="saha">
+    <div class="wrap split">
+      <img class="rv" src="assets/saha.svg" width="1200" height="1500" alt="Tezgâh başında CAN Bus hattını ölçen el tipi osiloskop" loading="lazy">
+      <div class="rv">
+        <div class="sec-h">
+          <p class="eyebrow" style="color:#FF453A">Tezgâh başında destek</p>
+          <h2>Saha servis ve teknik destek.</h2>
+        </div>
+        <ul class="list">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><div><strong>Yerinde arıza tespiti</strong><span>Tezgâh başında ölçüm ve analiz</span></div></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-chip"/></svg><div><strong>Kart değişimi ve devreye alma</strong><span>Onarılmış kartın montajı ve testi</span></div></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><div><strong>Önleyici bakım</strong><span>Pano, besleme ve bağlantı kontrolleri</span></div></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-msg"/></svg><div><strong>Teknik danışmanlık</strong><span>Tekrarlayan arızalara kalıcı çözüm</span></div></li>
+        </ul>
+        <div class="region">
+          <div><small>Hizmet bölgesi</small><b>Tüm Türkiye</b></div>
+          <a class="btn btn-blue" data-tel href="tel:+905531153694"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span data-phone-text>0553 115 36 94</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORKLIFT -->
+  <section class="gray" id="forklift">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <p class="eyebrow">Lojistik elektroniği</p>
+        <h2>Elektrikli forklift ve transpalet elektroniği.</h2>
+      </div>
+      <div class="lift">
+        <div class="lift-img rv"><img src="assets/forklift.svg" width="1200" height="1160" alt="Elektrikli forklift ve kontrol ünitesi" loading="lazy"></div>
+        <div class="feat">
+          <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg><b>Motor kontrol üniteleri</b><span>Sürüş ve kaldırma kontrolörleri</span></div>
+          <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-monitor"/></svg><b>Gösterge ve kumanda</b><span>Ekran, tuş takımı, kumanda kolu</span></div>
+          <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-plug"/></svg><b>Şarj cihazları</b><span>Şarj etmeyen, hata veren cihazlar</span></div>
+          <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-cable"/></svg><b>Sensör ve kablo demeti</b><span>Enkoder, switch, bağlantı arızaları</span></div>
+          <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-battery"/></svg><b>Lityum batarya</b><span>BMS ve koruma kartları</span></div>
+          <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><b>Hata kodu analizi</b><span>Arızanın kaynağına inen tespit</span></div>
+        </div>
+      </div>
+      <p class="note rv">Kontrolörü atmadan önce bize gösterin.<span>Güç katı arızalarının önemli bir kısmı kart seviyesinde onarılabilir.</span></p>
+    </div>
+  </section>
+
+  <!-- PLC + ECU -->
+  <section id="plc-ecu">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <p class="eyebrow">Otomasyon ve otomotiv</p>
+        <h2>PLC, sürücü ve otomotiv ECU onarımı.</h2>
+      </div>
+      <div class="grid2 ab">
+        <article class="card alt rv">
+          <div class="ab-vis" aria-hidden="true"><div class="plc"><div class="cpu"></div><div></div><div></div><div></div></div><div class="drv">50.0 Hz</div></div>
+          <div class="cb">
+            <small>Endüstriyel otomasyon</small><h3>PLC ve sürücü tamiri</h3>
+            <p>Üretim hattını durduran otomasyon elektroniğinde kart seviyesinde onarım.</p>
+            <ul><li>Frekans invertörleri</li><li>Servo sürücüler</li><li>PLC CPU ve I/O modülleri</li><li>Endüstriyel güç kaynakları</li></ul>
+          </div>
+        </article>
+        <article class="card alt rv">
+          <img src="assets/ecu.svg" width="1400" height="1000" alt="Otomotiv elektronik kontrol ünitesi (ECU)" loading="lazy">
+          <div class="cb">
+            <small>Otomotiv elektroniği</small><h3>Otomotiv ECU onarımı</h3>
+            <p>Araç elektronik kontrol ünitelerinde donanım arızalarının tespiti ve onarımı.</p>
+            <ul><li>Besleme ve güç katı</li><li>Sensör ve aktüatör sürücü devreleri</li><li>CAN haberleşme arızaları</li><li>Onarım sonrası test</li></ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SSS -->
+  <section class="gray" id="sss">
+    <div class="wrap">
+      <div class="sec-h rv"><h2>Sıkça sorulan sorular.</h2></div>
+      <div class="faq rv">
+        <details><summary>Kartımız listede yok, yine de onarabilir misiniz?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Evet, listede olmayan kart ve sürücüler için de bize ulaşın. Kartın adını veya fotoğrafını WhatsApp'tan gönderirseniz ön değerlendirme yapalım.</p></details>
+        <details><summary>Kartı değiştirmek yerine neden onarmalıyız?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Arızalı kartı değiştirmek yerine onarmak; maliyeti düşürür, bekleme süresini kısaltır. Kartı komponent seviyesinde inceliyor, onarıp test ederek teslim ediyoruz.</p></details>
+        <details><summary>Onarılan kart nasıl test ediliyor?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Onarım sonrası her kart fonksiyon testinden geçer ve yük altında test edilir. Teslim, yapılan işlemleri gösteren raporla birlikte yapılır.</p></details>
+        <details><summary>Hangi tezgâhlara destek veriyorsunuz?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Kancalı (rapier) ve hava jetli dokuma tezgâhlarına destek veriyoruz; başlıca destek verdiğimiz markaları yukarıda bulabilirsiniz. Listede olmayan tezgâhlar için tezgâh markasını ve kart modelini iletirseniz ön değerlendirme yapalım.</p></details>
+        <details><summary>Saha servisi hangi bölgelerde veriyorsunuz?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Tüm Türkiye'de: yerinde arıza tespiti, kart değişimi ve devreye alma, önleyici bakım ve teknik danışmanlık. Arızayı bildirin, müdahaleyi birlikte planlayalım.</p></details>
+        <details><summary>Tezgâh üreticisinin yetkili servisi misiniz?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Hayır. Koç Elektronik bağımsız bir elektronik servis ve onarım firmasıdır; herhangi bir makine üreticisinin temsilcisi değildir.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section class="gray" id="iletisim" style="padding-top:20px">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <p class="eyebrow">İletişim</p>
+        <h2>Arızayı bildirin. Müdahaleyi birlikte planlayalım.</h2>
+        <p>Formu doldurun, mesajınız hazır şekilde WhatsApp'ta açılsın. Ya da doğrudan arayın.</p>
+      </div>
+      <div class="c-grid">
+        <div class="c-info rv">
+          <a class="c-row" data-tel href="tel:+905531153694"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><div><small>Telefon</small><span data-phone-text>0553 115 36 94</span></div></a>
+          <a class="c-row wa" data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg><div><small>WhatsApp</small><span data-phone-text>0553 115 36 94</span></div></a>
+          <a class="c-row" data-mail href="mailto:ikoc317@gmail.com"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><div><small>E-posta</small><span data-mail-text>ikoc317@gmail.com</span></div></a>
+          <div class="c-row"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><div><small>Hizmet bölgesi</small><span>Tüm Türkiye</span></div></div>
+        </div>
+
+        <form class="form rv" id="form" novalidate>
+          <h3>Arıza bildirimi</h3>
+          <p class="sub">Bilgileriniz yalnızca WhatsApp mesajınızı hazırlamak için kullanılır.</p>
+          <div class="f2">
+            <div class="fld"><label for="firma">Firma</label><input id="firma" name="firma" autocomplete="organization"></div>
+            <div class="fld"><label for="ad">Ad Soyad</label><input id="ad" name="ad" autocomplete="name" required aria-describedby="ad-err"><span class="err" id="ad-err" role="alert"></span></div>
+          </div>
+          <div class="f2">
+            <div class="fld"><label for="tel">Telefon</label><input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="05xx xxx xx xx"></div>
+            <div class="fld"><label for="ekipman">Ekipman</label>
+              <select id="ekipman" name="ekipman">
+                <option>Dokuma tezgâhı kartı / sürücü</option><option>Operatör ekranı</option><option>CAN Bus / RS-485 hattı</option>
+                <option>Forklift / Transpalet</option><option>PLC / İnvertör / Servo</option><option>Otomotiv ECU</option><option>Diğer</option>
+              </select>
+            </div>
+          </div>
+          <div class="fld"><label for="model">Kart / model (biliniyorsa)</label><input id="model" name="model" placeholder="Örn: LDEC sürücü, MCB kartı"></div>
+          <div class="fld"><label for="ariza">Arıza açıklaması</label><textarea id="ariza" name="ariza" required placeholder="Örn: Tezgâh açılışta CAN haberleşme hatası veriyor" aria-describedby="ariza-err"></textarea><span class="err" id="ariza-err" role="alert"></span></div>
+          <fieldset class="fld"><legend>Hizmet tercihi</legend>
+            <div class="seg">
+              <label><input type="radio" name="hizmet" value="Kartı onarıma göndermek istiyorum" checked>Kartı onarıma göndereceğim</label>
+              <label><input type="radio" name="hizmet" value="Saha servis talep ediyorum">Saha servis istiyorum</label>
+            </div>
+          </fieldset>
+          <button class="btn btn-blue" type="submit">WhatsApp ile gönder</button>
+          <p class="hint">Gönder'e basınca WhatsApp açılır; mesajı kontrol edip gönderebilirsiniz.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <a class="brand" href="#top"><img src="assets/logo-lacivert.png" width="26" height="25" alt=""><span>Koç Elektronik</span></a>
+      <p class="slogan">Sanayinin her adımında teknoloji.</p>
+    </div>
+    <p class="disc">Koç Elektronik bağımsız bir elektronik servis ve onarım firmasıdır; herhangi bir makine üreticisinin temsilcisi değildir. Bu sitede geçen marka ve model adları sahiplerine aittir; yalnızca hizmet verilen ekipmanı tanımlamak için kullanılmıştır.</p>
+    <p class="copy">© <span id="yil"></span> Koç Elektronik. Telefon: <a data-tel href="tel:+905531153694"><span data-phone-text>0553 115 36 94</span></a></p>
+  </div>
+</footer>
+
+<div class="m-bar">
+  <a class="btn btn-blue" data-tel href="tel:+905531153694"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Ara</a>
+  <a class="btn btn-wa" data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+</div>
+
+<script>
+/* ===== İŞLETME BİLGİLERİ (değişirse sadece burayı düzenleyin) ===== */
+const ISLETME = {
+  telefon:  "0553 115 36 94",
+  whatsapp: "905531153694",   // ülke koduyla, boşluksuz
+  eposta:   "ikoc317@gmail.com",
+};
+/* ================================================================== */
+
+const digits = s => (s || "").replace(/\D/g, "");
+const toIntl = d => d.startsWith("90") ? "+" + d : "+90" + d.replace(/^0/, "");
+const telHref = "tel:" + toIntl(digits(ISLETME.telefon));
+const waBase  = "https://wa.me/" + digits(ISLETME.whatsapp);
+
+document.querySelectorAll("[data-tel]").forEach(a => a.href = telHref);
+document.querySelectorAll("[data-wa]").forEach(a => a.href = waBase + "?text=" + encodeURIComponent("Merhaba Koç Elektronik, bir arıza hakkında bilgi almak istiyorum."));
+document.querySelectorAll("[data-phone-text]").forEach(el => el.textContent = ISLETME.telefon);
+document.querySelectorAll("[data-mail]").forEach(a => a.href = "mailto:" + ISLETME.eposta);
+document.querySelectorAll("[data-mail-text]").forEach(el => el.textContent = ISLETME.eposta);
+document.getElementById("yil").textContent = new Date().getFullYear();
+
+/* Mobil menü */
+const menuBtn = document.getElementById("menuBtn"), links = document.getElementById("links");
+const setMenu = open => {
+  links.classList.toggle("open", open);
+  document.body.style.overflow = open ? "hidden" : "";
+  menuBtn.setAttribute("aria-expanded", open);
+  menuBtn.setAttribute("aria-label", open ? "Menüyü kapat" : "Menüyü aç");
+  menuBtn.querySelector("use").setAttribute("href", open ? "#i-x" : "#i-menu");
+};
+menuBtn.addEventListener("click", () => setMenu(!links.classList.contains("open")));
+links.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+
+/* Arıza formu -> WhatsApp */
+const form = document.getElementById("form");
+const setErr = (id, msg) => {
+  document.getElementById(id).setAttribute("aria-invalid", msg ? "true" : "false");
+  document.getElementById(id + "-err").textContent = msg;
+  return !msg;
+};
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const f = Object.fromEntries(new FormData(form));
+  const ok = [setErr("ad", f.ad.trim() ? "" : "Lütfen adınızı yazın."),
+              setErr("ariza", f.ariza.trim() ? "" : "Lütfen arızayı kısaca anlatın.")].every(Boolean);
+  if (!ok) { form.querySelector('[aria-invalid="true"]').focus(); return; }
+  const satir = (k, v) => v && v.trim() ? `\n${k}: ${v.trim()}` : "";
+  const msg = "Merhaba Koç Elektronik,\n" + satir("Firma", f.firma) + satir("Ad Soyad", f.ad) + satir("Telefon", f.tel) +
+              satir("Ekipman", f.ekipman) + satir("Kart / model", f.model) + satir("Arıza", f.ariza) + satir("Talep", f.hizmet);
+  window.open(waBase + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+});
+
+
+/* ===== Animasyonlar ===== */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Başlık kelime kelime
+const h1 = document.getElementById("h1");
+if (!reduce) {
+  h1.innerHTML = h1.textContent.trim().split(/\s+/).map((w, i) => `<span class="w" style="animation-delay:${0.15 + i * 0.12}s">${w}</span>`).join(" ");
+}
+
+// Büyük cümle: kelimeler kaydırdıkça yanar
+const quote = document.getElementById("quote");
+const qWords = [];
+quote.querySelectorAll("em").forEach(em => em.replaceWith(...em.textContent.split(/(\s+)/).map(t => { if (/^\s+$/.test(t)) return document.createTextNode(t); const s = document.createElement("span"); s.className = "hl"; s.textContent = t; return s; })));
+[...quote.childNodes].forEach(n => {
+  if (n.nodeType === 3) {
+    const frag = document.createDocumentFragment();
+    n.textContent.split(/(\s+)/).forEach(t => { if (!t) return; if (/^\s+$/.test(t)) frag.append(t); else { const s = document.createElement("span"); s.textContent = t; frag.append(s); } });
+    n.replaceWith(frag);
+  }
+});
+quote.querySelectorAll("span").forEach(s => qWords.push(s));
+
+// Sırayla beliren öğeler
+const stagger = (sel, step) => document.querySelectorAll(sel).forEach((el, i) => { el.classList.add("rv"); el.style.transitionDelay = (i * step) + "ms"; });
+stagger(".mods .mod", 45); stagger(".steps li", 120); stagger(".brand-list li", 80);
+document.querySelectorAll(".mods").forEach(el => el.classList.remove("rv"));
+document.querySelectorAll(".steps").forEach(el => el.classList.remove("rv"));
+
+// Sayaçlar
+const counters = document.querySelectorAll("[data-count]");
+const runCount = el => {
+  const end = +el.dataset.count, pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
+  if (reduce) { el.textContent = pre + end + suf; return; }
+  const t0 = performance.now(), dur = 1600;
+  const tick = t => { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 4); el.textContent = pre + Math.round(end * e) + suf; if (p < 1) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+};
+if ("IntersectionObserver" in window) {
+  const co = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { runCount(en.target); co.unobserve(en.target); } }), { threshold: .6 });
+  counters.forEach(c => co.observe(c));
+} else counters.forEach(runCount);
+
+// Kaydırmaya bağlı efektler
+const prog = document.getElementById("prog"), heroImg = document.querySelector("#heroImg img"), statement = document.getElementById("statement");
+let ticking = false;
+const onScroll = () => {
+  const y = scrollY, vh = innerHeight, max = document.documentElement.scrollHeight - vh;
+  prog.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+  if (!reduce) {
+    const p = Math.min(1, y / (vh * 0.9));
+    heroImg.style.transform = `scale(${0.9 + 0.1 * p}) rotateX(${(1 - p) * 8}deg)`;
+    heroImg.style.boxShadow = `0 ${40 * p}px ${90 * p}px -30px rgba(0,0,0,${0.45 * p})`;
+    const r = statement.getBoundingClientRect();
+    const q = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.25)));
+    const n = Math.round(q * qWords.length);
+    qWords.forEach((w, i) => w.classList.toggle("on", i < n));
+  } else qWords.forEach(w => w.classList.add("on"));
+  ticking = false;
+};
+addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+addEventListener("resize", onScroll);
+onScroll();
+
+/* Kaydırınca beliren içerik */
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), { rootMargin: "0px 0px -6% 0px" });
+  document.querySelectorAll(".rv").forEach(el => io.observe(el));
+} else document.querySelectorAll(".rv").forEach(el => el.classList.add("in"));
+</script>
+</body>
+</html>
