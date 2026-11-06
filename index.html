@@ -453,6 +453,167 @@ footer .copy a{color:var(--link)}
   .rv{opacity:1;transform:none;transition:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+
+/* ================================================================
+   KURUMSAL SADE TASARIM — kutusuz, çizgi ve tipografi odaklı düzen
+   ================================================================ */
+:root{--btn:#0E2248;--btn-h:#16305E;--btn-fg:#FFFFFF;--rule:#1D1D1F;--kicker:#C8102E;--r:6px}
+@media (prefers-color-scheme:dark){:root{--btn:#F5F5F7;--btn-h:#FFFFFF;--btn-fg:#0E2248;--rule:#F5F5F7;--kicker:#FF5A5F}}
+body{letter-spacing:-.011em}
+.wrap{max-width:1180px}
+.gnav-in{max-width:1180px}
+
+/* Butonlar: hap yerine hafif köşeli, kurumsal lacivert */
+.btn{border-radius:var(--r);font-weight:500}
+.btn-blue{background:var(--btn);color:var(--btn-fg)}
+.btn-blue:hover{background:var(--btn-h)}
+.gnav .btn{border-radius:var(--r)}
+.ring::after{display:none}
+.more{font-weight:500}
+
+/* Üst etiketler: küçük, büyük harf, aralıklı */
+.eyebrow,.sec-h .eyebrow,.corp-head .eyebrow,.mv-k,.num{font-size:13px!important;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--kicker)!important}
+
+/* Hero: solda metin, sağda görsel */
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:48px;align-items:center;max-width:1180px;margin:0 auto;padding:88px 22px 56px;text-align:left}
+.hero .wrap{padding:0;margin:0;max-width:none}
+.hero h1{font-size:clamp(44px,5.6vw,76px);letter-spacing:-.035em;margin-top:14px}
+.hero .sub{color:var(--text);font-weight:500;opacity:.72}
+.hero .lead{margin:20px 0 0;max-width:34em}
+.hero .ctas{justify-content:flex-start;margin-top:30px}
+.hero-img{margin:0;padding:0;perspective:none}
+.hero-img img{aspect-ratio:auto}
+.hero-img .art{overflow:visible}
+.hero-img .art > img{transform:scale(1.3);transform-origin:50% 50%}
+@media (max-width:900px){.hero-img .art > img{transform:scale(1.18)}}
+@media (max-width:900px){.hero{grid-template-columns:1fr;padding:56px 22px 32px;gap:28px}.hero-img{padding:0}}
+
+/* Değerler: ikon kutusu yerine numaralı sütunlar */
+.values{counter-reset:v;gap:0;padding:40px 0 88px;border-top:1px solid var(--line)}
+.val{text-align:left;padding:28px 24px 0 0;counter-increment:v}
+.val+.val{padding-left:24px;border-left:1px solid var(--line)}
+.val .ic{display:none}
+.val::before{content:counter(v,decimal-leading-zero);display:block;font-size:13px;font-weight:600;color:var(--kicker);letter-spacing:.08em;margin-bottom:14px}
+@media (max-width:860px){.val+.val{border-left:0;padding-left:0}.val{border-top:1px solid var(--line)}}
+
+/* Bölüm başlıkları sola hizalı */
+.sec-h,.corp-head{text-align:left;margin-left:0;margin-right:0;max-width:760px}
+.sec-h h2,.corp-head h2{letter-spacing:-.03em}
+.split .sec-h{max-width:none}
+
+/* Büyük cümle: renk geçişi yok, sola hizalı */
+.quote{text-align:left;margin:0;max-width:1000px}
+.quote span.hl.on{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--kicker)}
+.statement{padding:120px 0 64px}
+
+/* Rakamlar: çizgili, sola hizalı */
+.stats{text-align:left;gap:0;border-top:1px solid var(--line);padding-bottom:110px}
+.stat{padding:28px 24px 0 0}
+.stat+.stat{padding-left:24px;border-left:1px solid var(--line)}
+.stat b{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--text);font-weight:600}
+@media (max-width:860px){.stat+.stat{border-left:0;padding-left:0}.stat{border-top:1px solid var(--line)}.stats{border-top:0}}
+
+/* Karolar: sol alt hizalı başlıklar */
+.tile{text-align:left;align-items:flex-start;padding:44px 48px}
+.tile .ctas{justify-content:flex-start}
+.tiles{gap:2px;padding:0}
+
+/* Yetenek şeridi: kutucuksuz, sade metin */
+.mq-wrap{padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.marquee{padding:6px 0}
+.mq{gap:0}
+.mq span,.mq span:nth-child(3n),.mq span:nth-child(5n){background:none!important;color:var(--text2)!important;border-radius:0;padding:0 22px;font-size:15px;position:relative}
+.mq span::after{content:"";position:absolute;right:-2px;top:50%;width:4px;height:4px;border-radius:50%;background:var(--kicker);transform:translateY(-50%)}
+.mq.rev span{color:var(--text)!important}
+
+/* Kartlar: arka plansız, üstte kalın çizgi */
+.card,.card.alt,.mv-card,.v4,.sector,.story-card,.tl,.corp-info,.feat .card,.ab .card{background:none!important;border-radius:0!important;box-shadow:none!important}
+.card{padding:24px 0 0;border-top:2px solid var(--rule)}
+.card.has-art{padding-top:0;border-top:0}
+.card-art{margin:0 0 22px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
+.gray .card-art{background:var(--bg)}
+.card.has-art small{display:block;padding-top:18px;border-top:2px solid var(--rule)}
+.card li{border-color:var(--line)!important}
+.grid3,.grid2{gap:40px}
+@media (hover:hover){.mod:hover,.feat .card:hover,.brand-list li:hover,.sector:hover{transform:none;box-shadow:none}}
+
+/* Markalar: düz liste */
+.brands{border-top:2px solid var(--rule);padding-top:28px;margin-top:56px}
+.brand-list{gap:0;border-top:1px solid var(--line)}
+.brand-list li{background:none;border-radius:0;min-height:72px;border-bottom:1px solid var(--line);align-items:flex-start;padding:0;font-size:20px}
+.brand-list li+li{border-left:1px solid var(--line);padding-left:20px}
+
+/* Modüller: kutu ızgarası yerine tablo */
+.mods{grid-template-columns:repeat(3,1fr);gap:0 40px;border-top:2px solid var(--rule)}
+.mod,.mod.plus{background:none;border-radius:0;box-shadow:none;text-align:left;display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+.mod b{font-size:19px}
+.mod small{margin:0;font-size:14px}
+.mods-art{margin:0 0 40px;max-width:none}
+.flow{text-align:left;gap:0;margin-top:72px}
+.flow > div{padding:0 24px 0 0}
+.flow > div+div{padding-left:24px;border-left:1px solid var(--line)}
+.flow b{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--kicker);font-size:15px;font-weight:600;letter-spacing:.08em}
+@media (max-width:860px){.mods{grid-template-columns:1fr 1fr}.flow{row-gap:32px}.flow > div+div{border-left:0;padding-left:0}.brand-list li:nth-child(odd){border-left:0;padding-left:0}.brand-list li:nth-child(even){border-left:1px solid var(--line);padding-left:20px}}
+@media (max-width:560px){.mods{grid-template-columns:1fr}}
+
+/* Kart tamiri ve saha: hafif köşeler */
+.wide-img img,.wide-img .art,.split img,.can-art .art,.lift-img{border-radius:var(--r)!important}
+.pills{justify-content:flex-start}
+.pills span{border-radius:var(--r)}
+.steps li::after{height:1px}
+.region{border-radius:var(--r)}
+
+/* Forklift özellikleri: liste */
+.feat{gap:0 40px;align-content:start}
+.feat .card{padding:18px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:32px 1fr;column-gap:14px}
+.feat .card .ic{grid-row:span 2;margin:2px 0 0;width:24px;height:24px}
+.note{text-align:left;border-top:2px solid var(--rule);padding-top:24px}
+
+/* PLC / ECU */
+.ab{gap:40px}
+.ab .card{border-top:0}
+.ab .card .art{background:var(--bg2);border-radius:var(--r);overflow:hidden}
+.ab .cb{padding:22px 0 0!important;border-top:2px solid var(--rule);margin-top:22px}
+
+/* Kurumsal bölüm */
+.corp-logo{display:none}
+.corp-head{margin-bottom:64px}
+.story{gap:56px;grid-template-columns:1.2fr .8fr;margin-bottom:72px}
+.story-card{padding:24px 0 0!important;border-top:2px solid var(--rule)}
+.tl{padding:24px 0 0!important;border-top:2px solid var(--rule)}
+.tl li::before{background:var(--bg2);box-shadow:0 0 0 2px var(--rule)}
+.tl li:last-child::before{background:var(--kicker);box-shadow:0 0 0 2px var(--kicker)}
+.mv{gap:56px}
+.mv-card{padding:24px 0 0!important;border-top:2px solid var(--rule)}
+.mv-card::after{display:none}
+.mv-card p{font-size:clamp(19px,1.8vw,22px);font-weight:500}
+.corp-sub{text-align:left;font-size:22px;margin:80px 0 0;padding-bottom:18px;border-bottom:2px solid var(--rule)}
+.vals4,.sectors{gap:0}
+.v4,.sector{padding:24px 24px 24px 0!important;border-bottom:1px solid var(--line)}
+.v4+.v4,.sector+.sector{padding-left:24px!important;border-left:1px solid var(--line)}
+.v4 .ic,.sector .ic{width:24px;height:24px;margin-bottom:14px}
+.sector b::after{content:" →";color:var(--kicker)}
+.corp-info{padding:0!important;margin-top:80px;border-top:2px solid var(--rule)}
+.ci-row{border-color:var(--line)}
+.ci-slogan{text-align:left;background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--text)}
+.ci-guide{text-align:left}
+@media (max-width:860px){.story{grid-template-columns:1fr;gap:40px}.v4+.v4,.sector+.sector{border-left:0;padding-left:0!important}}
+
+/* SSS */
+.faq{max-width:none}
+.faq details:first-child{border-top:2px solid var(--rule)}
+
+/* İletişim */
+.c-grid{gap:56px}
+.c-info{gap:0;border-top:2px solid var(--rule)}
+.c-row{background:none!important;border-radius:0;padding:18px 0;border-bottom:1px solid var(--line)}
+.c-row .ic{width:24px;height:24px;padding:0;background:none!important;color:var(--text)!important}
+.c-row.wa .ic{color:#1FA855!important}
+.form{border-radius:var(--r);box-shadow:inset 0 0 0 1px var(--line)}
+.fld input,.fld select,.fld textarea,.seg label{border-radius:var(--r)}
+
+/* Görsel kenarları */
+.can-art .art{border-radius:var(--r)}
 </style>
 </head>
 <body>
@@ -1039,7 +1200,7 @@ const onScroll = () => {
   if (!reduce) {
     if (y < vh * 1.3) {
       const p = Math.min(1, y / (vh * 0.9));
-      heroImg.style.transform = `scale(${(0.9 + 0.1 * p).toFixed(4)}) rotateX(${((1 - p) * 8).toFixed(2)}deg)`;
+      heroImg.style.transform = `translateY(${(p * -24).toFixed(1)}px)`;
     }
     const r = statement.getBoundingClientRect();
     if (r.bottom > -100 && r.top < vh + 100) {
