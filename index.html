@@ -145,9 +145,9 @@ a,button,summary,label{-webkit-tap-highlight-color:transparent}
 .story{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;margin-bottom:20px}
 .story-card{background:var(--card);border-radius:28px;padding:44px;position:relative;overflow:hidden}
 .story-card .mv-k{margin-bottom:16px}
-.story-card blockquote{margin:0;font-size:clamp(19px,1.8vw,22px);line-height:1.42;font-weight:600;letter-spacing:-.018em}
-.story-card blockquote p+p{margin-top:16px}
-.story-card blockquote em{font-style:normal;color:var(--link)}
+.story-text{font-size:clamp(17px,1.5vw,19px);line-height:1.6;color:var(--text2)}
+.story-text p+p{margin-top:14px}
+.story-text b{color:var(--text);font-weight:600}
 .story-sign{display:flex;align-items:center;gap:14px;margin-top:28px}
 .story-sign .av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#0E2248,#07152E);display:grid;place-items:center;flex:none;color:#fff;font-size:17px;font-weight:700;letter-spacing:.02em;box-shadow:inset 0 -3px 0 #E30613}
 .story-sign b{display:block;font-size:17px}
@@ -572,23 +572,22 @@ footer .copy a{color:var(--link)}
       </div>
       <div class="story">
         <article class="story-card rv">
-          <span class="mv-k">Kurucumuzun hikâyesi</span>
-          <blockquote>
-            <p>“Ovaakça Şarık Tarakçı Mesleki ve Teknik Anadolu Lisesi’nde okudum. O günden beri makinelere ve elektroniğe <em>meraklıyım</em>: bir makinenin neden durduğunu anlamak, bir kartın içindeki arızayı bulup yeniden çalıştırmak benim için hep bir bulmaca oldu.</p>
-            <p>Okulun ardından önemli sanayi firmalarında <em>üretim sorumlusu</em> olarak çalıştım. Bir makine durduğunda bütün hattın nasıl beklediğini, her saatin ne kadar değerli olduğunu bizzat yaşadım. Gördüm ki çoğu zaman arızalı kartın yenisini beklemek gerekmiyor; doğru tespit ve titiz bir onarımla aynı kart yeniden çalışıyor, üretim daha az bekliyor.</p>
-            <p>Koç Elektronik’i bu yüzden kurdum: üretimin dilini bilen bir servis olmak ve <em>yenisini almadan önce, onarılabilir mi bakalım</em> demek için.”</p>
-          </blockquote>
+          <span class="mv-k">Kurucumuz</span>
+          <div class="story-text">
+            <p>Firmamızın kurucusu <b>İsmail Koç</b>, mesleki eğitimini Ovaakça Şarık Tarakçı Mesleki ve Teknik Anadolu Lisesi’nde tamamlamıştır.</p>
+            <p>Eğitiminin ardından sanayinin önemli kuruluşlarında <b>üretim sorumlusu</b> olarak görev yapmış; üretim süreçlerinin yönetimi, makine elektroniği ve plansız duruşların işletmeye maliyeti konularında saha deneyimi edinmiştir.</p>
+            <p>Bu deneyim, arızalı elektronik kartların değiştirilmesi yerine komponent seviyesinde onarılmasının işletmelere sağladığı maliyet ve zaman avantajını ortaya koymuştur. Koç Elektronik; endüstriyel elektronik arızalarına üretim bakış açısıyla yaklaşan, güvenilir ve bağımsız bir teknik servis anlayışıyla kurulmuştur.</p>
+          </div>
           <div class="story-sign">
             <span class="av" aria-hidden="true">İK</span>
-            <div><b>İsmail Koç</b><span>Kurucu, Koç Elektronik</span></div>
+            <div><b>İsmail Koç</b><span>Kurucu · Koç Elektronik</span></div>
           </div>
         </article>
-        <ol class="tl rv" aria-label="Yolculuğumuz">
-          <li><b>Merak</b><span>Makinelerin ve elektroniğin nasıl çalıştığını öğrenme isteği.</span></li>
-          <li><b>Mesleki eğitim</b><span>Ovaakça Şarık Tarakçı Mesleki ve Teknik Anadolu Lisesi.</span></li>
-          <li><b>Üretim sorumluluğu</b><span>Önemli sanayi firmalarında üretim sorumlusu; duruşun maliyetini sahada öğrenmek.</span></li>
-          <li><b>Atölye ve saha</b><span>Tezgâh başında arıza tespiti; kart, sürücü ve haberleşme hatlarında onarım.</span></li>
-          <li><b>Koç Elektronik</b><span>Dokuma tezgâhı ve endüstriyel elektronikte bağımsız servis; tüm Türkiye’de.</span></li>
+        <ol class="tl rv" aria-label="Kurumsal gelişim">
+          <li><b>Mesleki ve teknik eğitim</b><span>Ovaakça Şarık Tarakçı Mesleki ve Teknik Anadolu Lisesi.</span></li>
+          <li><b>Sanayide üretim yönetimi</b><span>Önemli sanayi kuruluşlarında üretim sorumluluğu.</span></li>
+          <li><b>Saha ve onarım uzmanlığı</b><span>Tezgâh elektroniği; kart, sürücü ve haberleşme hatlarında arıza tespiti ve onarım.</span></li>
+          <li><b>Koç Elektronik</b><span>Endüstriyel elektronikte bağımsız teknik servis; tüm Türkiye’de hizmet.</span></li>
         </ol>
       </div>
       <div class="mv">
