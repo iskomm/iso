@@ -75,7 +75,7 @@ p{margin:0}
 .hero .sub{font-size:clamp(24px,3vw,32px);line-height:1.15;font-weight:600;margin-top:6px;letter-spacing:-.025em;color:var(--text2)}
 .hero .lead{font-size:clamp(17px,1.7vw,21px);color:var(--text2);max-width:640px;margin:18px auto 0;line-height:1.4}
 .hero-img{margin:56px auto 0;max-width:var(--wide);padding:0 22px}
-.hero-img img{width:100%;aspect-ratio:2.2/1;object-fit:cover;border-radius:28px}
+.hero-img img{width:100%;aspect-ratio:2.2/1;object-fit:cover;border-radius:28px;background:#000}
 
 /* Değerler */
 .values{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:72px 0 88px}
@@ -178,8 +178,9 @@ section{padding:110px 0}
 
 /* Forklift */
 .lift{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.lift-img{border-radius:28px;overflow:hidden;background:#fff}
-.lift-img img{width:100%;height:100%!important;object-fit:cover;min-height:420px}
+.lift-img{border-radius:28px;overflow:hidden;background:#ececf0}
+.lift-img{display:flex;align-items:center;background:linear-gradient(180deg,#f5f5f7,#e3e3e8)}
+.lift-img img{width:100%;height:auto;object-fit:contain}
 .feat{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .feat .card{padding:28px}
 .feat .ic{width:32px;height:32px;color:var(--blue);margin-bottom:14px;stroke-width:1.6}
@@ -270,7 +271,6 @@ footer .copy a{color:var(--link)}
   .brand-list{grid-template-columns:1fr 1fr}
   .flow{grid-template-columns:1fr 1fr;row-gap:36px}
   .split img{aspect-ratio:4/3}
-  .lift-img img{min-height:320px}
 }
 @media (max-width:560px){
   .hero{padding-top:52px}
@@ -360,7 +360,7 @@ footer .copy a{color:var(--link)}
       </div>
     </div>
     <div class="hero-img rv">
-      <img src="assets/tezgah.webp" width="1600" height="727" alt="Üretim halindeki dokuma tezgâhı" fetchpriority="high">
+      <img src="assets/pcb.svg" width="2400" height="1100" alt="Endüstriyel elektronik kontrol kartı" fetchpriority="high">
     </div>
   </div>
 
@@ -376,31 +376,31 @@ footer .copy a{color:var(--link)}
   <!-- KARO IZGARASI -->
   <div class="tiles">
     <article class="tile dk full rv">
-      <img class="t-img" src="assets/kart-tamiri.webp" width="1064" height="652" alt="" loading="lazy">
+      <img class="t-img" src="assets/pcb-tamir.svg" width="2400" height="1140" alt="" loading="lazy">
       <h2>Elektronik kart tamiri</h2>
       <p>Değiştirmeden önce onarın.</p>
       <div class="ctas"><a class="more" href="#kart-tamiri">Daha fazla bilgi</a><a class="more" href="#iletisim">Arıza bildirin</a></div>
     </article>
     <article class="tile lt rv">
-      <img class="t-img" src="assets/tezgah.webp" width="1600" height="727" alt="" loading="lazy" style="object-position:30% center">
+      <img class="t-img" src="assets/tezgah.svg" width="1400" height="1160" alt="" loading="lazy">
       <h2>Dokuma tezgâhı elektroniği</h2>
       <p>Kancalı ve hava jetli tezgâhlar.</p>
       <div class="ctas"><a class="more" href="#tezgah">Daha fazla bilgi</a></div>
     </article>
     <article class="tile dk rv">
-      <img class="t-img" src="assets/saha-servis.webp" width="1200" height="897" alt="" loading="lazy">
+      <img class="t-img" src="assets/saha-kare.svg" width="1400" height="1160" alt="" loading="lazy">
       <h2>Saha servis</h2>
       <p>Tezgâh başında, tüm Türkiye'de.</p>
       <div class="ctas"><a class="more" href="#saha">Daha fazla bilgi</a></div>
     </article>
     <article class="tile lt rv">
-      <img class="t-img" src="assets/forklift.webp" width="760" height="734" alt="" loading="lazy" style="object-position:center 70%">
+      <img class="t-img" src="assets/forklift.svg" width="1200" height="1160" alt="" loading="lazy">
       <h2>Forklift ve transpalet</h2>
       <p>Kontrolörü atmadan önce bize gösterin.</p>
       <div class="ctas"><a class="more" href="#forklift">Daha fazla bilgi</a></div>
     </article>
     <article class="tile dk rv">
-      <img class="t-img" src="assets/ecu.webp" width="771" height="501" alt="" loading="lazy">
+      <img class="t-img" src="assets/ecu.svg" width="1400" height="1000" alt="" loading="lazy">
       <h2>PLC, sürücü ve ECU</h2>
       <p>Otomasyondan otomotive.</p>
       <div class="ctas"><a class="more" href="#plc-ecu">Daha fazla bilgi</a></div>
@@ -475,7 +475,7 @@ footer .copy a{color:var(--link)}
         <p>Arızalı kartı komponent seviyesinde inceliyor, test ederek teslim ediyoruz. Onarmak; maliyeti düşürür, bekleme süresini kısaltır.</p>
       </div>
     </div>
-    <div class="wide-img rv"><img src="assets/kart-tamiri.webp" width="1064" height="652" alt="Elektronik kart üzerinde komponent seviyesinde lehimleme" loading="lazy"></div>
+    <div class="wide-img rv"><img src="assets/pcb-tamir.svg" width="2400" height="1140" alt="Havya ile elektronik kart üzerinde komponent seviyesinde lehimleme" loading="lazy"></div>
     <div class="wrap">
       <ol class="steps rv">
         <li><strong>Kabul ve kayıt</strong><span>Arıza bilgisi ve kart kimliği kayda alınır.</span></li>
@@ -535,7 +535,7 @@ footer .copy a{color:var(--link)}
   <!-- SAHA SERVİS -->
   <section class="dark" id="saha">
     <div class="wrap split">
-      <img class="rv" src="assets/saha-servis.webp" width="1200" height="897" alt="Koç Elektronik teknisyeni tezgâh panosunda arıza tespiti yapıyor" loading="lazy">
+      <img class="rv" src="assets/saha.svg" width="1200" height="1500" alt="Tezgâh başında CAN Bus hattını ölçen el tipi osiloskop" loading="lazy">
       <div class="rv">
         <div class="sec-h">
           <p class="eyebrow" style="color:#FF453A">Tezgâh başında destek</p>
@@ -563,7 +563,7 @@ footer .copy a{color:var(--link)}
         <h2>Elektrikli forklift ve transpalet elektroniği.</h2>
       </div>
       <div class="lift">
-        <div class="lift-img rv"><img src="assets/forklift.webp" width="760" height="734" alt="Elektrikli forklift ve transpalet" loading="lazy"></div>
+        <div class="lift-img rv"><img src="assets/forklift.svg" width="1200" height="1160" alt="Elektrikli forklift ve kontrol ünitesi" loading="lazy"></div>
         <div class="feat">
           <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg><b>Motor kontrol üniteleri</b><span>Sürüş ve kaldırma kontrolörleri</span></div>
           <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-monitor"/></svg><b>Gösterge ve kumanda</b><span>Ekran, tuş takımı, kumanda kolu</span></div>
@@ -594,7 +594,7 @@ footer .copy a{color:var(--link)}
           </div>
         </article>
         <article class="card alt rv">
-          <img src="assets/ecu.webp" width="771" height="501" alt="Otomotiv elektronik kontrol ünitesi (ECU)" loading="lazy">
+          <img src="assets/ecu.svg" width="1400" height="1000" alt="Otomotiv elektronik kontrol ünitesi (ECU)" loading="lazy">
           <div class="cb">
             <small>Otomotiv elektroniği</small><h3>Otomotiv ECU onarımı</h3>
             <p>Araç elektronik kontrol ünitelerinde donanım arızalarının tespiti ve onarımı.</p>
