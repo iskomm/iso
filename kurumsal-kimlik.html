@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kurumsal Kimlik Kılavuzu | Koç Elektronik</title>
+<meta name="description" content="Koç Elektronik kurumsal kimlik kılavuzu: logo kullanımı, renkler, yazı tipi, iletişim dili, illüstrasyon ve uygulama örnekleri.">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/png" href="assets/logo-lacivert.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --text:#1D1D1F; --text2:#6E6E73; --bg:#FFFFFF; --bg2:#F5F5F7; --card:#FFFFFF; --line:#D2D2D7; --line2:#E8E8ED;
+  --blue:#0071E3; --link:#0066CC; --red:#E30613; --nav:rgba(255,255,255,.8); --chip:#F5F5F7;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){:root{
+  --text:#F5F5F7; --text2:#A1A1A6; --bg:#000000; --bg2:#0F0F10; --card:#1C1C1E; --line:#424245; --line2:#2C2C2E;
+  --link:#2997FF; --nav:rgba(22,22,23,.8); --chip:#2C2C2E;
+}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);font-size:17px;line-height:1.5;letter-spacing:-.022em;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+img{height:auto}
+a{color:var(--link)}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.025em;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:1024px;margin:0 auto;padding:0 22px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+
+.gnav{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line2)}
+.gnav-in{max-width:1024px;margin:0 auto;height:52px;padding:0 22px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text);min-height:44px;margin-right:auto}
+.brand img{width:26px;height:25px}
+.brand span{font-size:15px;font-weight:600}
+.toc{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.toc a{display:flex;align-items:center;min-height:44px;padding:0 9px;font-size:12.5px;color:var(--text2);text-decoration:none}
+.toc a:hover{color:var(--text)}
+.back{font-size:13px;text-decoration:none;white-space:nowrap}
+@media (max-width:860px){.toc{display:none}}
+
+.hero{padding:88px 0 64px;text-align:center}
+.eyebrow{font-size:19px;font-weight:600;color:var(--red)}
+.hero h1{font-size:clamp(42px,7vw,80px);line-height:1.05;font-weight:700;letter-spacing:-.035em;margin-top:8px}
+.hero p.lead{font-size:clamp(18px,1.8vw,21px);color:var(--text2);max-width:680px;margin:18px auto 0}
+
+section{padding:88px 0;border-top:1px solid var(--line2)}
+.num{font-size:15px;font-weight:600;color:var(--text2)}
+section h2{font-size:clamp(32px,4.4vw,48px);line-height:1.08;margin-top:6px}
+.intro{font-size:19px;color:var(--text2);max-width:720px;margin-top:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+.card{background:var(--bg2);border-radius:24px;padding:32px}
+.card h3{font-size:21px}
+.card p{color:var(--text2);margin-top:8px;font-size:16px}
+
+/* Logo */
+.logo-stage{border-radius:24px;min-height:300px;display:grid;place-items:center;padding:40px}
+.logo-stage.light{background:#FFFFFF;box-shadow:inset 0 0 0 1px #E8E8ED}
+.logo-stage.dark{background:#07152E}
+.logo-stage.black{background:#000}
+.lockup{display:flex;align-items:center;gap:18px}
+.lockup img{width:76px;height:auto}
+.wm b{display:block;font-size:36px;font-weight:800;letter-spacing:.02em;line-height:1}
+.wm small{display:block;font-size:11.5px;font-weight:600;letter-spacing:.34em;margin-top:7px;white-space:nowrap}
+.light .wm{color:#0E2248}
+.dark .wm,.black .wm{color:#fff}
+.stage-cap{font-size:14px;color:var(--text2);margin-top:12px;text-align:center}
+.space{position:relative;display:inline-grid;place-items:center;padding:36px;border:1.5px dashed #FF453A;border-radius:12px}
+.space img{width:120px}
+.space i{position:absolute;font-style:normal;font-size:12px;font-weight:600;color:#FF453A}
+.space i.t{top:8px}.space i.l{left:8px}
+.rules{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:12px}
+.rules li{display:flex;gap:12px;align-items:flex-start;font-size:16px}
+.rules li::before{content:"";flex:none;width:22px;height:22px;border-radius:50%;margin-top:1px;background:#30D158 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/14px no-repeat}
+.rules.no li::before{background:#FF453A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center/14px no-repeat}
+.dl{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:11px 20px;border-radius:980px;background:var(--blue);color:#fff;text-decoration:none;font-size:16px}
+.btn:hover{background:#0077ED}
+.btn.ghost{background:transparent;color:var(--link);box-shadow:inset 0 0 0 1px currentColor}
+
+/* Renkler */
+.swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.sw{border-radius:22px;overflow:hidden;background:var(--card);box-shadow:inset 0 0 0 1px var(--line2);text-align:left;border:0;padding:0;cursor:pointer;font:inherit;color:inherit}
+.sw .chip{height:150px;display:flex;align-items:flex-end;padding:16px;font-size:13px;font-weight:600}
+.sw .meta{padding:16px 18px 18px}
+.sw b{display:block;font-size:17px}
+.sw code{display:block;font-family:ui-monospace,Menlo,monospace;font-size:14px;color:var(--text2);margin-top:4px}
+.sw span{display:block;font-size:14px;color:var(--text2);margin-top:8px}
+.sw:focus-visible{outline:2px solid var(--blue)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:#1D1D1F;color:#fff;padding:10px 18px;border-radius:980px;font-size:15px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:80}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.ratio{display:flex;height:56px;border-radius:14px;overflow:hidden;margin-top:24px}
+.ratio div{display:grid;place-items:center;font-size:12px;font-weight:600}
+
+/* Tipografi */
+.type{margin-top:40px;border-radius:24px;background:var(--bg2);padding:36px}
+.trow{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line2)}
+.trow:last-child{border-bottom:0}
+.trow small{font-size:13px;color:var(--text2);line-height:1.4}
+.t1{font-size:clamp(40px,6vw,64px);font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.t2{font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-.025em;line-height:1.1}
+.t3{font-size:21px;font-weight:600}
+.t4{font-size:17px;color:var(--text)}
+.t5{font-size:13px;font-weight:600;color:var(--text2);letter-spacing:.02em}
+
+/* Ton */
+.say{border-radius:20px;padding:24px;background:var(--bg2)}
+.say h3{font-size:17px;display:flex;align-items:center;gap:8px}
+.say h3::before{content:"";width:10px;height:10px;border-radius:50%;background:#30D158}
+.say.bad h3::before{background:#FF453A}
+.say q{display:block;quotes:"“" "”";font-size:18px;font-weight:500;margin-top:12px;line-height:1.4}
+.say q+q{margin-top:10px}
+
+/* İllüstrasyon */
+.ill{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+.ill figure{margin:0;border-radius:20px;background:var(--bg2);padding:14px;aspect-ratio:1/1;display:grid;place-items:center}
+.ill figure.dk{background:#000}
+.ill img{width:100%}
+.icons{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.icons span{width:64px;height:64px;border-radius:16px;background:var(--bg2);display:grid;place-items:center}
+.icons svg{width:28px;height:28px;fill:none;stroke:var(--text);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* Uygulamalar */
+.bc{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px}
+.bcard{aspect-ratio:85/55;border-radius:16px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 20px 50px -20px rgba(0,0,0,.35)}
+.bcard.front{background:linear-gradient(135deg,#0E2248,#07152E);color:#fff}
+.bcard.back{background:#fff;color:#1D1D1F;box-shadow:0 20px 50px -20px rgba(0,0,0,.35),inset 0 0 0 1px #E8E8ED}
+.bcard .lockup img{width:64px}
+.bcard .wm b{font-size:30px}
+.bcard .wm small{font-size:10px;letter-spacing:.55em}
+.bcard .slog{font-size:13px;opacity:.75}
+.bcard .bar{height:4px;width:56px;background:#E30613;border-radius:2px}
+.bcard.back .name{font-size:20px;font-weight:700}
+.bcard.back .role{font-size:13px;color:#6E6E73}
+.bcard.back ul{list-style:none;margin:0;padding:0;font-size:14px;display:grid;gap:4px}
+.bcard.back ul b{color:#E30613;font-weight:700;margin-right:6px}
+.sig{margin-top:20px;border-radius:20px;background:var(--bg2);padding:28px}
+.sig .mail{background:#fff;color:#1D1D1F;border-radius:14px;padding:24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.5;box-shadow:inset 0 0 0 1px #E8E8ED}
+.sig table{border-collapse:collapse}
+.sig td{vertical-align:top;padding:0}
+.sig .bd{border-left:3px solid #E30613;padding-left:14px}
+
+.note{margin-top:28px;font-size:15px;color:var(--text2)}
+footer{padding:36px 0 48px;border-top:1px solid var(--line2);font-size:13px;color:var(--text2);text-align:center}
+
+@media (max-width:860px){
+  .grid2,.grid3,.bc{grid-template-columns:1fr}
+  .swatches{grid-template-columns:1fr 1fr}
+  .ill{grid-template-columns:1fr 1fr}
+  .trow{grid-template-columns:1fr;gap:6px}
+}
+@media (max-width:560px){
+  .swatches{grid-template-columns:1fr}
+  .wm b{font-size:34px}.lockup img{width:72px}
+  .card,.type{padding:24px}
+  section{padding:64px 0}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.toast{transition:none}}
+</style>
+</head>
+<body>
+<header class="gnav">
+  <nav class="gnav-in" aria-label="Kılavuz menüsü">
+    <a class="brand" href="index.html"><picture><source srcset="assets/logo-beyaz.png" media="(prefers-color-scheme: dark)"><img src="assets/logo-lacivert.png" width="26" height="25" alt=""></picture><span>Koç Elektronik</span></a>
+    <ul class="toc">
+      <li><a href="#logo">Logo</a></li><li><a href="#renk">Renkler</a></li><li><a href="#tipo">Tipografi</a></li>
+      <li><a href="#ton">İletişim dili</a></li><li><a href="#gorsel">Görsel dil</a></li><li><a href="#uygulama">Uygulamalar</a></li>
+    </ul>
+    <a class="back" href="index.html">← Ana sayfa</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Koç Elektronik</p>
+      <h1>Kurumsal kimlik kılavuzu.</h1>
+      <p class="lead">Logomuz, renklerimiz, yazı tipimiz ve iletişim dilimiz. Web sitesi, katalog, kartvizit, araç giydirme ve sosyal medyada markanın her yerde aynı görünmesi için bu kuralları kullanın.</p>
+    </div>
+  </div>
+
+  <!-- 1 LOGO -->
+  <section id="logo">
+    <div class="wrap">
+      <p class="num">01 · Logo</p>
+      <h2>Koç başı ve kart devresi.</h2>
+      <p class="intro">Logomuz; güç ve kararlılığı temsil eden bir koç başı ile, ondan uzanan elektronik devre yollarından oluşur. Logo, “KOÇ ELEKTRONİK” yazısıyla birlikte ya da tek başına kullanılabilir.</p>
+      <div class="grid3">
+        <div><div class="logo-stage light"><div class="lockup"><img src="assets/logo-lacivert.png" width="96" height="91" alt="Koç Elektronik logosu, lacivert"><div class="wm"><b>KOÇ</b><small>ELEKTRONİK</small></div></div></div><p class="stage-cap">Açık zemin · lacivert logo</p></div>
+        <div><div class="logo-stage dark"><div class="lockup"><img src="assets/logo-beyaz.png" width="96" height="91" alt="Koç Elektronik logosu, beyaz"><div class="wm"><b>KOÇ</b><small>ELEKTRONİK</small></div></div></div><p class="stage-cap">Kurumsal lacivert zemin · beyaz logo</p></div>
+        <div><div class="logo-stage black"><img src="assets/logo-beyaz.png" width="120" height="114" alt="Koç Elektronik amblemi, beyaz" style="width:120px"></div><p class="stage-cap">Koyu zemin · yalnız amblem</p></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3>Koruma alanı ve boyut</h3>
+          <p>Logonun etrafında, en az koç başının yarısı kadar boş alan bırakın. Ekranda 24 pikselden, baskıda 10 mm’den küçük kullanmayın.</p>
+          <div style="margin-top:22px;display:flex;justify-content:center"><div class="space"><i class="t">½ X</i><i class="l">½ X</i><picture><source srcset="assets/logo-beyaz.png" media="(prefers-color-scheme: dark)"><img src="assets/logo-lacivert.png" width="120" height="114" alt="Koruma alanı örneği"></picture></div></div>
+        </div>
+        <div class="card">
+          <h3>Doğru kullanım</h3>
+          <ul class="rules">
+            <li>Açık zeminde lacivert, koyu zeminde beyaz logo kullanın.</li>
+            <li>Logoyu orantılı büyütüp küçültün.</li>
+            <li>Sade, tek renkli zeminler tercih edin.</li>
+          </ul>
+          <h3 style="margin-top:24px">Yanlış kullanım</h3>
+          <ul class="rules no">
+            <li>Logoyu esnetmeyin, eğmeyin, döndürmeyin.</li>
+            <li>Renklerini değiştirmeyin, gölge ve efekt eklemeyin.</li>
+            <li>Karmaşık fotoğrafların üzerine koymayın.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="dl">
+        <a class="btn" href="assets/logo-lacivert.png" download="koc-elektronik-logo-lacivert.png">Lacivert logoyu indir (PNG)</a>
+        <a class="btn ghost" href="assets/logo-beyaz.png" download="koc-elektronik-logo-beyaz.png">Beyaz logoyu indir (PNG)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 RENKLER -->
+  <section id="renk">
+    <div class="wrap">
+      <p class="num">02 · Renkler</p>
+      <h2>Lacivert güven, kırmızı enerji.</h2>
+      <p class="intro">Ana renklerimiz kurumsal lacivert ve koç kırmızısıdır. Web sitesinde etkileşim (buton, bağlantı) için vurgu mavisi kullanılır. Renk koduna tıklayarak kopyalayabilirsiniz.</p>
+      <div class="swatches">
+        <button class="sw" data-hex="#0E2248"><div class="chip" style="background:#0E2248;color:#fff">Ana renk</div><div class="meta"><b>Kurumsal lacivert</b><code>#0E2248 · RGB 14 34 72</code><span>Logo, kurumsal zeminler, kartvizit, katalog.</span></div></button>
+        <button class="sw" data-hex="#07152E"><div class="chip" style="background:#07152E;color:#fff">Koyu ton</div><div class="meta"><b>Gece laciverti</b><code>#07152E · RGB 7 21 46</code><span>Koyu zeminler, kapaklar, araç giydirme.</span></div></button>
+        <button class="sw" data-hex="#E30613"><div class="chip" style="background:#E30613;color:#fff">Vurgu</div><div class="meta"><b>Koç kırmızısı</b><code>#E30613 · RGB 227 6 19</code><span>Küçük vurgular: çizgiler, ikonlar, başlık üstleri.</span></div></button>
+        <button class="sw" data-hex="#0071E3"><div class="chip" style="background:#0071E3;color:#fff">Dijital</div><div class="meta"><b>Etkileşim mavisi</b><code>#0071E3 · RGB 0 113 227</code><span>Web’de butonlar ve bağlantılar.</span></div></button>
+        <button class="sw" data-hex="#1D1D1F"><div class="chip" style="background:#1D1D1F;color:#fff">Metin</div><div class="meta"><b>Grafit</b><code>#1D1D1F · RGB 29 29 31</code><span>Ana metin rengi, koyu kartlar.</span></div></button>
+        <button class="sw" data-hex="#F5F5F7"><div class="chip" style="background:#F5F5F7;color:#1D1D1F;box-shadow:inset 0 -1px 0 #E8E8ED">Zemin</div><div class="meta"><b>Açık gri</b><code>#F5F5F7 · RGB 245 245 247</code><span>Bölüm zeminleri, kartlar.</span></div></button>
+      </div>
+      <p class="note">Kullanım oranı: beyaz/açık gri zemin çoğunlukta, lacivert yapıyı taşır, kırmızı yalnızca küçük vurgular içindir.</p>
+      <div class="ratio" aria-label="Renk kullanım oranı">
+        <div style="flex:60;background:#F5F5F7;color:#1D1D1F">Zemin %60</div>
+        <div style="flex:25;background:#0E2248;color:#fff">Lacivert %25</div>
+        <div style="flex:10;background:#1D1D1F;color:#fff">Grafit %10</div>
+        <div style="flex:5;background:#E30613;color:#fff">%5</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 TİPOGRAFİ -->
+  <section id="tipo">
+    <div class="wrap">
+      <p class="num">03 · Tipografi</p>
+      <h2>Sade, okunaklı, modern.</h2>
+      <p class="intro">Web’de cihazın sistem yazı tipi (Apple cihazlarda SF Pro) ve yedeği Inter kullanılır. Basılı materyallerde aynı karakterde geometrik bir sans-serif (ör. Inter veya Poppins) tercih edin. Büyük başlıklarda harf aralığı hafifçe daraltılır.</p>
+      <div class="type">
+        <div class="trow"><small>Ana başlık<br>Bold 700 · 64 px</small><div class="t1">Üretiminiz durmasın.</div></div>
+        <div class="trow"><small>Bölüm başlığı<br>Semibold 600 · 40 px</small><div class="t2">Değiştirmeden önce onarın.</div></div>
+        <div class="trow"><small>Alt başlık<br>Semibold 600 · 21 px</small><div class="t3">Kart seviyesinde onarım</div></div>
+        <div class="trow"><small>Gövde metni<br>Regular 400 · 17 px</small><div class="t4">Arızalı kartı komponent seviyesinde inceliyor, test ederek teslim ediyoruz.</div></div>
+        <div class="trow"><small>Etiket<br>Semibold 600 · 13 px</small><div class="t5">TEZGÂH ELEKTRONİĞİ · TÜM TÜRKİYE</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 İLETİŞİM DİLİ -->
+  <section id="ton">
+    <div class="wrap">
+      <p class="num">04 · İletişim dili</p>
+      <h2>Net, teknik, güven veren.</h2>
+      <p class="intro">Müşterimizin derdi durmuş bir üretim hattıdır. Kısa ve açık konuşur, ne yapacağımızı ve nasıl test edeceğimizi söyleriz. Abartılı ve doğrulanamayan iddialardan kaçınırız.</p>
+      <div class="card" style="margin-top:32px;text-align:center;background:linear-gradient(135deg,#0E2248,#07152E);color:#fff">
+        <p style="color:#A1A1A6;font-size:14px;font-weight:600">SLOGAN</p>
+        <p style="font-size:clamp(26px,3.6vw,40px);font-weight:700;letter-spacing:-.03em;margin-top:8px;color:#fff">Sanayinin her adımında teknoloji.</p>
+      </div>
+      <div class="grid2">
+        <div class="say"><h3>Böyle söyleriz</h3><q>Kartınızı komponent seviyesinde onarıp test ederek, raporla teslim ediyoruz.</q><q>Arızayı bildirin, müdahaleyi birlikte planlayalım.</q><q>Yenisini almadan önce onarılabilir mi, bakalım.</q></div>
+        <div class="say bad"><h3>Böyle söylemeyiz</h3><q>Türkiye’nin bir numaralı servisi!</q><q>Her arızayı garanti çözeriz.</q><q>Resmî yetkili servisiz. (Bağımsız servisiz.)</q></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 GÖRSEL DİL -->
+  <section id="gorsel">
+    <div class="wrap">
+      <p class="num">05 · Görsel dil</p>
+      <h2>Temiz illüstrasyonlar, ince ikonlar.</h2>
+      <p class="intro">Şeffaf zeminli, yumuşak gölgeli, ürün fotoğrafı gibi duran illüstrasyonlar kullanırız: koyu yeşil kartlar, altın pedler, mavi ve yeşil durum ışıkları. Hareket varsa hafiftir ve anlam taşır (akan sinyal, yanan LED).</p>
+      <div class="ill">
+        <figure><img src="assets/pcb.svg" width="2400" height="1100" alt="Elektronik kart illüstrasyonu" loading="lazy"></figure>
+        <figure><img src="assets/moduller.svg" width="1600" height="560" alt="Kart ve modül illüstrasyonu" loading="lazy"></figure>
+        <figure class="dk"><img src="assets/saha.svg" width="1200" height="1500" alt="Osiloskop illüstrasyonu" loading="lazy" style="width:72%"></figure>
+        <figure><img src="assets/forklift.svg" width="1200" height="1160" alt="Forklift illüstrasyonu" loading="lazy"></figure>
+      </div>
+      <h3 style="margin-top:40px;font-size:21px">İkonlar</h3>
+      <p class="intro" style="font-size:17px">İnce çizgili (1,8 px), yuvarlak uçlu, tek renkli çizgi ikonlar.</p>
+      <div class="icons" aria-hidden="true">
+        <span><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg></span>
+        <span><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <span><svg viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></span>
+        <span><svg viewBox="0 0 24 24"><path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <span><svg viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg></span>
+        <span><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+        <span><svg viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2M6 11v2M10 11v2"/></svg></span>
+        <span><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 UYGULAMALAR -->
+  <section id="uygulama">
+    <div class="wrap">
+      <p class="num">06 · Uygulamalar</p>
+      <h2>Kartvizit ve e-posta imzası.</h2>
+      <p class="intro">Örnek uygulamalar. Kartvizit ölçüsü 85 × 55 mm; ön yüz kurumsal lacivert, arka yüz beyaz.</p>
+      <div class="bc">
+        <div class="bcard front" aria-label="Kartvizit ön yüz örneği">
+          <div class="lockup"><img src="assets/logo-beyaz.png" width="64" height="61" alt=""><div class="wm"><b>KOÇ</b><small>ELEKTRONİK</small></div></div>
+          <div><div class="bar"></div><p class="slog" style="margin-top:10px">Sanayinin her adımında teknoloji.</p></div>
+        </div>
+        <div class="bcard back" aria-label="Kartvizit arka yüz örneği">
+          <div><p class="name">Ad Soyad</p><p class="role">Elektronik Servis</p></div>
+          <ul>
+            <li><b>T</b>0553 115 36 94</li>
+            <li><b>E</b>ikoc317@gmail.com</li>
+            <li><b>W</b>Tezgâh elektroniği · Kart tamiri · Saha servis</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sig">
+        <p class="num" style="margin-bottom:14px">E-posta imzası</p>
+        <div class="mail">
+          <table role="presentation"><tr>
+            <td style="padding-right:14px"><img src="assets/logo-lacivert.png" width="56" height="53" alt="Koç Elektronik"></td>
+            <td class="bd"><b style="font-size:15px;color:#0E2248">Ad Soyad</b><br><span style="color:#6E6E73">Koç Elektronik · Elektronik Servis</span><br>T: 0553 115 36 94 · E: <a href="mailto:ikoc317@gmail.com" style="color:#0066CC">ikoc317@gmail.com</a><br><span style="color:#E30613;font-weight:600">Sanayinin her adımında teknoloji.</span></td>
+          </tr></table>
+        </div>
+      </div>
+      <p class="note">Marka notu: Koç Elektronik bağımsız bir elektronik servis firmasıdır. Tanıtım materyallerinde makine üreticilerinin logolarını kullanmayın; marka adlarını yalnızca hizmet verilen ekipmanı tanımlamak için, metin olarak kullanın.</p>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© <span id="yil"></span> Koç Elektronik · <a href="index.html">Ana sayfaya dön</a></div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+document.getElementById("yil").textContent = new Date().getFullYear();
+const toast = document.getElementById("toast"); let tt;
+document.querySelectorAll(".sw").forEach(b => b.addEventListener("click", async () => {
+  const hex = b.dataset.hex;
+  try { await navigator.clipboard.writeText(hex); toast.textContent = hex + " kopyalandı"; }
+  catch { toast.textContent = hex; }
+  toast.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove("on"), 1600);
+}));
+</script>
+</body>
+</html>

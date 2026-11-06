@@ -98,6 +98,49 @@ a,button,summary,label{-webkit-tap-highlight-color:transparent}
 .mods-art .art .ov{object-fit:contain}
 @media (max-width:560px){.card-art{margin:-28px -24px 18px}}
 
+/* Kurumsal */
+.corp{background:var(--bg2)}
+.corp-head{text-align:center;max-width:820px;margin:0 auto 56px}
+.corp-logo{width:84px;height:auto;margin:0 auto 18px}
+.corp-head .eyebrow{font-size:19px}
+.corp-head h2{font-size:clamp(36px,5vw,56px);line-height:1.07;margin-top:6px}
+.corp-lead{font-size:clamp(19px,1.8vw,21px);color:var(--text2);margin-top:18px;line-height:1.45}
+.mv{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.mv-card{background:var(--card);border-radius:28px;padding:40px;position:relative;overflow:hidden}
+.mv-card::after{content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(0,113,227,.14),transparent 70%)}
+.mv-k{display:inline-block;font-size:14px;font-weight:600;color:var(--red);margin-bottom:12px}
+.mv-card p{font-size:clamp(20px,2vw,24px);line-height:1.35;font-weight:600;letter-spacing:-.02em}
+.corp-sub{font-size:28px;text-align:center;margin:72px 0 28px}
+.vals4,.sectors{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.v4,.sector{background:var(--card);border-radius:22px;padding:28px 24px}
+.sector{display:block;text-decoration:none;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,opacity .7s}
+.v4 .ic,.sector .ic{width:34px;height:34px;margin-bottom:16px;stroke-width:1.6}
+.v4 .ic{color:var(--link)}
+.sector .ic{color:var(--red)}
+.v4 b,.sector b{display:block;font-size:19px;font-weight:600}
+.v4 span,.sector span{display:block;font-size:15px;color:var(--text2);margin-top:4px}
+@media (hover:hover){.sector:hover{transform:translateY(-6px);box-shadow:0 18px 40px -18px rgba(0,0,0,.25)}}
+.corp-info{margin-top:72px;background:var(--card);border-radius:28px;padding:16px 40px 32px}
+.ci-row{display:grid;grid-template-columns:220px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line2);font-size:17px}
+.ci-row span{color:var(--text2)}
+.ci-row b{font-weight:600}
+.ci-row a{color:var(--link);text-decoration:none}
+.ci-row b span{color:inherit}
+.ci-slogan{margin-top:24px;text-align:center;font-size:clamp(22px,2.6vw,30px);font-weight:600;letter-spacing:-.025em;background:linear-gradient(90deg,#0071E3,#5AB0FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ci-guide{text-align:center;margin-top:4px}
+.can-art{margin:20px 0 0}
+.can-art .art{border-radius:28px;overflow:hidden}
+.can-art .art > img:first-child{width:100%}
+.can-art .art .ov{object-fit:contain}
+.f-cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:28px;padding:8px 0 24px;border-bottom:1px solid var(--line)}
+.f-cols h4{margin:0 0 10px;font-size:12px;font-weight:600;color:var(--text)}
+.f-cols ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.f-cols a{color:var(--text2);text-decoration:none}
+.f-cols a:hover{color:var(--text);text-decoration:underline}
+.f-brand p{margin-top:10px;max-width:260px}
+@media (max-width:860px){.mv,.vals4,.sectors{grid-template-columns:1fr 1fr}.f-cols{grid-template-columns:1fr 1fr}.ci-row{grid-template-columns:1fr;gap:2px}.corp-info{padding:8px 24px 24px}}
+@media (max-width:560px){.mv,.vals4,.sectors{grid-template-columns:1fr}.mv-card{padding:28px 24px;border-radius:22px}.corp-sub{margin:56px 0 20px}.can-art .art{border-radius:18px}}
+
 /* Global menü */
 .gnav{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--nav-line)}
 .gnav-in{max-width:var(--max);margin:0 auto;height:52px;padding:0 22px;display:flex;align-items:center;gap:8px}
@@ -421,6 +464,7 @@ footer .copy a{color:var(--link)}
   <nav class="gnav-in" aria-label="Ana menü">
     <a class="brand" href="#top" aria-label="Koç Elektronik ana sayfa"><picture><source srcset="assets/logo-beyaz.png" media="(prefers-color-scheme: dark)"><img src="assets/logo-lacivert.png" width="26" height="25" alt=""></picture><span>Koç Elektronik</span></a>
     <ul class="links" id="links">
+      <li><a href="#kurumsal">Kurumsal</a></li>
       <li><a href="#tezgah">Tezgâhlar</a></li>
       <li><a href="#kartlar">Kartlar</a></li>
       <li><a href="#kart-tamiri">Kart Tamiri</a></li>
@@ -437,6 +481,7 @@ footer .copy a{color:var(--link)}
 <div class="mmenu" id="mmenu" aria-hidden="true">
   <nav aria-label="Mobil menü">
     <ul>
+      <li style="transition-delay:20ms"><a class="mlink" href="#kurumsal">Kurumsal</a></li>
       <li style="transition-delay:40ms"><a class="mlink" href="#tezgah">Tezgâhlar</a></li>
       <li style="transition-delay:75ms"><a class="mlink" href="#kartlar">Kartlar</a></li>
       <li style="transition-delay:110ms"><a class="mlink" href="#kart-tamiri">Kart Tamiri</a></li>
@@ -494,6 +539,46 @@ footer .copy a{color:var(--link)}
       <div class="stat rv"><b data-count="100" data-prefix="%">0</b><span>Test edilerek teslim</span></div>
     </div>
   </div>
+
+  <!-- KURUMSAL -->
+  <section class="corp" id="kurumsal">
+    <div class="wrap">
+      <div class="corp-head rv">
+        <picture><source srcset="assets/logo-beyaz.png" media="(prefers-color-scheme: dark)"><img class="corp-logo" src="assets/logo-lacivert.png" width="96" height="91" alt="Koç Elektronik logosu"></picture>
+        <p class="eyebrow">Biz kimiz</p>
+        <h2>Üretiminiz durmasın,<br>kartınız yeniden çalışsın.</h2>
+        <p class="corp-lead">Koç Elektronik; dokuma tezgâhları, endüstriyel otomasyon ve araç elektroniği için arıza tespiti, komponent seviyesinde onarım ve saha servisi sunan bağımsız bir elektronik servis firmasıdır.</p>
+      </div>
+      <div class="mv">
+        <article class="mv-card rv"><span class="mv-k">Misyonumuz</span><p>Arızalı elektronik kartları komponent seviyesinde onararak işletmelerin üretim duruşlarını en aza indirmek; onarımı, yenisini almaya göre ekonomik ve güvenilir bir seçenek hâline getirmek.</p></article>
+        <article class="mv-card rv"><span class="mv-k">Vizyonumuz</span><p>“Sanayinin her adımında teknoloji” anlayışıyla, endüstriyel elektronik onarımında Türkiye genelinde güvenilen bağımsız çözüm ortağı olmak.</p></article>
+      </div>
+      <h3 class="corp-sub rv">Değerlerimiz</h3>
+      <div class="vals4">
+        <div class="v4 rv"><svg class="ic" aria-hidden="true"><use href="#i-award"/></svg><b>Tecrübe ve uzmanlık</b><span>Tezgâh elektroniğinde saha deneyimi.</span></div>
+        <div class="v4 rv"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><b>Güvenilirlik</b><span>Her kart test edilir, raporla teslim edilir.</span></div>
+        <div class="v4 rv"><svg class="ic" aria-hidden="true"><use href="#i-zap"/></svg><b>Hız</b><span>Duruş süresini kısaltan planlama.</span></div>
+        <div class="v4 rv"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><b>Yerinde destek</b><span>Tüm Türkiye’de saha servisi.</span></div>
+      </div>
+      <h3 class="corp-sub rv">Hizmet verdiğimiz sektörler</h3>
+      <div class="sectors">
+        <a class="sector rv" href="#tezgah"><svg class="ic" aria-hidden="true"><use href="#i-cable"/></svg><b>Tekstil ve dokuma</b><span>Kancalı ve hava jetli tezgâhlar</span></a>
+        <a class="sector rv" href="#plc-ecu"><svg class="ic" aria-hidden="true"><use href="#i-chip"/></svg><b>Endüstriyel otomasyon</b><span>PLC, invertör, servo sürücü</span></a>
+        <a class="sector rv" href="#forklift"><svg class="ic" aria-hidden="true"><use href="#i-battery"/></svg><b>Lojistik ve istif</b><span>Elektrikli forklift ve transpalet</span></a>
+        <a class="sector rv" href="#plc-ecu"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg><b>Otomotiv</b><span>ECU onarımı ve testi</span></a>
+      </div>
+      <div class="corp-info rv">
+        <div class="ci-row"><span>Firma</span><b>Koç Elektronik</b></div>
+        <div class="ci-row"><span>Faaliyet alanı</span><b>Endüstriyel elektronik servis ve onarım</b></div>
+        <div class="ci-row"><span>Statü</span><b>Bağımsız servis (üretici temsilcisi değildir)</b></div>
+        <div class="ci-row"><span>Hizmet bölgesi</span><b>Tüm Türkiye</b></div>
+        <div class="ci-row"><span>Telefon · WhatsApp</span><b><a data-tel href="tel:+905531153694"><span data-phone-text>0553 115 36 94</span></a></b></div>
+        <div class="ci-row"><span>E-posta</span><b><a data-mail href="mailto:ikoc317@gmail.com"><span data-mail-text>ikoc317@gmail.com</span></a></b></div>
+        <p class="ci-slogan">Sanayinin her adımında teknoloji.</p>
+        <p class="ci-guide"><a class="more" href="kurumsal-kimlik.html">Kurumsal kimlik kılavuzu</a></p>
+      </div>
+    </div>
+  </section>
 
   <!-- KARO IZGARASI -->
   <div class="tiles">
@@ -642,21 +727,10 @@ footer .copy a{color:var(--link)}
             <li>Kablo ve konnektör<span>Kopuk, kısa devre, oksitli bağlantı</span></li>
             <li>Transceiver onarımı<span>Kart üzerindeki haberleşme katı</span></li>
           </ul>
-          <div class="bus" role="img" aria-label="Şematik: tezgâh haberleşme hattı. İki ucunda 120 ohm sonlandırma; hat üzerinde operatör ekranı, MCB, PowerBox, LDEC ve SUMO sürücü düğümleri. Örnekte MCB arızalı düğüm olarak işaretli.">
-            <small>Tezgâh haberleşme hattı · şematik</small>
-            <div class="bus-grid">
-              <div class="bus-line"><span class="pkt"></span><span class="pkt"></span><span class="pkt"></span></div>
-              <div class="node term">120Ω sonlandırma</div>
-              <div class="node">Operatör ekranı</div>
-              <div class="node bad">MCB — arızalı node</div>
-              <div class="node">PowerBox</div>
-              <div class="node">LDEC sürücü</div>
-              <div class="node">SUMO sürücü</div>
-              <div class="node term">120Ω sonlandırma</div>
-            </div>
-          </div>
+
         </div>
       </div>
+      <figure class="can-art rv"><div class="art"><img src="assets/can-hat.svg" width="1000" height="560" alt="Örnek gösterim: CAN Bus haberleşme hattında iki yönlü veri trafiği. Bir düğüm arızalanıp hattı kilitleyince trafik durur ve tezgâh durur; arızalı düğüm onarılınca akış yeniden başlar." loading="lazy"><img class="ov" src="assets/can-hat-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></figure>
     </div>
   </section>
 
@@ -798,12 +872,17 @@ footer .copy a{color:var(--link)}
 
 <footer>
   <div class="wrap">
-    <div class="f-top">
-      <a class="brand" href="#top"><picture><source srcset="assets/logo-beyaz.png" media="(prefers-color-scheme: dark)"><img src="assets/logo-lacivert.png" width="26" height="25" alt=""></picture><span>Koç Elektronik</span></a>
-      <p class="slogan">Sanayinin her adımında teknoloji.</p>
+    <div class="f-cols">
+      <div class="f-brand">
+        <a class="brand" href="#top"><picture><source srcset="assets/logo-beyaz.png" media="(prefers-color-scheme: dark)"><img src="assets/logo-lacivert.png" width="26" height="25" alt=""></picture><span>Koç Elektronik</span></a>
+        <p>Sanayinin her adımında teknoloji. Endüstriyel elektronik arıza tespiti, kart onarımı ve saha servisi.</p>
+      </div>
+      <div><h4>Kurumsal</h4><ul><li><a href="#kurumsal">Biz kimiz</a></li><li><a href="#kurumsal">Misyon ve vizyon</a></li><li><a href="kurumsal-kimlik.html">Kurumsal kimlik</a></li><li><a href="#sss">Sıkça sorulanlar</a></li></ul></div>
+      <div><h4>Hizmetler</h4><ul><li><a href="#tezgah">Tezgâh elektroniği</a></li><li><a href="#kart-tamiri">Kart tamiri</a></li><li><a href="#ekran">Ekran · CAN Bus</a></li><li><a href="#saha">Saha servis</a></li><li><a href="#forklift">Forklift · transpalet</a></li><li><a href="#plc-ecu">PLC · ECU</a></li></ul></div>
+      <div><h4>İletişim</h4><ul><li><a data-tel href="tel:+905531153694"><span data-phone-text>0553 115 36 94</span></a></li><li><a data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener">WhatsApp</a></li><li><a data-mail href="mailto:ikoc317@gmail.com"><span data-mail-text>ikoc317@gmail.com</span></a></li><li><a href="#iletisim">Arıza bildirimi</a></li><li>Hizmet bölgesi: Tüm Türkiye</li></ul></div>
     </div>
     <p class="disc">Koç Elektronik bağımsız bir elektronik servis ve onarım firmasıdır; herhangi bir makine üreticisinin temsilcisi değildir. Bu sitede geçen marka ve model adları sahiplerine aittir; yalnızca hizmet verilen ekipmanı tanımlamak için kullanılmıştır.</p>
-    <p class="copy">© <span id="yil"></span> Koç Elektronik. Telefon: <a data-tel href="tel:+905531153694"><span data-phone-text>0553 115 36 94</span></a></p>
+    <p class="copy">© <span id="yil"></span> Koç Elektronik. Tüm hakları saklıdır.</p>
   </div>
 </footer>
 
