@@ -666,6 +666,25 @@ body{letter-spacing:-.011em}
 .own-img img{width:min(360px,70vw)!important;aspect-ratio:auto!important;object-fit:contain!important;filter:drop-shadow(0 28px 40px rgba(0,0,0,.35))}
 @media (prefers-color-scheme:dark){.own-img img{filter:drop-shadow(0 28px 40px rgba(0,0,0,.8))}}
 @media (max-width:860px){.tile-cut{right:-6%;width:62%;top:auto;bottom:-30%;opacity:.55}.tile.full{min-height:560px}}
+
+/* Atölyeden galerisi */
+.atolye{background:var(--bg2)}
+.ag{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-auto-rows:minmax(0,auto);gap:36px 28px}
+.ag figure{margin:0}
+.ag-img{overflow:hidden;border-radius:var(--r);background:#0F0F10;aspect-ratio:4/5}
+.ag-img img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+@media (hover:hover){.ag figure:hover .ag-img img{transform:scale(1.03)}}
+.ag-big{grid-row:span 2}
+.ag-big .ag-img{aspect-ratio:auto;height:calc(100% - 118px);min-height:420px}
+.ag figcaption{margin-top:16px;padding-top:16px;border-top:2px solid var(--rule)}
+.ag .n{display:block;font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--kicker)}
+.ag b{display:block;font-size:18px;font-weight:600;margin-top:6px}
+.ag figcaption > span:last-child{display:block;font-size:15px;color:var(--text2);margin-top:4px}
+@media (max-width:900px){.ag{grid-template-columns:1fr 1fr}.ag-big{grid-column:1/-1;grid-row:auto}.ag-big .ag-img{height:auto;aspect-ratio:4/5;min-height:0}}
+@media (max-width:520px){.ag{grid-template-columns:1fr}}
+.own{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)!important;align-items:center!important}
+.own-img img{width:100%!important;max-width:620px}
+@media (prefers-color-scheme:dark){.own-img{background:radial-gradient(ellipse at center,rgba(255,255,255,.10),rgba(255,255,255,0) 70%)!important}}
 </style>
 </head>
 <body>
@@ -810,10 +829,10 @@ body{letter-spacing:-.011em}
         </ol>
       </div>
       <figure class="own rv">
-        <div class="own-img"><picture><source srcset="assets/foto/koc-modul-kesik.webp" type="image/webp"><img src="assets/foto/koc-modul-kesik.png" width="600" height="909" alt="Koç Elektronik sürücü modülü" loading="lazy"></picture></div>
+        <div class="own-img"><picture><source srcset="assets/foto/moduller-kesik.webp" type="image/webp"><img src="assets/foto/moduller-kesik.png" width="1200" height="408" alt="Koç Elektronik sürücü modülleri" loading="lazy"></picture></div>
         <figcaption>
           <span class="mv-k">Sahada Koç Elektronik</span>
-          <p class="own-t">Koç Elektronik sürücü modülü.</p>
+          <p class="own-t">Koç Elektronik sürücü modülleri.</p>
           <p class="own-d">Onarım hizmetlerimizin yanı sıra, sahadaki ihtiyaçlara yönelik Koç Elektronik imzalı sürücü modülleri de üretilmekte ve endüstriyel panolarda devreye alınmaktadır.</p>
         </figcaption>
       </figure>
@@ -966,6 +985,39 @@ body{letter-spacing:-.011em}
         <li><strong>Test ve teslim</strong><span>Fonksiyon testi, raporla teslim.</span></li>
       </ol>
       <div class="pills rv" aria-label="Yetkinlikler"><span>SMD rework</span><span>THT lehimleme</span><span>Osiloskop analizi</span><span>Güç katı onarımı</span><span>Yük altında test</span></div>
+    </div>
+  </section>
+
+  <!-- ATÖLYEDEN -->
+  <section class="atolye" id="atolye">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <p class="eyebrow">Atölyeden</p>
+        <h2>Kabulden teslimata, kayıt altında.</h2>
+        <p>Onarıma gelen her kart ve ünite servis etiketiyle kayda alınır, test edilir ve teslime hazırlanır.</p>
+      </div>
+      <div class="ag">
+        <figure class="ag-big rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/surucu-moduller.webp" type="image/webp"><img src="assets/foto/surucu-moduller.jpg" width="1050" height="1400" alt="Onarımı tamamlanmış sürücü ünitesi ve Koç Elektronik sürücü modülleri" loading="lazy"></picture></div>
+          <figcaption><span class="n">01</span><b>Onarılan sürücü ünitesi</b><span>Onarımı tamamlanan sürücü ünitesi ve Koç Elektronik sürücü modülleri.</span></figcaption>
+        </figure>
+        <figure class=" rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/etiket.webp" type="image/webp"><img src="assets/foto/etiket.jpg" width="1050" height="1400" alt="Onarılan kart üzerinde Koç Elektronik servis etiketi" loading="lazy"></picture></div>
+          <figcaption><span class="n">02</span><b>Servis etiketi</b><span>Her kart, tarih ve firma bilgisiyle etiketlenerek kayda alınır.</span></figcaption>
+        </figure>
+        <figure class=" rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/test-ok.webp" type="image/webp"><img src="assets/foto/test-ok.jpg" width="1400" height="1050" alt="Motor testi yapılmış ve etiketlenmiş sürücü ünitesi" loading="lazy"></picture></div>
+          <figcaption><span class="n">03</span><b>Test ve teslim</b><span>Motor testi yapılan ünite, etiketlenerek teslime hazırlanır.</span></figcaption>
+        </figure>
+        <figure class=" rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/masa.webp" type="image/webp"><img src="assets/foto/masa.jpg" width="1050" height="1400" alt="Atölyede onarım ve test sırasındaki elektronik kartlar" loading="lazy"></picture></div>
+          <figcaption><span class="n">04</span><b>Atölye</b><span>Onarım ve test sırasındaki kontrol, güç ve sürücü kartları.</span></figcaption>
+        </figure>
+        <figure class=" rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/pano.webp" type="image/webp"><img src="assets/foto/pano.jpg" width="787" height="1400" alt="Endüstriyel elektrik panosu" loading="lazy"></picture></div>
+          <figcaption><span class="n">05</span><b>Pano kontrolleri</b><span>Pano, besleme ve bağlantı kontrolleri.</span></figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
