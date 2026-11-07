@@ -637,6 +637,15 @@ body{letter-spacing:-.011em}
 .split-v{aspect-ratio:4/5;border-radius:var(--r)}
 @media (max-width:860px){.split-v{aspect-ratio:4/3}}
 .tile video.t-img{background:#0F0F10}
+
+/* Kurumsal: sahadaki modül */
+.own{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:end;margin:0 0 72px}
+.own-img{border-radius:var(--r);overflow:hidden;background:#0F0F10}
+.own-img img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.own figcaption{padding-top:24px;border-top:2px solid var(--rule)}
+.own-t{font-size:clamp(22px,2.4vw,30px);font-weight:600;letter-spacing:-.025em;line-height:1.2;margin-top:6px}
+.own-d{color:var(--text2);margin-top:14px;max-width:34em}
+@media (max-width:860px){.own{grid-template-columns:1fr;gap:24px}}
 </style>
 </head>
 <body>
@@ -774,6 +783,14 @@ body{letter-spacing:-.011em}
           <li><b>Koç Elektronik</b><span>Endüstriyel elektronikte bağımsız teknik servis; tüm Türkiye’de hizmet.</span></li>
         </ol>
       </div>
+      <figure class="own rv">
+        <div class="own-img"><picture><source srcset="assets/foto/koc-modul.webp" type="image/webp"><img src="assets/foto/koc-modul.jpg" width="800" height="1000" alt="Koç Elektronik logolu elektronik modül, bir endüstriyel panoda devrede" loading="lazy"></picture></div>
+        <figcaption>
+          <span class="mv-k">Sahada Koç Elektronik</span>
+          <p class="own-t">Koç Elektronik imzalı modül, bir endüstriyel panoda devrede.</p>
+          <p class="own-d">Onarım hizmetlerimizin yanı sıra, sahadaki ihtiyaçlara yönelik Koç Elektronik imzalı elektronik modüller de uygulanmaktadır.</p>
+        </figcaption>
+      </figure>
       <div class="mv">
         <article class="mv-card rv"><span class="mv-k">Misyonumuz</span><p>Arızalı elektronik kartları komponent seviyesinde onararak işletmelerin üretim duruşlarını en aza indirmek; onarımı, yenisini almaya göre ekonomik ve güvenilir bir seçenek hâline getirmek.</p></article>
         <article class="mv-card rv"><span class="mv-k">Vizyonumuz</span><p>“Sanayinin her adımında teknoloji” anlayışıyla, endüstriyel elektronik onarımında Türkiye genelinde güvenilen bağımsız çözüm ortağı olmak.</p></article>
@@ -857,7 +874,7 @@ body{letter-spacing:-.011em}
           <ul><li>Kontrol kartları (MCB · MB)</li><li>Güç modülü ve sürücüler</li><li>Sensör ve haberleşme</li></ul></div>
         <div class="card has-art rv"><div class="card-art"><div class="art"><img src="assets/havajetli.svg" width="800" height="500" alt="Hava jetli tezgâhta ana ve ara memelerle atkı ipliğinin taşınması" loading="lazy"><img class="ov" src="assets/havajetli-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></div><small>Hava Jetli (Air-Jet)</small><h3>Hava jetli tezgâhlar</h3>
           <ul><li>Kontrol ve sürücü kartları</li><li>Valf ve sensör elektroniği</li><li>CAN Bus / RS-485 hatları</li></ul></div>
-        <div class="card has-art rv"><div class="card-art"><div class="art"><img src="assets/guc-karti.svg" width="800" height="500" alt="Trafo, kondansatör ve soğutuculu besleme kartı" loading="lazy"><img class="ov" src="assets/guc-karti-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></div><small>Tüm tezgâh tipleri</small><h3>Ortak arızalar</h3>
+        <div class="card has-art rv"><div class="card-art"><div class="art"><video class="vid" data-auto muted loop playsinline preload="none" poster="assets/video/kontrol-kutusu.jpg" aria-label="Tezgâh kontrol kutusu ve besleme bağlantıları"><source src="assets/video/kontrol-kutusu.mp4" type="video/mp4"><source src="assets/video/kontrol-kutusu.webm" type="video/webm"></video></div></div><small>Tüm tezgâh tipleri</small><h3>Ortak arızalar</h3>
           <ul><li>Elektronik kart onarımı</li><li>Besleme ve güç arızaları</li><li>Operatör ekranı</li></ul></div>
       </div>
       <div class="card brands rv">
@@ -962,7 +979,7 @@ body{letter-spacing:-.011em}
   <!-- SAHA SERVİS -->
   <section class="dark" id="saha">
     <div class="wrap split">
-      <div class="art rv"><video class="vid split-v" data-auto muted loop playsinline preload="none" poster="assets/video/kontrol-kutusu.jpg" aria-label="Tezgâh kontrol kutusu ve bağlantıları"><source src="assets/video/kontrol-kutusu.mp4" type="video/mp4"><source src="assets/video/kontrol-kutusu.webm" type="video/webm"></video></div>
+      <div class="art rv"><video class="vid split-v" data-auto muted loop playsinline preload="none" poster="assets/video/devreye-alma.jpg" aria-label="Saha servisi: kontrol ünitesi yüklenip doğrulandıktan sonra tezgâhın yeniden üretime başlaması"><source src="assets/video/devreye-alma.mp4" type="video/mp4"><source src="assets/video/devreye-alma.webm" type="video/webm"></video></div>
       <div class="rv">
         <div class="sec-h">
           <p class="eyebrow" style="color:#FF453A">Tezgâh başında destek</p>
