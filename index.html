@@ -667,20 +667,25 @@ body{letter-spacing:-.011em}
 @media (prefers-color-scheme:dark){.own-img img{filter:drop-shadow(0 28px 40px rgba(0,0,0,.8))}}
 @media (max-width:860px){.tile-cut{right:-6%;width:62%;top:auto;bottom:-30%;opacity:.55}.tile.full{min-height:560px}}
 
-/* Atölyeden galerisi */
+/* Atölyeden galerisi: yalnızca kartlar */
 .atolye{background:var(--bg2)}
-.ag{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 28px;align-items:start}
-.ag figure{margin:0}
-.ag-img{overflow:hidden;border-radius:var(--r);background:#0F0F10}
-.ag-img img{display:block;width:100%;height:auto;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
-@media (hover:hover){.ag figure:hover .ag-img img{transform:scale(1.03)}}
+.ag{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 28px;align-items:stretch}
+.ag figure{margin:0;display:flex;flex-direction:column}
+.ag-img{flex:1;overflow:hidden;border-radius:var(--r)}
+.pc .ag-img{display:grid;place-items:center;padding:clamp(20px,4vw,48px);background:radial-gradient(ellipse at 50% 40%,var(--card) 0%,var(--bg2) 75%);box-shadow:inset 0 0 0 1px var(--line2)}
+.pc .ag-img img{display:block;width:100%;height:auto;filter:drop-shadow(0 24px 30px rgba(0,0,0,.28));transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.ph .ag-img{background:#0F0F10}
+.ph .ag-img img{display:block;width:100%;height:100%;object-fit:cover}
+@media (hover:hover){.pc:hover .ag-img img{transform:translateY(-6px) scale(1.01)}}
 .ag-wide{grid-column:span 2}
+.ag-full{grid-column:1/-1}
+.ag-full .ag-img img{max-width:820px}
 .ag figcaption{margin-top:16px;padding-top:16px;border-top:2px solid var(--rule)}
 .ag .n{display:block;font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--kicker)}
 .ag b{display:block;font-size:18px;font-weight:600;margin-top:6px}
 .ag figcaption > span:last-child{display:block;font-size:15px;color:var(--text2);margin-top:4px}
-@media (max-width:900px){.ag{grid-template-columns:1fr 1fr}.ag-wide{grid-column:1/-1}}
-@media (max-width:520px){.ag{grid-template-columns:1fr}}
+@media (prefers-color-scheme:dark){.pc .ag-img{background:radial-gradient(ellipse at 50% 40%,#2A2A2D 0%,#141416 75%)}.pc .ag-img img{filter:drop-shadow(0 24px 30px rgba(0,0,0,.7))}}
+@media (max-width:900px){.ag{grid-template-columns:1fr}.ag-wide,.ag-full{grid-column:auto}.ph .ag-img{aspect-ratio:4/5}}
 .own{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)!important;align-items:center!important}
 .own-img img{width:100%!important;max-width:620px}
 @media (prefers-color-scheme:dark){.own-img{background:radial-gradient(ellipse at center,rgba(255,255,255,.10),rgba(255,255,255,0) 70%)!important}}
@@ -996,25 +1001,17 @@ body{letter-spacing:-.011em}
         <p>Onarıma gelen her kart ve ünite servis etiketiyle kayda alınır, test edilir ve teslime hazırlanır.</p>
       </div>
       <div class="ag">
-        <figure class="rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/surucu-moduller.webp" type="image/webp"><img src="assets/foto/surucu-moduller.jpg" width="1120" height="1400" alt="Onarımı tamamlanmış sürücü ünitesi ve Koç Elektronik sürücü modülleri" loading="lazy"></picture></div>
-          <figcaption><span class="n">01</span><b>Onarılan sürücü ünitesi</b><span>Onarımı tamamlanan sürücü ünitesi ve Koç Elektronik sürücü modülleri.</span></figcaption>
+        <figure class="pc ag-wide rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/ldec-kesik.webp" type="image/webp"><img src="assets/foto/ldec-kesik.png" width="1100" height="677" alt="Onarımı tamamlanmış, servis etiketli sürücü ünitesi" loading="lazy"></picture></div>
+          <figcaption><span class="n">01</span><b>Sürücü ünitesi</b><span>Motor testi yapılan ünite, servis etiketiyle teslime hazırlanır.</span></figcaption>
         </figure>
-        <figure class="rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/etiket.webp" type="image/webp"><img src="assets/foto/etiket.jpg" width="1120" height="1400" alt="Onarılan kart üzerinde Koç Elektronik servis etiketi" loading="lazy"></picture></div>
+        <figure class="ph rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/etiket.webp" type="image/webp"><img src="assets/foto/etiket.jpg" width="1120" height="1400" alt="Onarılan kart üzerinde Koç Elektrik & Elektronik servis etiketi" loading="lazy"></picture></div>
           <figcaption><span class="n">02</span><b>Servis etiketi</b><span>Her kart, tarih ve firma bilgisiyle etiketlenerek kayda alınır.</span></figcaption>
         </figure>
-        <figure class="rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/masa.webp" type="image/webp"><img src="assets/foto/masa.jpg" width="1121" height="1400" alt="Atölyede onarım ve test sırasındaki elektronik kartlar" loading="lazy"></picture></div>
-          <figcaption><span class="n">03</span><b>Atölye</b><span>Onarım ve test sırasındaki kontrol, güç ve sürücü kartları.</span></figcaption>
-        </figure>
-        <figure class="ag-wide rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/test-ok.webp" type="image/webp"><img src="assets/foto/test-ok.jpg" width="1400" height="840" alt="Motor testi yapılmış ve etiketlenmiş sürücü ünitesi" loading="lazy"></picture></div>
-          <figcaption><span class="n">04</span><b>Test ve teslim</b><span>Motor testi yapılan ünite, etiketlenerek teslime hazırlanır.</span></figcaption>
-        </figure>
-        <figure class="rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/pano.webp" type="image/webp"><img src="assets/foto/pano.jpg" width="1120" height="1400" alt="Endüstriyel elektrik panosu" loading="lazy"></picture></div>
-          <figcaption><span class="n">05</span><b>Pano kontrolleri</b><span>Pano, besleme ve bağlantı kontrolleri.</span></figcaption>
+        <figure class="pc ag-full rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/guc-karti-kesik.webp" type="image/webp"><img src="assets/foto/guc-karti-kesik.png" width="900" height="531" alt="Onarım için kabul edilen güç ve sürücü kartı" loading="lazy"></picture></div>
+          <figcaption><span class="n">03</span><b>Güç ve sürücü kartı</b><span>Kartlar komponent seviyesinde incelenir, onarılır ve test edilir.</span></figcaption>
         </figure>
       </div>
     </div>
