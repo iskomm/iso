@@ -708,6 +708,12 @@ body{letter-spacing:-.011em}
 
 /* Çok dar ekranlar */
 @media (max-width:380px){.quote{font-size:27px;overflow-wrap:break-word}.hero h1{font-size:40px}.sec-h h2,.corp-head h2{font-size:32px}}
+
+.loom-vid{margin:0 0 48px}
+.loom-vid .lv{border-radius:var(--r);overflow:hidden;background:#0F0F10}
+.loom-vid .vid{aspect-ratio:16/7}
+.loom-vid figcaption{margin-top:12px;font-size:14px;color:var(--text2)}
+@media (max-width:700px){.loom-vid .vid{aspect-ratio:16/10}}
 </style>
 </head>
 <body>
@@ -937,12 +943,16 @@ body{letter-spacing:-.011em}
         <h2>Dokuma tezgâhı elektroniği.</h2>
         <p>Kancalı ve hava jetli dokuma tezgâhlarının kart, sürücü, sensör ve haberleşme arızalarında uçtan uca onarım.</p>
       </div>
+      <figure class="loom-vid rv">
+        <div class="lv"><video class="vid" data-auto muted loop playsinline preload="none" poster="assets/video/kancali.jpg" aria-label="Kancalı dokuma tezgâhında kumaşın dokunması"><source src="assets/video/kancali.mp4" type="video/mp4"><source src="assets/video/kancali.webm" type="video/webm"></video></div>
+        <figcaption>Kancalı (rapier) dokuma tezgâhı · üretim sırasında</figcaption>
+      </figure>
       <div class="grid3">
-        <div class="card has-art rv"><div class="card-art"><div class="art"><img src="assets/kancali.svg" width="800" height="500" alt="Kancalı tezgâhta iki yandan gelen kancaların atkıyı ortada aktarması" loading="lazy"><img class="ov" src="assets/kancali-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></div><small>Kancalı (Rapier)</small><h3>Kancalı tezgâhlar</h3>
+        <div class="card rv"><small>Kancalı (Rapier)</small><h3>Kancalı tezgâhlar</h3>
           <ul><li>Kontrol kartları (MCB · MB)</li><li>Güç modülü ve sürücüler</li><li>Sensör ve haberleşme</li></ul></div>
-        <div class="card has-art rv"><div class="card-art"><div class="art"><img src="assets/havajetli.svg" width="800" height="500" alt="Hava jetli tezgâhta ana ve ara memelerle atkı ipliğinin taşınması" loading="lazy"><img class="ov" src="assets/havajetli-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></div><small>Hava Jetli (Air-Jet)</small><h3>Hava jetli tezgâhlar</h3>
+        <div class="card rv"><small>Hava Jetli (Air-Jet)</small><h3>Hava jetli tezgâhlar</h3>
           <ul><li>Kontrol ve sürücü kartları</li><li>Valf ve sensör elektroniği</li><li>CAN Bus / RS-485 hatları</li></ul></div>
-        <div class="card has-art rv"><div class="card-art"><div class="art"><video class="vid" data-auto muted loop playsinline preload="none" poster="assets/video/kontrol-kutusu.jpg" aria-label="Tezgâh kontrol kutusu ve besleme bağlantıları"><source src="assets/video/kontrol-kutusu.mp4" type="video/mp4"><source src="assets/video/kontrol-kutusu.webm" type="video/webm"></video></div></div><small>Tüm tezgâh tipleri</small><h3>Ortak arızalar</h3>
+        <div class="card rv"><small>Tüm tezgâh tipleri</small><h3>Ortak arızalar</h3>
           <ul><li>Elektronik kart onarımı</li><li>Besleme ve güç arızaları</li><li>Operatör ekranı</li></ul></div>
       </div>
       <div class="card brands rv">
