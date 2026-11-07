@@ -630,18 +630,13 @@ body{letter-spacing:-.011em}
 @media (max-width:900px){.hero.hero-video{min-height:82vh}.hero-video::before{background:linear-gradient(0deg,rgba(7,21,46,.95) 0%,rgba(7,21,46,.75) 55%,rgba(7,21,46,.35) 100%)}.hero-video .wrap{padding:96px 22px 56px}}
 .values{margin-top:56px}
 
-/* Sahadan galerisi */
-.sahadan{background:var(--bg);padding-top:24px}
-.fg{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
-.fg figure{margin:0}
-.fg .vb{aspect-ratio:4/5;overflow:hidden;border-radius:var(--r);background:#0F0F10}
-.fg video{width:100%;height:100%;object-fit:cover;display:block}
-.fg figcaption{margin-top:16px;padding-top:16px;border-top:2px solid var(--rule)}
-.fg .n{display:block;font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--kicker)}
-.fg b{display:block;font-size:18px;font-weight:600;margin-top:6px}
-.fg figcaption > span:last-child{display:block;font-size:15px;color:var(--text2);margin-top:4px}
-@media (max-width:900px){.fg{grid-template-columns:1fr 1fr;gap:28px 20px}}
-@media (max-width:520px){.fg .vb{aspect-ratio:1/1}.fg b{font-size:16px}.fg figcaption > span:last-child{font-size:14px}}
+/* İllüstrasyon yerine saha videoları */
+.vid{display:block;width:100%;height:100%;object-fit:cover;background:#0F0F10}
+.card-art .art{height:100%}
+.card-art .vid{aspect-ratio:16/10}
+.split-v{aspect-ratio:4/5;border-radius:var(--r)}
+@media (max-width:860px){.split-v{aspect-ratio:4/3}}
+.tile video.t-img{background:#0F0F10}
 </style>
 </head>
 <body>
@@ -750,35 +745,6 @@ body{letter-spacing:-.011em}
     </div>
   </div>
 
-  <!-- SAHADAN -->
-  <section class="sahadan" id="sahadan">
-    <div class="wrap">
-      <div class="sec-h rv">
-        <p class="eyebrow">Sahadan</p>
-        <h2>Üretimin içinden.</h2>
-        <p>Saha çalışmalarımızdan görüntüler: dokuma salonu, tahrik ve güç elektroniği, kontrol kutusu ve operatör paneli.</p>
-      </div>
-      <div class="fg">
-        <figure class="rv">
-          <div class="vb"><video data-auto muted loop playsinline preload="none" poster="assets/video/sinyal-kulesi.jpg" aria-label="Dokuma salonunda tezgâh durum sinyal kulesi"><source src="assets/video/sinyal-kulesi.mp4" type="video/mp4"><source src="assets/video/sinyal-kulesi.webm" type="video/webm"></video></div>
-          <figcaption><span class="n">01</span><b>Dokuma salonu</b><span>Tezgâh durum sinyalleri: yeşil çalışma, sarı uyarı, kırmızı duruş.</span></figcaption>
-        </figure>
-        <figure class="rv">
-          <div class="vb"><video data-auto muted loop playsinline preload="none" poster="assets/video/tahrik-unitesi.jpg" aria-label="Tezgâh tahrik ünitesi ve motor grubu"><source src="assets/video/tahrik-unitesi.mp4" type="video/mp4"><source src="assets/video/tahrik-unitesi.webm" type="video/webm"></video></div>
-          <figcaption><span class="n">02</span><b>Tahrik ve güç elektroniği</b><span>Ana motor ve sürücü grubunda arıza tespiti ve onarım.</span></figcaption>
-        </figure>
-        <figure class="rv">
-          <div class="vb"><video data-auto muted loop playsinline preload="none" poster="assets/video/kontrol-kutusu.jpg" aria-label="Tezgâh kontrol kutusu ve bağlantıları"><source src="assets/video/kontrol-kutusu.mp4" type="video/mp4"><source src="assets/video/kontrol-kutusu.webm" type="video/webm"></video></div>
-          <figcaption><span class="n">03</span><b>Kontrol kutusu ve bağlantılar</b><span>Pano, besleme ve haberleşme bağlantılarının kontrolü.</span></figcaption>
-        </figure>
-        <figure class="rv">
-          <div class="vb"><video data-auto muted loop playsinline preload="none" poster="assets/video/operator-paneli.jpg" aria-label="Tezgâh operatör paneli"><source src="assets/video/operator-paneli.mp4" type="video/mp4"><source src="assets/video/operator-paneli.webm" type="video/webm"></video></div>
-          <figcaption><span class="n">04</span><b>Operatör paneli</b><span>Ekran, dokunmatik ve haberleşme arızalarında servis.</span></figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
   <!-- KURUMSAL -->
   <section class="corp" id="kurumsal">
     <div class="wrap">
@@ -847,14 +813,14 @@ body{letter-spacing:-.011em}
       <p>Değişimden önce onarım.</p>
       <div class="ctas"><a class="more" href="#kart-tamiri">Daha fazla bilgi</a><a class="more" href="#iletisim">Arıza bildirin</a></div>
     </article>
-    <article class="tile lt rv">
-      <div class="art"><img class="t-img" src="assets/tezgah.svg" width="1400" height="1160" alt="" loading="lazy"><img class="ov" src="assets/tezgah-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
+    <article class="tile dk rv">
+      <div class="art"><video class="t-img" data-auto muted loop playsinline preload="none" poster="assets/video/sinyal-kulesi.jpg" aria-hidden="true"><source src="assets/video/sinyal-kulesi.mp4" type="video/mp4"><source src="assets/video/sinyal-kulesi.webm" type="video/webm"></video></div>
       <h2>Dokuma tezgâhı elektroniği</h2>
       <p>Kancalı ve hava jetli tezgâhlar.</p>
       <div class="ctas"><a class="more" href="#tezgah">Daha fazla bilgi</a></div>
     </article>
     <article class="tile dk rv">
-      <div class="art"><img class="t-img" src="assets/saha-kare.svg" width="1400" height="1160" alt="" loading="lazy"><img class="ov" src="assets/saha-kare-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
+      <div class="art"><video class="t-img" data-auto muted loop playsinline preload="none" poster="assets/video/tahrik-unitesi.jpg" aria-hidden="true"><source src="assets/video/tahrik-unitesi.mp4" type="video/mp4"><source src="assets/video/tahrik-unitesi.webm" type="video/webm"></video></div>
       <h2>Saha servis</h2>
       <p>Türkiye genelinde yerinde hizmet.</p>
       <div class="ctas"><a class="more" href="#saha">Daha fazla bilgi</a></div>
@@ -969,7 +935,7 @@ body{letter-spacing:-.011em}
       </div>
       <div class="grid2">
         <div class="card alt has-art rv">
-          <div class="card-art"><div class="art"><img src="assets/operator-ekrani.svg" width="1400" height="875" alt="Tezgâh operatör ekranı: devir göstergesi, verim ve CAN Bus durumu" loading="lazy"><img class="ov" src="assets/operator-ekrani-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></div><small>Operatör ekranları</small><h3>Ekran ve dokunmatik panel</h3>
+          <div class="card-art"><div class="art"><video class="vid" data-auto muted loop playsinline preload="none" poster="assets/video/operator-paneli.jpg" aria-label="Tezgâh operatör paneli"><source src="assets/video/operator-paneli.mp4" type="video/mp4"><source src="assets/video/operator-paneli.webm" type="video/webm"></video></div></div><small>Operatör ekranları</small><h3>Ekran ve dokunmatik panel</h3>
           <ul>
             <li>Dokunmatik panel<span>Tepkisiz veya kayık dokunma arızaları</span></li>
             <li>Görüntü ve arka aydınlatma<span>Karanlık, soluk veya çizgili ekran</span></li>
@@ -996,7 +962,7 @@ body{letter-spacing:-.011em}
   <!-- SAHA SERVİS -->
   <section class="dark" id="saha">
     <div class="wrap split">
-      <div class="art rv"><img src="assets/saha.svg" width="1200" height="1500" alt="Tezgâh başında CAN Bus hattını ölçen el tipi osiloskop" loading="lazy"><img class="ov" src="assets/saha-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
+      <div class="art rv"><video class="vid split-v" data-auto muted loop playsinline preload="none" poster="assets/video/kontrol-kutusu.jpg" aria-label="Tezgâh kontrol kutusu ve bağlantıları"><source src="assets/video/kontrol-kutusu.mp4" type="video/mp4"><source src="assets/video/kontrol-kutusu.webm" type="video/webm"></video></div>
       <div class="rv">
         <div class="sec-h">
           <p class="eyebrow" style="color:#FF453A">Tezgâh başında destek</p>
@@ -1136,7 +1102,7 @@ body{letter-spacing:-.011em}
         <a class="brand" href="#top"><picture><source srcset="assets/logo-beyaz.png" media="(prefers-color-scheme: dark)"><img src="assets/logo-lacivert.png" width="26" height="25" alt=""></picture><span>Koç Elektronik</span></a>
         <p>Sanayinin her adımında teknoloji. Endüstriyel elektronik arıza tespiti, kart onarımı ve saha servisi.</p>
       </div>
-      <div><h4>Kurumsal</h4><ul><li><a href="#kurumsal">Biz kimiz</a></li><li><a href="#kurumsal">Misyon ve vizyon</a></li><li><a href="#sahadan">Sahadan</a></li><li><a href="kurumsal-kimlik.html">Kurumsal kimlik</a></li><li><a href="#sss">Sıkça sorulanlar</a></li></ul></div>
+      <div><h4>Kurumsal</h4><ul><li><a href="#kurumsal">Biz kimiz</a></li><li><a href="#kurumsal">Misyon ve vizyon</a></li><li><a href="kurumsal-kimlik.html">Kurumsal kimlik</a></li><li><a href="#sss">Sıkça sorulanlar</a></li></ul></div>
       <div><h4>Hizmetler</h4><ul><li><a href="#tezgah">Tezgâh elektroniği</a></li><li><a href="#kart-tamiri">Kart tamiri</a></li><li><a href="#ekran">Ekran · CAN Bus</a></li><li><a href="#saha">Saha servis</a></li><li><a href="#forklift">Forklift · transpalet</a></li><li><a href="#plc-ecu">PLC · ECU</a></li></ul></div>
       <div><h4>İletişim</h4><ul><li><a data-tel href="tel:+905531153694"><span data-phone-text>0553 115 36 94</span></a></li><li><a data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener">WhatsApp</a></li><li><a data-mail href="mailto:ikoc317@gmail.com"><span data-mail-text>ikoc317@gmail.com</span></a></li><li><a href="#iletisim">Arıza bildirimi</a></li><li>Hizmet bölgesi: Tüm Türkiye</li></ul></div>
     </div>
