@@ -148,6 +148,13 @@ a,button,summary,label{-webkit-tap-highlight-color:transparent}
 .story-text{font-size:clamp(17px,1.5vw,19px);line-height:1.6;color:var(--text2)}
 .story-text p+p{margin-top:14px}
 .story-text b{color:var(--text);font-weight:600}
+.iv-intro{font-size:clamp(17px,1.5vw,19px);color:var(--text2);line-height:1.55;margin-top:4px}
+.iv-intro b{color:var(--text);font-weight:600}
+.iv{margin:22px 0 0}
+.iv dt{font-size:clamp(18px,1.6vw,20px);font-weight:600;letter-spacing:-.015em;line-height:1.35;padding-top:20px;border-top:1px solid var(--line)}
+.iv dt:first-child{border-top:0;padding-top:4px}
+.iv dt::before{content:"— ";color:var(--kicker)}
+.iv dd{margin:8px 0 20px;font-size:clamp(16px,1.4vw,18px);line-height:1.6;color:var(--text2)}
 .story-sign{display:flex;align-items:center;gap:14px;margin-top:28px}
 .story-sign .av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#0E2248,#07152E);display:grid;place-items:center;flex:none;color:#fff;font-size:17px;font-weight:700;letter-spacing:.02em;box-shadow:inset 0 -3px 0 #E30613}
 .story-sign b{display:block;font-size:17px}
@@ -765,12 +772,18 @@ body{letter-spacing:-.011em}
       </div>
       <div class="story">
         <article class="story-card rv">
-          <span class="mv-k">Kurucumuz</span>
-          <div class="story-text">
-            <p>Firmamızın kurucusu <b>İsmail Koç</b>, mesleki eğitimini Ovakça Şarık Tara Mesleki ve Teknik Anadolu Lisesi’nde tamamlamıştır.</p>
-            <p>Eğitiminin ardından sanayinin önemli kuruluşlarında <b>üretim sorumlusu</b> olarak görev yapmış; üretim süreçlerinin yönetimi, makine elektroniği ve plansız duruşların işletmeye maliyeti konularında saha deneyimi edinmiştir.</p>
-            <p>Bu deneyim, arızalı elektronik kartların değiştirilmesi yerine komponent seviyesinde onarılmasının işletmelere sağladığı maliyet ve zaman avantajını ortaya koymuştur. Koç Elektronik; endüstriyel elektronik arızalarına üretim bakış açısıyla yaklaşan, güvenilir ve bağımsız bir teknik servis anlayışıyla kurulmuştur.</p>
-          </div>
+          <span class="mv-k">Röportaj · Kurucumuz</span>
+          <p class="iv-intro">Koç Elektronik’in kurucusu <b>İsmail Koç</b> ile firmanın kuruluşunu ve hizmet anlayışını konuştuk.</p>
+          <dl class="iv">
+            <dt>Makine ve elektroniğe ilginiz nasıl başladı?</dt>
+            <dd>Mesleki eğitimimi Ovakça Şarık Tara Mesleki ve Teknik Anadolu Lisesi’nde aldım. Makineler ve elektronik sistemler, o yıllardan bu yana ilgi alanımın merkezinde yer alıyor.</dd>
+            <dt>Sanayideki deneyiminiz size ne kazandırdı?</dt>
+            <dd>Önemli sanayi kuruluşlarında üretim sorumlusu olarak görev yaptım. Plansız bir duruşun üretim hattına ve işletmeye maliyetini sahada, birebir gördüm. Üretimde her saatin değerini o dönemde öğrendim.</dd>
+            <dt>Koç Elektronik’i kurmaya nasıl karar verdiniz?</dt>
+            <dd>Arızalı kartların çoğu zaman değiştirilmek zorunda olmadığını; doğru tespit ve komponent seviyesinde onarımla yeniden çalıştırılabildiğini gördüm. Koç Elektronik’i, üretimin önceliklerini bilen, güvenilir ve bağımsız bir teknik servis anlayışıyla kurdum.</dd>
+            <dt>Müşterilerinize ne taahhüt ediyorsunuz?</dt>
+            <dd>Her kartı test ederek ve yapılan işlemleri raporlayarak teslim ediyoruz. Amacımız, üretimin en kısa sürede ve kalıcı biçimde yeniden başlamasıdır.</dd>
+          </dl>
           <div class="story-sign">
             <span class="av" aria-hidden="true">İK</span>
             <div><b>İsmail Koç</b><span>Kurucu · Koç Elektronik</span></div>
