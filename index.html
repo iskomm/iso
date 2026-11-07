@@ -380,13 +380,6 @@ footer .disc{margin-top:16px;max-width:860px}
 footer .copy{margin-top:10px}
 footer .copy a{color:var(--link)}
 
-/* Mobil alt çubuk */
-.m-bar{display:none}
-@media (max-width:640px){
-  .m-bar{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:40}
-  .m-bar .btn{box-shadow:0 8px 24px -8px rgba(0,0,0,.35)}
-  footer{padding-bottom:96px}
-}
 
 @media (max-width:1068px){
   .mods{grid-template-columns:repeat(4,1fr)}
@@ -1231,10 +1224,6 @@ body{letter-spacing:-.011em}
   </div>
 </footer>
 
-<div class="m-bar">
-  <a class="btn btn-blue" data-tel href="tel:+905531153694"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Ara</a>
-  <a class="btn btn-wa" data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
-</div>
 
 <script>
 /* ===== İŞLETME BİLGİLERİ (değişirse sadece burayı düzenleyin) ===== */
