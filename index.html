@@ -653,6 +653,19 @@ body{letter-spacing:-.011em}
 .own-t{font-size:clamp(22px,2.4vw,30px);font-weight:600;letter-spacing:-.025em;line-height:1.2;margin-top:6px}
 .own-d{color:var(--text2);margin-top:14px;max-width:34em}
 @media (max-width:860px){.own{grid-template-columns:1fr;gap:24px}}
+
+/* Şeffaf (arka planı silinmiş) fotoğraflar */
+.tile.full{overflow:hidden}
+.tile-cut{position:absolute;z-index:-1;right:6%;top:6%;bottom:-8%;width:min(38%,460px);display:flex;align-items:flex-start;justify-content:center;pointer-events:none}
+.tile-cut img{width:100%;height:auto;filter:drop-shadow(0 30px 50px rgba(0,0,0,.6));transform:rotate(-4deg);transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+@media (hover:hover){.tile.full:hover .tile-cut img{transform:rotate(-2deg) translateY(-8px)}}
+.tile.full.dk::before{background:linear-gradient(90deg,rgba(0,0,0,.9) 0%,rgba(0,0,0,.4) 45%,rgba(0,0,0,0) 70%)}
+.wide-img.cut{display:flex;justify-content:center;padding-top:8px}
+.wide-img.cut img{width:min(520px,82vw);height:auto;aspect-ratio:auto!important;border-radius:0!important;object-fit:contain;filter:drop-shadow(0 40px 60px rgba(0,0,0,.65))}
+.own-img{background:none!important;overflow:visible!important;display:flex;justify-content:center;padding:12px 0}
+.own-img img{width:min(360px,70vw)!important;aspect-ratio:auto!important;object-fit:contain!important;filter:drop-shadow(0 28px 40px rgba(0,0,0,.35))}
+@media (prefers-color-scheme:dark){.own-img img{filter:drop-shadow(0 28px 40px rgba(0,0,0,.8))}}
+@media (max-width:860px){.tile-cut{right:-6%;width:62%;top:auto;bottom:-30%;opacity:.55}.tile.full{min-height:560px}}
 </style>
 </head>
 <body>
@@ -797,11 +810,11 @@ body{letter-spacing:-.011em}
         </ol>
       </div>
       <figure class="own rv">
-        <div class="own-img"><picture><source srcset="assets/foto/koc-modul.webp" type="image/webp"><img src="assets/foto/koc-modul.jpg" width="800" height="1000" alt="Koç Elektronik logolu elektronik modül, bir endüstriyel panoda devrede" loading="lazy"></picture></div>
+        <div class="own-img"><picture><source srcset="assets/foto/koc-modul-kesik.webp" type="image/webp"><img src="assets/foto/koc-modul-kesik.png" width="600" height="909" alt="Koç Elektronik sürücü modülü" loading="lazy"></picture></div>
         <figcaption>
           <span class="mv-k">Sahada Koç Elektronik</span>
-          <p class="own-t">Koç Elektronik imzalı modül, bir endüstriyel panoda devrede.</p>
-          <p class="own-d">Onarım hizmetlerimizin yanı sıra, sahadaki ihtiyaçlara yönelik Koç Elektronik imzalı elektronik modüller de uygulanmaktadır.</p>
+          <p class="own-t">Koç Elektronik sürücü modülü.</p>
+          <p class="own-d">Onarım hizmetlerimizin yanı sıra, sahadaki ihtiyaçlara yönelik Koç Elektronik imzalı sürücü modülleri de üretilmekte ve endüstriyel panolarda devreye alınmaktadır.</p>
         </figcaption>
       </figure>
       <div class="mv">
@@ -838,7 +851,7 @@ body{letter-spacing:-.011em}
   <!-- KARO IZGARASI -->
   <div class="tiles">
     <article class="tile dk full rv">
-      <div class="art"><picture><source srcset="assets/foto/kart-tamiri.webp" type="image/webp"><img class="t-img" src="assets/foto/kart-tamiri.jpg" width="1500" height="683" alt="" loading="lazy"></picture></div>
+      <div class="tile-cut" aria-hidden="true"><picture><source srcset="assets/foto/kart-kesik.webp" type="image/webp"><img src="assets/foto/kart-kesik.png" width="900" height="1334" alt="" loading="lazy"></picture></div>
       <h2>Elektronik kart tamiri</h2>
       <p>Değişimden önce onarım.</p>
       <div class="ctas"><a class="more" href="#kart-tamiri">Daha fazla bilgi</a><a class="more" href="#iletisim">Arıza bildirin</a></div>
@@ -943,7 +956,7 @@ body{letter-spacing:-.011em}
         <p>Arızalı kartlar komponent seviyesinde incelenir, onarılır ve test edilerek raporla teslim edilir. Onarım; maliyeti düşürür, bekleme süresini kısaltır.</p>
       </div>
     </div>
-    <div class="wide-img rv"><div class="art"><picture><source srcset="assets/foto/kart-yakin.webp" type="image/webp"><img src="assets/foto/kart-yakin.jpg" width="1008" height="479" alt="Onarım için incelenen tezgâh güç ve sürücü kartı: SMD ve THT komponentler, güç dirençleri ve kondansatörler" loading="lazy"></picture></div></div>
+    <div class="wide-img cut rv"><picture><source srcset="assets/foto/kart-kesik.webp" type="image/webp"><img src="assets/foto/kart-kesik.png" width="900" height="1334" alt="Onarım için incelenen tezgâh güç ve sürücü kartı" loading="lazy"></picture></div>
     <div class="wrap">
       <ol class="steps rv">
         <li><strong>Kabul ve kayıt</strong><span>Arıza bilgisi ve kart kimliği kayda alınır.</span></li>
