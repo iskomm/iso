@@ -669,18 +669,17 @@ body{letter-spacing:-.011em}
 
 /* Atölyeden galerisi */
 .atolye{background:var(--bg2)}
-.ag{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-auto-rows:minmax(0,auto);gap:36px 28px}
+.ag{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 28px;align-items:start}
 .ag figure{margin:0}
-.ag-img{overflow:hidden;border-radius:var(--r);background:#0F0F10;aspect-ratio:4/5}
-.ag-img img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.ag-img{overflow:hidden;border-radius:var(--r);background:#0F0F10}
+.ag-img img{display:block;width:100%;height:auto;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
 @media (hover:hover){.ag figure:hover .ag-img img{transform:scale(1.03)}}
-.ag-big{grid-row:span 2}
-.ag-big .ag-img{aspect-ratio:auto;height:calc(100% - 118px);min-height:420px}
+.ag-wide{grid-column:span 2}
 .ag figcaption{margin-top:16px;padding-top:16px;border-top:2px solid var(--rule)}
 .ag .n{display:block;font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--kicker)}
 .ag b{display:block;font-size:18px;font-weight:600;margin-top:6px}
 .ag figcaption > span:last-child{display:block;font-size:15px;color:var(--text2);margin-top:4px}
-@media (max-width:900px){.ag{grid-template-columns:1fr 1fr}.ag-big{grid-column:1/-1;grid-row:auto}.ag-big .ag-img{height:auto;aspect-ratio:4/5;min-height:0}}
+@media (max-width:900px){.ag{grid-template-columns:1fr 1fr}.ag-wide{grid-column:1/-1}}
 @media (max-width:520px){.ag{grid-template-columns:1fr}}
 .own{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)!important;align-items:center!important}
 .own-img img{width:100%!important;max-width:620px}
@@ -997,24 +996,24 @@ body{letter-spacing:-.011em}
         <p>Onarıma gelen her kart ve ünite servis etiketiyle kayda alınır, test edilir ve teslime hazırlanır.</p>
       </div>
       <div class="ag">
-        <figure class="ag-big rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/surucu-moduller.webp" type="image/webp"><img src="assets/foto/surucu-moduller.jpg" width="1050" height="1400" alt="Onarımı tamamlanmış sürücü ünitesi ve Koç Elektronik sürücü modülleri" loading="lazy"></picture></div>
+        <figure class="rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/surucu-moduller.webp" type="image/webp"><img src="assets/foto/surucu-moduller.jpg" width="1120" height="1400" alt="Onarımı tamamlanmış sürücü ünitesi ve Koç Elektronik sürücü modülleri" loading="lazy"></picture></div>
           <figcaption><span class="n">01</span><b>Onarılan sürücü ünitesi</b><span>Onarımı tamamlanan sürücü ünitesi ve Koç Elektronik sürücü modülleri.</span></figcaption>
         </figure>
-        <figure class=" rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/etiket.webp" type="image/webp"><img src="assets/foto/etiket.jpg" width="1050" height="1400" alt="Onarılan kart üzerinde Koç Elektronik servis etiketi" loading="lazy"></picture></div>
+        <figure class="rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/etiket.webp" type="image/webp"><img src="assets/foto/etiket.jpg" width="1120" height="1400" alt="Onarılan kart üzerinde Koç Elektronik servis etiketi" loading="lazy"></picture></div>
           <figcaption><span class="n">02</span><b>Servis etiketi</b><span>Her kart, tarih ve firma bilgisiyle etiketlenerek kayda alınır.</span></figcaption>
         </figure>
-        <figure class=" rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/test-ok.webp" type="image/webp"><img src="assets/foto/test-ok.jpg" width="1400" height="1050" alt="Motor testi yapılmış ve etiketlenmiş sürücü ünitesi" loading="lazy"></picture></div>
-          <figcaption><span class="n">03</span><b>Test ve teslim</b><span>Motor testi yapılan ünite, etiketlenerek teslime hazırlanır.</span></figcaption>
+        <figure class="rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/masa.webp" type="image/webp"><img src="assets/foto/masa.jpg" width="1121" height="1400" alt="Atölyede onarım ve test sırasındaki elektronik kartlar" loading="lazy"></picture></div>
+          <figcaption><span class="n">03</span><b>Atölye</b><span>Onarım ve test sırasındaki kontrol, güç ve sürücü kartları.</span></figcaption>
         </figure>
-        <figure class=" rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/masa.webp" type="image/webp"><img src="assets/foto/masa.jpg" width="1050" height="1400" alt="Atölyede onarım ve test sırasındaki elektronik kartlar" loading="lazy"></picture></div>
-          <figcaption><span class="n">04</span><b>Atölye</b><span>Onarım ve test sırasındaki kontrol, güç ve sürücü kartları.</span></figcaption>
+        <figure class="ag-wide rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/test-ok.webp" type="image/webp"><img src="assets/foto/test-ok.jpg" width="1400" height="840" alt="Motor testi yapılmış ve etiketlenmiş sürücü ünitesi" loading="lazy"></picture></div>
+          <figcaption><span class="n">04</span><b>Test ve teslim</b><span>Motor testi yapılan ünite, etiketlenerek teslime hazırlanır.</span></figcaption>
         </figure>
-        <figure class=" rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/pano.webp" type="image/webp"><img src="assets/foto/pano.jpg" width="787" height="1400" alt="Endüstriyel elektrik panosu" loading="lazy"></picture></div>
+        <figure class="rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/pano.webp" type="image/webp"><img src="assets/foto/pano.jpg" width="1120" height="1400" alt="Endüstriyel elektrik panosu" loading="lazy"></picture></div>
           <figcaption><span class="n">05</span><b>Pano kontrolleri</b><span>Pano, besleme ve bağlantı kontrolleri.</span></figcaption>
         </figure>
       </div>
