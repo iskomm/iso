@@ -614,6 +614,34 @@ body{letter-spacing:-.011em}
 
 /* Görsel kenarları */
 .can-art .art{border-radius:var(--r)}
+
+/* Videolu açılış */
+.hero.hero-video{position:relative;display:flex;align-items:flex-end;max-width:none;margin:0;padding:0;gap:0;min-height:min(88vh,780px);color:#fff;overflow:hidden;isolation:isolate;background:#07152E}
+.hv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero-video::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(7,21,46,.92) 0%,rgba(7,21,46,.7) 42%,rgba(7,21,46,.2) 100%),linear-gradient(0deg,rgba(7,21,46,.75) 0%,rgba(7,21,46,0) 45%)}
+.hero-video .wrap{width:100%;max-width:1180px;margin:0 auto;padding:120px 22px 80px}
+.hero-video h1{color:#fff;max-width:11em}
+.hero-video .sub{color:#fff;opacity:.88}
+.hero-video .lead{color:rgba(255,255,255,.82)}
+.hero-video .eyebrow{color:#FF6B70!important}
+.hero-video .btn-blue{background:#fff;color:#0E2248}
+.hero-video .btn-blue:hover{background:#E8EDF5}
+.hero-video .more{color:#9CCBFF}
+@media (max-width:900px){.hero.hero-video{min-height:82vh}.hero-video::before{background:linear-gradient(0deg,rgba(7,21,46,.95) 0%,rgba(7,21,46,.75) 55%,rgba(7,21,46,.35) 100%)}.hero-video .wrap{padding:96px 22px 56px}}
+.values{margin-top:56px}
+
+/* Sahadan galerisi */
+.sahadan{background:var(--bg);padding-top:24px}
+.fg{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.fg figure{margin:0}
+.fg .vb{aspect-ratio:4/5;overflow:hidden;border-radius:var(--r);background:#0F0F10}
+.fg video{width:100%;height:100%;object-fit:cover;display:block}
+.fg figcaption{margin-top:16px;padding-top:16px;border-top:2px solid var(--rule)}
+.fg .n{display:block;font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--kicker)}
+.fg b{display:block;font-size:18px;font-weight:600;margin-top:6px}
+.fg figcaption > span:last-child{display:block;font-size:15px;color:var(--text2);margin-top:4px}
+@media (max-width:900px){.fg{grid-template-columns:1fr 1fr;gap:28px 20px}}
+@media (max-width:520px){.fg .vb{aspect-ratio:1/1}.fg b{font-size:16px}.fg figcaption > span:last-child{font-size:14px}}
 </style>
 </head>
 <body>
@@ -682,7 +710,10 @@ body{letter-spacing:-.011em}
 
 <main id="main">
   <!-- HERO -->
-  <div class="hero" id="top">
+  <div class="hero hero-video" id="top">
+    <video class="hv" data-auto autoplay muted loop playsinline preload="metadata" poster="assets/video/tezgah.jpg" aria-hidden="true">
+      <source src="assets/video/tezgah.mp4" type="video/mp4"><source src="assets/video/tezgah.webm" type="video/webm">
+    </video>
     <div class="wrap">
       <p class="eyebrow rv">Koç Elektronik</p>
       <h1 id="h1">Üretiminiz durmasın.</h1>
@@ -692,9 +723,6 @@ body{letter-spacing:-.011em}
         <a class="btn btn-blue" data-tel href="tel:+905531153694">Arızayı bildirin</a>
         <a class="more" data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener">WhatsApp ile iletişim</a>
       </div>
-    </div>
-    <div class="hero-img rv" id="heroImg">
-      <div class="art"><img src="assets/pcb.svg" width="2400" height="1100" alt="Endüstriyel elektronik kontrol kartı" fetchpriority="high"><img class="ov" src="assets/pcb-anim.svg" alt="" aria-hidden="true"></div>
     </div>
   </div>
 
@@ -721,6 +749,35 @@ body{letter-spacing:-.011em}
       <div class="stat rv"><b data-count="100" data-prefix="%">0</b><span>Test edilerek teslim</span></div>
     </div>
   </div>
+
+  <!-- SAHADAN -->
+  <section class="sahadan" id="sahadan">
+    <div class="wrap">
+      <div class="sec-h rv">
+        <p class="eyebrow">Sahadan</p>
+        <h2>Üretimin içinden.</h2>
+        <p>Saha çalışmalarımızdan görüntüler: dokuma salonu, tahrik ve güç elektroniği, kontrol kutusu ve operatör paneli.</p>
+      </div>
+      <div class="fg">
+        <figure class="rv">
+          <div class="vb"><video data-auto muted loop playsinline preload="none" poster="assets/video/sinyal-kulesi.jpg" aria-label="Dokuma salonunda tezgâh durum sinyal kulesi"><source src="assets/video/sinyal-kulesi.mp4" type="video/mp4"><source src="assets/video/sinyal-kulesi.webm" type="video/webm"></video></div>
+          <figcaption><span class="n">01</span><b>Dokuma salonu</b><span>Tezgâh durum sinyalleri: yeşil çalışma, sarı uyarı, kırmızı duruş.</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <div class="vb"><video data-auto muted loop playsinline preload="none" poster="assets/video/tahrik-unitesi.jpg" aria-label="Tezgâh tahrik ünitesi ve motor grubu"><source src="assets/video/tahrik-unitesi.mp4" type="video/mp4"><source src="assets/video/tahrik-unitesi.webm" type="video/webm"></video></div>
+          <figcaption><span class="n">02</span><b>Tahrik ve güç elektroniği</b><span>Ana motor ve sürücü grubunda arıza tespiti ve onarım.</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <div class="vb"><video data-auto muted loop playsinline preload="none" poster="assets/video/kontrol-kutusu.jpg" aria-label="Tezgâh kontrol kutusu ve bağlantıları"><source src="assets/video/kontrol-kutusu.mp4" type="video/mp4"><source src="assets/video/kontrol-kutusu.webm" type="video/webm"></video></div>
+          <figcaption><span class="n">03</span><b>Kontrol kutusu ve bağlantılar</b><span>Pano, besleme ve haberleşme bağlantılarının kontrolü.</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <div class="vb"><video data-auto muted loop playsinline preload="none" poster="assets/video/operator-paneli.jpg" aria-label="Tezgâh operatör paneli"><source src="assets/video/operator-paneli.mp4" type="video/mp4"><source src="assets/video/operator-paneli.webm" type="video/webm"></video></div>
+          <figcaption><span class="n">04</span><b>Operatör paneli</b><span>Ekran, dokunmatik ve haberleşme arızalarında servis.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
 
   <!-- KURUMSAL -->
   <section class="corp" id="kurumsal">
@@ -1079,7 +1136,7 @@ body{letter-spacing:-.011em}
         <a class="brand" href="#top"><picture><source srcset="assets/logo-beyaz.png" media="(prefers-color-scheme: dark)"><img src="assets/logo-lacivert.png" width="26" height="25" alt=""></picture><span>Koç Elektronik</span></a>
         <p>Sanayinin her adımında teknoloji. Endüstriyel elektronik arıza tespiti, kart onarımı ve saha servisi.</p>
       </div>
-      <div><h4>Kurumsal</h4><ul><li><a href="#kurumsal">Biz kimiz</a></li><li><a href="#kurumsal">Misyon ve vizyon</a></li><li><a href="kurumsal-kimlik.html">Kurumsal kimlik</a></li><li><a href="#sss">Sıkça sorulanlar</a></li></ul></div>
+      <div><h4>Kurumsal</h4><ul><li><a href="#kurumsal">Biz kimiz</a></li><li><a href="#kurumsal">Misyon ve vizyon</a></li><li><a href="#sahadan">Sahadan</a></li><li><a href="kurumsal-kimlik.html">Kurumsal kimlik</a></li><li><a href="#sss">Sıkça sorulanlar</a></li></ul></div>
       <div><h4>Hizmetler</h4><ul><li><a href="#tezgah">Tezgâh elektroniği</a></li><li><a href="#kart-tamiri">Kart tamiri</a></li><li><a href="#ekran">Ekran · CAN Bus</a></li><li><a href="#saha">Saha servis</a></li><li><a href="#forklift">Forklift · transpalet</a></li><li><a href="#plc-ecu">PLC · ECU</a></li></ul></div>
       <div><h4>İletişim</h4><ul><li><a data-tel href="tel:+905531153694"><span data-phone-text>0553 115 36 94</span></a></li><li><a data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener">WhatsApp</a></li><li><a data-mail href="mailto:ikoc317@gmail.com"><span data-mail-text>ikoc317@gmail.com</span></a></li><li><a href="#iletisim">Arıza bildirimi</a></li><li>Hizmet bölgesi: Tüm Türkiye</li></ul></div>
     </div>
@@ -1198,7 +1255,7 @@ const onScroll = () => {
   const y = scrollY, vh = innerHeight, max = document.documentElement.scrollHeight - vh;
   prog.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
   if (!reduce) {
-    if (y < vh * 1.3) {
+    if (heroImg && y < vh * 1.3) {
       const p = Math.min(1, y / (vh * 0.9));
       heroImg.style.transform = `translateY(${(p * -24).toFixed(1)}px)`;
     }
@@ -1223,6 +1280,17 @@ if ("IntersectionObserver" in window) {
     if (en.target.classList.contains("mq-wrap")) en.target.classList.toggle("paused", !en.isIntersecting);
   }), { rootMargin: "120px 0px" });
   document.querySelectorAll(".art, .mq-wrap").forEach(el => vis.observe(el));
+}
+
+// Saha videoları: yalnızca ekrandayken oynat; "hareketi azalt" açıksa kapak görüntüsünde kal
+const vids = document.querySelectorAll("video[data-auto]");
+if (reduce) vids.forEach(v => { v.removeAttribute("autoplay"); v.pause(); });
+else if ("IntersectionObserver" in window) {
+  const vo = new IntersectionObserver(es => es.forEach(en => {
+    const v = en.target;
+    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } else v.pause();
+  }), { threshold: 0.25 });
+  vids.forEach(v => vo.observe(v));
 }
 
 /* Kaydırınca beliren içerik */
