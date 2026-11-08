@@ -753,6 +753,15 @@ body{letter-spacing:-.011em}
 .lift{grid-template-columns:1fr!important}
 .lift .feat{grid-template-columns:repeat(3,1fr)}
 @media (max-width:860px){.lift .feat{grid-template-columns:1fr}}
+
+/* ===== Kaydırınca beliren fotoğraflar ===== */
+.pr{clip-path:inset(14% 10% 14% 10% round 12px);transform:translateY(40px) scale(1.06);opacity:0;transition:clip-path 1.25s cubic-bezier(.2,.75,.15,1),transform 1.25s cubic-bezier(.2,.75,.15,1),opacity .7s ease;will-change:clip-path,transform}
+.pr.seen{clip-path:inset(0 0 0 0 round 0);transform:none;opacity:1}
+.pr-cut{transform:translateY(60px) rotate(-3deg) scale(.94);opacity:0;transition:transform 1.3s cubic-bezier(.2,.75,.15,1),opacity .8s ease}
+.pr-cut.seen{transform:none;opacity:1}
+.pr-img img,.pr-img video{transform:scale(1.18);transition:transform 1.8s cubic-bezier(.2,.75,.15,1)}
+.pr-img.seen img,.pr-img.seen video{transform:scale(1)}
+@media (prefers-reduced-motion:reduce){.pr,.pr-cut,.pr-img img,.pr-img video{clip-path:none!important;transform:none!important;opacity:1!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -1010,7 +1019,7 @@ body{letter-spacing:-.011em}
         <h2>Onardığımız kart ve modüller.</h2>
         <p>Dokuma tezgâhlarındaki kontrol, güç ve sürücü kartlarında arıza tespiti, onarım ve fonksiyon testi. Listede yer almayan kart ve modüller için de değerlendirme yapılmaktadır.</p>
       </div>
-      <figure class="mods-photo cutout rv"><picture><source srcset="assets/foto/surucu-ici-kesik.webp" type="image/webp"><img src="assets/foto/surucu-ici-kesik.png" width="820" height="1190" alt="Kabini açılmış tezgâh sürücü ünitesi: kontrol, güç ve sürücü kartları" loading="lazy"></picture><figcaption>Kabini açılmış sürücü ünitesi: kontrol, güç ve sürücü kartları</figcaption></figure>
+      <figure class="mods-photo cutout rv"><picture><source srcset="assets/foto/surucu-ici-kesik.webp" type="image/webp"><img src="assets/foto/surucu-ici-kesik.png" width="620" height="1114" alt="Kabini açılmış tezgâh sürücü ünitesi: kontrol, güç ve sürücü kartları" loading="lazy"></picture><figcaption>Kabini açılmış sürücü ünitesi: kontrol, güç ve sürücü kartları</figcaption></figure>
       <div class="mods rv">
         <div class="mod"><b>MCB</b><small>Kart onarımı</small></div>
         <div class="mod"><b>MB</b><small>Kart onarımı</small></div>
@@ -1170,7 +1179,7 @@ body{letter-spacing:-.011em}
       </div>
       <div class="grid2 ab">
         <article class="card alt rv">
-          <div class="art cutout"><picture><source srcset="assets/foto/operator-karti-kesik.webp" type="image/webp"><img src="assets/foto/operator-karti-kesik.png" width="1000" height="788" alt="Endüstriyel kontrol kartı" loading="lazy"></picture></div>
+          <div class="art cutout"><picture><source srcset="assets/foto/operator-karti-kesik.webp" type="image/webp"><img src="assets/foto/operator-karti-kesik.png" width="866" height="660" alt="Endüstriyel kontrol kartı" loading="lazy"></picture></div>
           <div class="cb">
             <small>Endüstriyel otomasyon</small><h3>PLC ve sürücü tamiri</h3>
             <p>Üretim hattını durduran otomasyon elektroniğinde kart seviyesinde onarım.</p>
@@ -1178,7 +1187,7 @@ body{letter-spacing:-.011em}
           </div>
         </article>
         <article class="card alt rv">
-          <div class="art cutout"><picture><source srcset="assets/foto/ecu-kesik.webp" type="image/webp"><img src="assets/foto/ecu-kesik.png" width="800" height="1164" alt="Otomotiv kontrol ünitesi kartı" loading="lazy"></picture></div>
+          <div class="art cutout"><picture><source srcset="assets/foto/ecu-kesik.webp" type="image/webp"><img src="assets/foto/ecu-kesik.png" width="670" height="1196" alt="Otomotiv kontrol ünitesi kartı" loading="lazy"></picture></div>
           <div class="cb">
             <small>Otomotiv elektroniği</small><h3>Otomotiv ECU onarımı</h3>
             <p>Araç elektronik kontrol ünitelerinde donanım arızalarının tespiti ve onarımı.</p>
@@ -1404,6 +1413,20 @@ if ("IntersectionObserver" in window) {
   }), { rootMargin: "120px 0px" });
   document.querySelectorAll(".art, .mq-wrap").forEach(el => vis.observe(el));
 }
+
+// Fotoğraflar kaydırınca animasyonla gelsin
+(() => {
+  const groups = [
+    [".ag-img, .loom-vid .lv, .auto figure > picture, .saha-arac > picture, .card-art, .split-v, .wide-img", "pr pr-img"],
+    [".cutout img, .own-img img, .pc .ag-img img", "pr-cut"],
+    [".tile .art, .tile-cut", "pr-img"]
+  ];
+  const els = [];
+  groups.forEach(([sel, cls]) => document.querySelectorAll(sel).forEach(el => { if (!el.dataset.pr) { el.dataset.pr = 1; cls.split(" ").forEach(c => el.classList.add(c)); els.push(el); } }));
+  if (reduce || !("IntersectionObserver" in window)) { els.forEach(el => el.classList.add("seen")); return; }
+  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("seen"); io.unobserve(en.target); } }), { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  els.forEach(el => io.observe(el));
+})();
 
 // Saha videoları: yalnızca ekrandayken oynat; "hareketi azalt" açıksa kapak görüntüsünde kal
 const vids = document.querySelectorAll("video[data-auto]");
