@@ -707,6 +707,35 @@ body{letter-spacing:-.011em}
 .loom-vid .vid{aspect-ratio:16/7}
 .loom-vid figcaption{margin-top:12px;font-size:14px;color:var(--text2)}
 @media (max-width:700px){.loom-vid .vid{aspect-ratio:16/10}}
+
+/* Yeni saha fotoğrafları */
+.mods-photo{margin:0 auto 40px;max-width:520px}
+.mods-photo img{display:block;width:100%;height:auto;border-radius:var(--r)}
+.mods-photo figcaption,.saha-arac figcaption{margin-top:10px;font-size:14px;color:var(--text2)}
+.wide-img img{object-fit:cover}
+.ag-img .vid{aspect-ratio:auto;height:100%;object-fit:cover}
+.ph .ag-img{aspect-ratio:4/5}
+.ag{grid-template-columns:repeat(3,1fr)}
+.ab .card .art img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:var(--r)}
+.auto{display:grid;grid-template-columns:1fr 1.6fr;gap:28px;margin-top:40px}
+.auto figure{margin:0}
+.auto img{display:block;width:100%;height:320px;object-fit:cover;border-radius:var(--r)}
+.auto figcaption{margin-top:14px;padding-top:14px;border-top:2px solid var(--rule)}
+.auto b{display:block;font-size:17px;font-weight:600}
+.auto figcaption span{display:block;font-size:15px;color:var(--text2);margin-top:2px}
+.saha-arac{margin:28px 0 0}
+.saha-arac img{display:block;width:100%;height:auto;border-radius:var(--r)}
+.saha-arac figcaption{color:#A1A1A6}
+@media (max-width:860px){.auto{grid-template-columns:1fr}.auto img{height:auto}.ph .ag-img{aspect-ratio:auto}}
+
+.ag{grid-template-columns:repeat(6,1fr)!important}
+.ag > figure{grid-column:span 3}
+.ag > figure.ag-wide{grid-column:span 4}
+.ag > figure.ag-wide + figure{grid-column:span 2}
+.auto{grid-template-columns:1fr!important}
+.auto img{height:auto!important;max-height:420px;object-fit:cover}
+.tile .t-img[src*="gosterge"]{object-position:center 60%}
+@media (max-width:900px){.ag{grid-template-columns:1fr!important}.ag > figure,.ag > figure.ag-wide,.ag > figure.ag-wide + figure{grid-column:auto}}
 </style>
 </head>
 <body>
@@ -892,13 +921,13 @@ body{letter-spacing:-.011em}
   <!-- KARO IZGARASI -->
   <div class="tiles">
     <article class="tile dk full rv">
-      <div class="tile-cut" aria-hidden="true"><picture><source srcset="assets/foto/kart-kesik.webp" type="image/webp"><img src="assets/foto/kart-kesik.png" width="900" height="1334" alt="" loading="lazy"></picture></div>
+      <div class="art"><picture><source srcset="assets/foto/kart-onarim.webp" type="image/webp"><img class="t-img" src="assets/foto/kart-onarim.jpg" width="1600" height="1200" alt="" loading="lazy"></picture></div>
       <h2>Elektronik kart tamiri</h2>
       <p>Değişimden önce onarım.</p>
       <div class="ctas"><a class="more" href="#kart-tamiri">Daha fazla bilgi</a><a class="more" href="#iletisim">Arıza bildirin</a></div>
     </article>
     <article class="tile dk rv">
-      <div class="art"><video class="t-img" data-auto muted loop playsinline preload="none" poster="assets/video/sinyal-kulesi.jpg" aria-hidden="true"><source src="assets/video/sinyal-kulesi.mp4" type="video/mp4"><source src="assets/video/sinyal-kulesi.webm" type="video/webm"></video></div>
+      <div class="art"><video class="t-img" data-auto muted loop playsinline preload="none" poster="assets/video/tezgah-saha.jpg" aria-label="Sahada çalışan dokuma tezgâhı"><source src="assets/video/tezgah-saha.mp4" type="video/mp4"><source src="assets/video/tezgah-saha.webm" type="video/webm"></video></div>
       <h2>Dokuma tezgâhı elektroniği</h2>
       <p>Kancalı ve hava jetli tezgâhlar.</p>
       <div class="ctas"><a class="more" href="#tezgah">Daha fazla bilgi</a></div>
@@ -916,7 +945,7 @@ body{letter-spacing:-.011em}
       <div class="ctas"><a class="more" href="#forklift">Daha fazla bilgi</a></div>
     </article>
     <article class="tile dk rv">
-      <div class="art"><img class="t-img" src="assets/ecu.svg" width="1400" height="1000" alt="" loading="lazy"><img class="ov" src="assets/ecu-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
+      <div class="art"><picture><source srcset="assets/foto/gosterge.webp" type="image/webp"><img class="t-img" src="assets/foto/gosterge.jpg" width="1100" height="1105" alt="" loading="lazy"></picture></div>
       <h2>PLC, sürücü ve ECU</h2>
       <p>Otomasyondan otomotive.</p>
       <div class="ctas"><a class="more" href="#plc-ecu">Daha fazla bilgi</a></div>
@@ -968,7 +997,7 @@ body{letter-spacing:-.011em}
         <h2>Onardığımız kart ve modüller.</h2>
         <p>Dokuma tezgâhlarındaki kontrol, güç ve sürücü kartlarında arıza tespiti, onarım ve fonksiyon testi. Listede yer almayan kart ve modüller için de değerlendirme yapılmaktadır.</p>
       </div>
-      <div class="mods-art rv"><div class="art"><img src="assets/moduller.svg" width="1600" height="560" alt="Tezgâh elektroniği kartları: MCB, PowerBox ve LDEC" loading="lazy"><img class="ov" src="assets/moduller-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></div>
+      <figure class="mods-photo rv"><picture><source srcset="assets/foto/surucu-ici.webp" type="image/webp"><img src="assets/foto/surucu-ici.jpg" width="877" height="1572" alt="Kabini açılmış tezgâh sürücü ünitesi: kontrol, güç ve sürücü kartları" loading="lazy"></picture><figcaption>Kabini açılmış sürücü ünitesi: kontrol, güç ve sürücü kartları</figcaption></figure>
       <div class="mods rv">
         <div class="mod"><b>MCB</b><small>Kart onarımı</small></div>
         <div class="mod"><b>MB</b><small>Kart onarımı</small></div>
@@ -1001,7 +1030,6 @@ body{letter-spacing:-.011em}
         <p>Arızalı kartlar komponent seviyesinde incelenir, onarılır ve test edilerek raporla teslim edilir. Onarım; maliyeti düşürür, bekleme süresini kısaltır.</p>
       </div>
     </div>
-    <div class="wide-img cut rv"><picture><source srcset="assets/foto/kart-kesik.webp" type="image/webp"><img src="assets/foto/kart-kesik.png" width="900" height="1334" alt="Onarım için incelenen tezgâh güç ve sürücü kartı" loading="lazy"></picture></div>
     <div class="wrap">
       <ol class="steps rv">
         <li><strong>Kabul ve kayıt</strong><span>Arıza bilgisi ve kart kimliği kayda alınır.</span></li>
@@ -1028,12 +1056,16 @@ body{letter-spacing:-.011em}
           <figcaption><span class="n">01</span><b>Sürücü ünitesi</b><span>Motor testi yapılan ünite, servis etiketiyle teslime hazırlanır.</span></figcaption>
         </figure>
         <figure class="ph rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/etiket.webp" type="image/webp"><img src="assets/foto/etiket.jpg" width="1120" height="1400" alt="Onarılan kart üzerinde Koç Elektrik & Elektronik servis etiketi" loading="lazy"></picture></div>
-          <figcaption><span class="n">02</span><b>Servis etiketi</b><span>Her kart, tarih ve firma bilgisiyle etiketlenerek kayda alınır.</span></figcaption>
+          <div class="ag-img"><video class="vid" data-auto muted loop playsinline preload="none" poster="assets/video/atolye-test.jpg" aria-label="Atölyede sürücü kartlarının test edilmesi"><source src="assets/video/atolye-test.mp4" type="video/mp4"><source src="assets/video/atolye-test.webm" type="video/webm"></video></div>
+          <figcaption><span class="n">02</span><b>Test</b><span>Kartlar, ünite içinde ve test düzeneğinde çalıştırılarak doğrulanır.</span></figcaption>
         </figure>
-        <figure class="pc ag-full rv">
-          <div class="ag-img"><picture><source srcset="assets/foto/guc-karti-kesik.webp" type="image/webp"><img src="assets/foto/guc-karti-kesik.png" width="900" height="553" alt="Onarım için kabul edilen güç ve sürücü kartı" loading="lazy"></picture></div>
-          <figcaption><span class="n">03</span><b>Güç ve sürücü kartı</b><span>Kartlar komponent seviyesinde incelenir, onarılır ve test edilir.</span></figcaption>
+        <figure class="ph rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/etiketli-kart.webp" type="image/webp"><img src="assets/foto/etiketli-kart.jpg" width="1100" height="1261" alt="Koç Elektrik & Elektronik servis etiketli sürücü kartları" loading="lazy"></picture></div>
+          <figcaption><span class="n">03</span><b>Servis etiketi</b><span>Her ünite, tarih ve firma bilgisiyle etiketlenerek kayda alınır.</span></figcaption>
+        </figure>
+        <figure class="ph rv">
+          <div class="ag-img"><picture><source srcset="assets/foto/operator-etiket.webp" type="image/webp"><img src="assets/foto/operator-etiket.jpg" width="1100" height="1467" alt="Onarımı tamamlanmış, Koç Elektrik & Elektronik etiketli operatör paneli" loading="lazy"></picture></div>
+          <figcaption><span class="n">04</span><b>Teslime hazır panel</b><span>Onarılan panel, yazılımı yüklenerek teslim edilir.</span></figcaption>
         </figure>
       </div>
     </div>
@@ -1087,7 +1119,8 @@ body{letter-spacing:-.011em}
           <li><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><div><strong>Önleyici bakım</strong><span>Pano, besleme ve bağlantı kontrolleri</span></div></li>
           <li><svg class="ic" aria-hidden="true"><use href="#i-msg"/></svg><div><strong>Teknik danışmanlık</strong><span>Tekrarlayan arızalara kalıcı çözüm</span></div></li>
         </ul>
-        <div class="region">
+        <figure class="saha-arac rv"><picture><source srcset="assets/foto/saha-araci.webp" type="image/webp"><img src="assets/foto/saha-araci.jpg" width="1100" height="900" alt="Saha servisine götürülen sürücü üniteleri" loading="lazy"></picture><figcaption>Sahaya götürülen üniteler: tesiste devreye alma ve değişim</figcaption></figure>
+        \1
           <div><small>Hizmet bölgesi</small><b>Tüm Türkiye</b></div>
           <a class="btn btn-blue" data-tel href="tel:+905531153694"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span data-phone-text>0553 115 36 94</span></a>
         </div>
@@ -1126,7 +1159,7 @@ body{letter-spacing:-.011em}
       </div>
       <div class="grid2 ab">
         <article class="card alt rv">
-          <div class="art"><img src="assets/plc-surucu.svg" width="1400" height="875" alt="Ray üzerinde PLC CPU ve giriş/çıkış modülleri ile frekans invertörü" loading="lazy"><img class="ov" src="assets/plc-surucu-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
+          <div class="art"><picture><source srcset="assets/foto/operator-karti.webp" type="image/webp"><img src="assets/foto/operator-karti.jpg" width="1200" height="1072" alt="Endüstriyel kontrol kartı" loading="lazy"></picture></div>
           <div class="cb">
             <small>Endüstriyel otomasyon</small><h3>PLC ve sürücü tamiri</h3>
             <p>Üretim hattını durduran otomasyon elektroniğinde kart seviyesinde onarım.</p>
@@ -1134,13 +1167,16 @@ body{letter-spacing:-.011em}
           </div>
         </article>
         <article class="card alt rv">
-          <div class="art"><img src="assets/ecu.svg" width="1400" height="1000" alt="Otomotiv elektronik kontrol ünitesi (ECU)" loading="lazy"><img class="ov" src="assets/ecu-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
+          <div class="art"><picture><source srcset="assets/foto/ecu-karti.webp" type="image/webp"><img src="assets/foto/ecu-karti.jpg" width="900" height="1442" alt="Otomotiv kontrol ünitesi kartı" loading="lazy"></picture></div>
           <div class="cb">
             <small>Otomotiv elektroniği</small><h3>Otomotiv ECU onarımı</h3>
             <p>Araç elektronik kontrol ünitelerinde donanım arızalarının tespiti ve onarımı.</p>
             <ul><li>Besleme ve güç katı</li><li>Sensör ve aktüatör sürücü devreleri</li><li>CAN haberleşme arızaları</li><li>Onarım sonrası test</li></ul>
           </div>
         </article>
+      </div>
+      <div class="auto">
+        <figure class="rv"><picture><source srcset="assets/foto/arac-veri.webp" type="image/webp"><img src="assets/foto/arac-veri.jpg" width="1500" height="681" alt="Araç verilerinin canlı izlenmesi" loading="lazy"></picture><figcaption><b>Canlı veri izleme</b><span>Araç verilerinin canlı izlenmesi ve arıza teşhisi.</span></figcaption></figure>
       </div>
     </div>
   </section>
