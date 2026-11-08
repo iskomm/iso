@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="Koç Elektronik | Dokuma Tezgâhı ve Endüstriyel Elektronik Onarımı">
 <meta name="twitter:description" content="Dokuma tezgâhı ve endüstriyel elektronik kart tamiri, sürücü, operatör ekranı, CAN Bus, PLC ve ECU onarımı. Türkiye genelinde saha servisi.">
 <meta name="twitter:image" content="https://iskomm.github.io/iso/assets/og.jpg">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "Koç Elektronik", "description": "Dokuma tezgâhı ve endüstriyel elektronik kart tamiri, sürücü, operatör ekranı, CAN Bus / RS-485, PLC ve ECU onarımı; Türkiye genelinde saha servisi.", "url": "https://iskomm.github.io/iso/", "logo": "https://iskomm.github.io/iso/assets/logo-lacivert.png", "image": "https://iskomm.github.io/iso/assets/og.jpg", "telephone": "+905531153694", "email": "ikoc317@gmail.com", "founder": {"@type": "Person", "name": "İsmail Koç"}, "areaServed": {"@type": "Country", "name": "Türkiye"}, "slogan": "Sanayinin her adımında teknoloji.", "address": {"@type": "PostalAddress", "streetAddress": "Barbaros Mah. Demirtaş Yolu Cd. No: 409/A", "addressLocality": "Osmangazi", "addressRegion": "Bursa", "addressCountry": "TR"}, "hasMap": "https://www.google.com/maps/search/?api=1&query=Barbaros+Mahallesi+Demirta%C5%9F+Yolu+Caddesi+No%3A409%2FA+Osmangazi+Bursa"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "Koç Elektronik", "description": "Dokuma tezgâhı ve endüstriyel elektronik kart tamiri, sürücü, operatör ekranı, CAN Bus / RS-485, PLC ve ECU onarımı; Türkiye genelinde saha servisi.", "url": "https://iskomm.github.io/iso/", "logo": "https://iskomm.github.io/iso/assets/logo-lacivert.png", "image": "https://iskomm.github.io/iso/assets/og.jpg", "telephone": "+905531153694", "email": "ikoc317@gmail.com", "founder": {"@type": "Person", "name": "İsmail Koç"}, "areaServed": {"@type": "Country", "name": "Türkiye"}, "slogan": "Sanayinin her adımında teknoloji.", "address": {"@type": "PostalAddress", "streetAddress": "Barbaros Mah. Demirtaş Yolu Cd. No: 409/A", "addressLocality": "Osmangazi", "addressRegion": "Bursa", "addressCountry": "TR"}, "hasMap": "https://www.google.com/maps/search/?api=1&query=Barbaros+Mahallesi+Demirta%C5%9F+Yolu+Caddesi+No%3A409%2FA+Osmangazi+Bursa", "numberOfEmployees": {"@type": "QuantitativeValue", "value": 7}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -738,6 +738,21 @@ body{letter-spacing:-.011em}
 @media (max-width:900px){.ag{grid-template-columns:1fr!important}.ag > figure,.ag > figure.ag-wide,.ag > figure.ag-wide + figure{grid-column:auto}}
 
 .saha-arac img{max-height:300px;object-fit:cover;object-position:center 40%}
+
+/* Şeffaf ürün görselleri */
+.cutout{background:radial-gradient(ellipse at 50% 45%,var(--card) 0%,var(--bg2) 75%);box-shadow:inset 0 0 0 1px var(--line2);border-radius:var(--r);display:grid;place-items:center;padding:clamp(18px,3vw,36px)}
+.cutout img{display:block;width:100%;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;border-radius:0!important;filter:drop-shadow(0 22px 28px rgba(0,0,0,.28))}
+.ab .card .art.cutout{aspect-ratio:16/10}
+.ab .card .art.cutout img{max-height:100%;width:auto;max-width:100%}
+.mods-photo.cutout{max-width:560px;padding:32px 48px}
+.mods-photo.cutout figcaption{margin-top:16px}
+@media (prefers-color-scheme:dark){.cutout{background:radial-gradient(ellipse at 50% 45%,#2A2A2D 0%,#141416 75%)}.cutout img{filter:drop-shadow(0 22px 28px rgba(0,0,0,.7))}}
+/* Forklift karosu: görselsiz liste */
+.tile-list{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.tile-list li{font-size:15px;padding:9px 16px;border-radius:var(--r);background:var(--card);box-shadow:inset 0 0 0 1px var(--line2)}
+.lift{grid-template-columns:1fr!important}
+.lift .feat{grid-template-columns:repeat(3,1fr)}
+@media (max-width:860px){.lift .feat{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -824,7 +839,7 @@ body{letter-spacing:-.011em}
 
   <div class="wrap">
     <div class="values">
-      <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-award"/></svg><b>Tecrübe ve uzmanlık</b><span>Tezgâh elektroniğinde saha deneyimi</span></div>
+      <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-award"/></svg><b>Uzman ekip</b><span>7 kişilik deneyimli teknik kadro</span></div>
       <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><b>Güvenilir hizmet</b><span>Test edilmiş, raporlu teslim</span></div>
       <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-zap"/></svg><b>Hızlı çözüm</b><span>Duruş süresini kısaltan planlama</span></div>
       <div class="val rv"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><b>Tüm Türkiye</b><span>Yerinde tespit ve müdahale</span></div>
@@ -840,7 +855,7 @@ body{letter-spacing:-.011em}
   <div class="wrap">
     <div class="stats">
       <div class="stat rv"><b data-count="11" data-suffix="+">0</b><span>Kart ve modül tipi</span></div>
-      <div class="stat rv"><b data-count="5">0</b><span>Adımlı onarım süreci</span></div>
+      <div class="stat rv"><b data-count="7">0</b><span>Kişilik uzman ekip</span></div>
       <div class="stat rv"><b data-count="81">0</b><span>İlde saha servis</span></div>
       <div class="stat rv"><b data-count="100" data-prefix="%">0</b><span>Test edilerek teslim</span></div>
     </div>
@@ -853,7 +868,7 @@ body{letter-spacing:-.011em}
         <picture><source srcset="assets/logo-beyaz.png" media="(prefers-color-scheme: dark)"><img class="corp-logo" src="assets/logo-lacivert.png" width="96" height="91" alt="Koç Elektronik logosu"></picture>
         <p class="eyebrow">Biz kimiz</p>
         <h2>Üretiminiz durmasın,<br>kartınız yeniden çalışsın.</h2>
-        <p class="corp-lead">Koç Elektronik; dokuma tezgâhları, endüstriyel otomasyon ve araç elektroniği için arıza tespiti, komponent seviyesinde onarım ve saha servisi sunan bağımsız bir elektronik servis firmasıdır.</p>
+        <p class="corp-lead">Koç Elektronik; dokuma tezgâhları, endüstriyel otomasyon ve araç elektroniği için arıza tespiti, komponent seviyesinde onarım ve saha servisi sunan bağımsız bir elektronik servis firmasıdır. Firmamız, elektronik onarım ve saha servisinde deneyimli <b>7 kişilik uzman ekibiyle</b> hizmet vermektedir.</p>
       </div>
       <div class="story">
         <article class="story-card rv">
@@ -889,7 +904,7 @@ body{letter-spacing:-.011em}
       </div>
       <h3 class="corp-sub rv">Değerlerimiz</h3>
       <div class="vals4">
-        <div class="v4 rv"><svg class="ic" aria-hidden="true"><use href="#i-award"/></svg><b>Tecrübe ve uzmanlık</b><span>Tezgâh elektroniğinde saha deneyimi.</span></div>
+        <div class="v4 rv"><svg class="ic" aria-hidden="true"><use href="#i-award"/></svg><b>Uzman ekip</b><span>7 kişilik deneyimli teknik kadromuzla tezgâh elektroniğinde saha deneyimi.</span></div>
         <div class="v4 rv"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><b>Güvenilirlik</b><span>Her kart test edilir, raporla teslim edilir.</span></div>
         <div class="v4 rv"><svg class="ic" aria-hidden="true"><use href="#i-zap"/></svg><b>Hız</b><span>Duruş süresini kısaltan planlama.</span></div>
         <div class="v4 rv"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><b>Yerinde destek</b><span>Tüm Türkiye’de saha servisi.</span></div>
@@ -903,6 +918,7 @@ body{letter-spacing:-.011em}
       </div>
       <div class="corp-info rv">
         <div class="ci-row"><span>Firma</span><b>Koç Elektronik</b></div>
+        <div class="ci-row"><span>Kadro</span><b>7 kişilik uzman ekip</b></div>
         <div class="ci-row"><span>Faaliyet alanı</span><b>Endüstriyel elektronik servis ve onarım</b></div>
         <div class="ci-row"><span>Statü</span><b>Bağımsız servis (üretici temsilcisi değildir)</b></div>
         <div class="ci-row"><span>Adres</span><b><a href="https://www.google.com/maps/search/?api=1&query=Barbaros+Mahallesi+Demirta%C5%9F+Yolu+Caddesi+No%3A409%2FA+Osmangazi+Bursa" target="_blank" rel="noopener">Barbaros Mah. Demirtaş Yolu Cd. No: 409/A, Osmangazi / Bursa</a></b></div>
@@ -936,10 +952,10 @@ body{letter-spacing:-.011em}
       <div class="ctas"><a class="more" href="#saha">Daha fazla bilgi</a></div>
     </article>
     <article class="tile lt rv">
-      <div class="art"><img class="t-img" src="assets/forklift.svg" width="1200" height="1160" alt="" loading="lazy"><img class="ov" src="assets/forklift-anim.svg" alt="" aria-hidden="true" loading="lazy"></div>
-      <h2>Forklift ve transpalet</h2>
+            <h2>Forklift ve transpalet</h2>
       <p>Kontrolör ve şarj elektroniği onarımı.</p>
       <div class="ctas"><a class="more" href="#forklift">Daha fazla bilgi</a></div>
+      <ul class="tile-list" aria-label="Forklift ve transpalet hizmetleri"><li>Motor kontrol üniteleri</li><li>Şarj cihazları</li><li>Lityum batarya BMS</li><li>Gösterge ve kumanda</li><li>Hata kodu analizi</li></ul>
     </article>
     <article class="tile dk rv">
       <div class="art"><picture><source srcset="assets/foto/gosterge.webp" type="image/webp"><img class="t-img" src="assets/foto/gosterge.jpg" width="1100" height="1105" alt="" loading="lazy"></picture></div>
@@ -994,7 +1010,7 @@ body{letter-spacing:-.011em}
         <h2>Onardığımız kart ve modüller.</h2>
         <p>Dokuma tezgâhlarındaki kontrol, güç ve sürücü kartlarında arıza tespiti, onarım ve fonksiyon testi. Listede yer almayan kart ve modüller için de değerlendirme yapılmaktadır.</p>
       </div>
-      <figure class="mods-photo rv"><picture><source srcset="assets/foto/surucu-ici.webp" type="image/webp"><img src="assets/foto/surucu-ici.jpg" width="877" height="1572" alt="Kabini açılmış tezgâh sürücü ünitesi: kontrol, güç ve sürücü kartları" loading="lazy"></picture><figcaption>Kabini açılmış sürücü ünitesi: kontrol, güç ve sürücü kartları</figcaption></figure>
+      <figure class="mods-photo cutout rv"><picture><source srcset="assets/foto/surucu-ici-kesik.webp" type="image/webp"><img src="assets/foto/surucu-ici-kesik.png" width="820" height="1190" alt="Kabini açılmış tezgâh sürücü ünitesi: kontrol, güç ve sürücü kartları" loading="lazy"></picture><figcaption>Kabini açılmış sürücü ünitesi: kontrol, güç ve sürücü kartları</figcaption></figure>
       <div class="mods rv">
         <div class="mod"><b>MCB</b><small>Kart onarımı</small></div>
         <div class="mod"><b>MB</b><small>Kart onarımı</small></div>
@@ -1097,7 +1113,6 @@ body{letter-spacing:-.011em}
 
         </div>
       </div>
-      <figure class="can-art rv"><div class="art"><img src="assets/can-hat.svg" width="1000" height="560" alt="Örnek gösterim: CAN Bus haberleşme hattında iki yönlü veri trafiği. Bir düğüm arızalanıp hattı kilitleyince trafik durur ve tezgâh durur; arızalı düğüm onarılınca akış yeniden başlar." loading="lazy"><img class="ov" src="assets/can-hat-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></figure>
     </div>
   </section>
 
@@ -1133,7 +1148,6 @@ body{letter-spacing:-.011em}
         <h2>Elektrikli forklift ve transpalet elektroniği.</h2>
       </div>
       <div class="lift">
-        <div class="lift-img rv"><div class="art"><img src="assets/forklift.svg" width="1200" height="1160" alt="Elektrikli forklift ve kontrol ünitesi" loading="lazy"><img class="ov" src="assets/forklift-anim.svg" alt="" aria-hidden="true" loading="lazy"></div></div>
         <div class="feat">
           <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg><b>Motor kontrol üniteleri</b><span>Sürüş ve kaldırma kontrolörleri</span></div>
           <div class="card rv"><svg class="ic" aria-hidden="true"><use href="#i-monitor"/></svg><b>Gösterge ve kumanda</b><span>Ekran, tuş takımı, kumanda kolu</span></div>
@@ -1156,7 +1170,7 @@ body{letter-spacing:-.011em}
       </div>
       <div class="grid2 ab">
         <article class="card alt rv">
-          <div class="art"><picture><source srcset="assets/foto/operator-karti.webp" type="image/webp"><img src="assets/foto/operator-karti.jpg" width="1200" height="1072" alt="Endüstriyel kontrol kartı" loading="lazy"></picture></div>
+          <div class="art cutout"><picture><source srcset="assets/foto/operator-karti-kesik.webp" type="image/webp"><img src="assets/foto/operator-karti-kesik.png" width="1000" height="788" alt="Endüstriyel kontrol kartı" loading="lazy"></picture></div>
           <div class="cb">
             <small>Endüstriyel otomasyon</small><h3>PLC ve sürücü tamiri</h3>
             <p>Üretim hattını durduran otomasyon elektroniğinde kart seviyesinde onarım.</p>
@@ -1164,7 +1178,7 @@ body{letter-spacing:-.011em}
           </div>
         </article>
         <article class="card alt rv">
-          <div class="art"><picture><source srcset="assets/foto/ecu-karti.webp" type="image/webp"><img src="assets/foto/ecu-karti.jpg" width="900" height="1442" alt="Otomotiv kontrol ünitesi kartı" loading="lazy"></picture></div>
+          <div class="art cutout"><picture><source srcset="assets/foto/ecu-kesik.webp" type="image/webp"><img src="assets/foto/ecu-kesik.png" width="800" height="1164" alt="Otomotiv kontrol ünitesi kartı" loading="lazy"></picture></div>
           <div class="cb">
             <small>Otomotiv elektroniği</small><h3>Otomotiv ECU onarımı</h3>
             <p>Araç elektronik kontrol ünitelerinde donanım arızalarının tespiti ve onarımı.</p>
