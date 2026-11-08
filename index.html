@@ -1323,12 +1323,13 @@ body{letter-spacing:-.011em}
       <div><h4>İletişim</h4><ul><li><a data-tel href="tel:+905531153694"><span data-phone-text>0553 115 36 94</span></a></li><li><a data-wa href="https://wa.me/905531153694" target="_blank" rel="noopener">WhatsApp</a></li><li><a data-mail href="mailto:ikoc317@gmail.com"><span data-mail-text>ikoc317@gmail.com</span></a></li><li><a href="#iletisim">Arıza bildirimi</a></li><li><a href="https://www.google.com/maps/search/?api=1&query=Barbaros+Mahallesi+Demirta%C5%9F+Yolu+Caddesi+No%3A409%2FA+Osmangazi+Bursa" target="_blank" rel="noopener">Barbaros Mah. Demirtaş Yolu Cd. No: 409/A, Osmangazi / Bursa</a></li><li>Hizmet bölgesi: Tüm Türkiye</li></ul></div>
     </div>
     <p class="disc">Koç Elektronik bağımsız bir elektronik servis ve onarım firmasıdır; herhangi bir makine üreticisinin temsilcisi değildir. Bu sitede geçen marka ve model adları sahiplerine aittir; yalnızca hizmet verilen ekipmanı tanımlamak için kullanılmıştır.</p>
-    <p class="copy">© 2024 Koç Elektronik. Tüm hakları saklıdır.</p>
+    <p class="copy">© <span id="yil"></span> Koç Elektronik. Tüm hakları saklıdır.</p>
   </div>
 </footer>
 
 
 <script>
+document.getElementById("yil").textContent = new Date().getFullYear();
 /* ===== İŞLETME BİLGİLERİ (değişirse sadece burayı düzenleyin) ===== */
 const ISLETME = {
   telefon:  "0553 115 36 94",
