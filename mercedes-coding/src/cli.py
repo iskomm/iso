@@ -65,12 +65,18 @@ def _build_security(args) -> SecurityProfile:
 def cmd_scan(args):
     scan = CbfFile(args.file).scan()
     print(f"dosya      : {scan.path}")
-    print(f"boyut      : {scan.size} byte")
-    print(f"magic      : {scan.magic}")
-    print(f"beyinler   : {', '.join(scan.ecu_names) or '(bulunamadi)'}")
-    print(f"kodlama etiketleri ({len(scan.did_labels)}):")
-    for s in scan.did_labels[:40]:
-        print(f"  - {s}")
+    print(f"boyut      : {scan.size} byte   magic: {scan.magic}")
+    print(f"BEYIN      : {scan.ecu_name or '(XML yok)'}")
+    print(f"versiyon   : {scan.version or '-'}")
+    print(f"kodlama    : {', '.join(scan.coding_classes) or '(belirsiz)'}")
+    print(f"varyantlar ({len(scan.variants)}):")
+    for v in scan.variants[:60]:
+        print(f"  - {v}")
+    if len(scan.variants) > 60:
+        print(f"  ... (+{len(scan.variants) - 60} tane daha)")
+    # ComParam etiketleri (CAN ID, baud vb. isimleri)
+    cps = [s for s in scan.did_labels if s.startswith("CP_")]
+    print(f"\nComParam ({len(cps)}): {', '.join(cps[:20])}")
 
 
 def cmd_devices(args):

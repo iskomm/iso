@@ -46,6 +46,11 @@ class CbfScan:
     strings: list[str] = field(default_factory=list)
     ecu_names: list[str] = field(default_factory=list)
     did_labels: list[str] = field(default_factory=list)
+    # gomulu Diogenes XML metadata'sindan:
+    ecu_name: str = ""
+    version: str = ""
+    variants: list[str] = field(default_factory=list)
+    coding_classes: list[str] = field(default_factory=list)
 
 
 class CbfFile:
@@ -60,7 +65,11 @@ class CbfFile:
         data = self.data
         magic = data[:4].hex()
         strings = self._extract_strings()
+        meta = self.extract_metadata()
         ecu_names = self._guess_ecu_names(strings)
+        # XML'den gelen gercek beyin adi varsa one al
+        if meta["ecu_name"] and meta["ecu_name"] not in ecu_names:
+            ecu_names.insert(0, meta["ecu_name"])
         did_labels = self._guess_did_labels(strings)
         return CbfScan(
             path=self.path,
@@ -69,7 +78,39 @@ class CbfFile:
             strings=strings,
             ecu_names=ecu_names,
             did_labels=did_labels,
+            ecu_name=meta["ecu_name"],
+            version=meta["version"],
+            variants=meta["variants"],
+            coding_classes=meta["coding_classes"],
         )
+
+    def extract_metadata(self) -> dict:
+        """CBF'e gomulu Diogenes 'SelectionConfiguration' XML'inden beyin
+        adi, versiyon ve varyant listesini cikarir. Bu XML her CBF'de
+        bulunur ve beynin gercek kimligini verir."""
+        # ikili veri icinde UTF-8 XML pasajlarini metne cevir
+        text = self.data.decode("latin-1", "ignore")
+        ecu = re.search(r"<EcuName>(.*?)</EcuName>", text)
+        ver = re.search(r"<VersionName>(.*?)</VersionName>", text)
+        variants = []
+        seen = set()
+        for m in re.finditer(r"<VariantName>(.*?)</VariantName>", text):
+            v = m.group(1).strip()
+            if v and v not in seen:
+                seen.add(v)
+                variants.append(v)
+        # kodlama ile ilgili diagnoz siniflari (Variantenkodierung vb.)
+        coding = []
+        for kw in ("Variantenkodierung", "Variantencodierung", "Codierung",
+                   "Kodierung", "VariantCoding"):
+            if kw.lower() in text.lower() and kw not in coding:
+                coding.append(kw)
+        return {
+            "ecu_name": ecu.group(1).strip() if ecu else "",
+            "version": ver.group(1).strip() if ver else "",
+            "variants": variants,
+            "coding_classes": coding,
+        }
 
     def _extract_strings(self) -> list[str]:
         out, seen = [], set()
