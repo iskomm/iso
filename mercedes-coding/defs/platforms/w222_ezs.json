@@ -1,0 +1,34 @@
+{
+  "ecu_name": "W222_EZS",
+  "platform": "W222",
+  "model_name": "S-Serisi (W222, 2013-2020)",
+  "ecu_role": "ezs",
+  "vin_patterns": [
+    "^WDD222",
+    "^WDC222"
+  ],
+  "request_id": 2019,
+  "response_id": 2027,
+  "baudrate": 500000,
+  "extended_id": false,
+  "protocol": "UDS",
+  "seedkey": {
+    "level": 5,
+    "dll": "",
+    "func": "GenerateKeyEx",
+    "xor_mask": ""
+  },
+  "blocks": [],
+  "features": [],
+  "routines": [
+    {
+      "name": "anahtar_tanitma_sonrasi_kontrol",
+      "title": "Kontak Sonrasi Kontrol",
+      "routine_id": 3888,
+      "control": 1,
+      "security_level": 5,
+      "description": "Kontak/EZS islemi sonrasi durum kontrolu. (Anahtar programlama bu araca dahil DEGILDIR.)"
+    }
+  ],
+  "_NOT": "ORNEK/SABLON. DID, byte/bit, CAN ID, routine_id ve seedkey seviyesi platform/beyne gore DEGISIR ve YAKLASIKTIR. Yazmadan/tanitmadan once kendi CBF'inden (CaesarSuite) dogrula. Yanlis deger beyni bozabilir."
+}

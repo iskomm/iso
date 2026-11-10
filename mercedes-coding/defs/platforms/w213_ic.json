@@ -1,0 +1,124 @@
+{
+  "ecu_name": "W213_IC",
+  "platform": "W213",
+  "model_name": "E-Serisi (W213, 2016-2023)",
+  "ecu_role": "gosterge",
+  "vin_patterns": [
+    "^WDD213",
+    "^W1K213"
+  ],
+  "request_id": 2016,
+  "response_id": 2024,
+  "baudrate": 500000,
+  "extended_id": false,
+  "protocol": "UDS",
+  "seedkey": {
+    "level": 3,
+    "dll": "",
+    "func": "GenerateKeyEx",
+    "xor_mask": ""
+  },
+  "blocks": [
+    {
+      "name": "amg_sport_gosterge",
+      "did": 512,
+      "read_sid": 34,
+      "write_sid": 46,
+      "security_level": 3,
+      "length": 2,
+      "fields": [
+        {
+          "name": "amg_menu",
+          "byte_offset": 0,
+          "bit_offset": 0,
+          "bit_length": 1,
+          "description": "AMG / Sport menusu",
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        },
+        {
+          "name": "boost_gostergesi",
+          "byte_offset": 0,
+          "bit_offset": 1,
+          "bit_length": 1,
+          "description": "turbo basinc",
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        },
+        {
+          "name": "yag_sicakligi",
+          "byte_offset": 0,
+          "bit_offset": 2,
+          "bit_length": 1,
+          "description": "yag sicaklik gostergesi",
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        },
+        {
+          "name": "tur_zamanlayici",
+          "byte_offset": 0,
+          "bit_offset": 3,
+          "bit_length": 1,
+          "description": "RACETIMER / tur sayaci",
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        },
+        {
+          "name": "dijital_hiz",
+          "byte_offset": 0,
+          "bit_offset": 4,
+          "bit_length": 1,
+          "description": "dijital hiz gostergesi",
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        }
+      ]
+    }
+  ],
+  "features": [
+    {
+      "name": "amg_menu",
+      "title": "AMG Menu Aktivasyonu",
+      "block": "amg_sport_gosterge",
+      "category": "gosterge",
+      "description": "Gostergede AMG/Sport sayfasini acar.",
+      "requires_hardware": "Gosterge yazilimi bu sayfayi desteklemeli.",
+      "changes": {
+        "amg_menu": 1,
+        "boost_gostergesi": 1,
+        "yag_sicakligi": 1,
+        "tur_zamanlayici": 1,
+        "dijital_hiz": 1
+      },
+      "disable_changes": {
+        "amg_menu": 0,
+        "boost_gostergesi": 0,
+        "yag_sicakligi": 0,
+        "tur_zamanlayici": 0,
+        "dijital_hiz": 0
+      }
+    }
+  ],
+  "routines": [
+    {
+      "name": "gosterge_tanitma",
+      "title": "Gosterge Tanitma (degisim sonrasi)",
+      "routine_id": 3841,
+      "control": 1,
+      "security_level": 3,
+      "category": "tanitma",
+      "description": "Gosterge degisimi sonrasi arac verilerini eslestirir."
+    }
+  ],
+  "_NOT": "ORNEK/SABLON. DID, byte/bit, CAN ID, routine_id ve seedkey seviyesi platform/beyne gore DEGISIR ve YAKLASIKTIR. Yazmadan/tanitmadan once kendi CBF'inden (CaesarSuite) dogrula. Yanlis deger beyni bozabilir."
+}

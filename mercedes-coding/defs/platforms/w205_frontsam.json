@@ -1,0 +1,129 @@
+{
+  "ecu_name": "W205_FrontSAM",
+  "platform": "W205",
+  "model_name": "C-Serisi (W205, 2014-2021)",
+  "ecu_role": "konfor_beyni",
+  "vin_patterns": [
+    "^WDD205",
+    "^W1K205"
+  ],
+  "request_id": 2017,
+  "response_id": 2025,
+  "baudrate": 500000,
+  "extended_id": false,
+  "protocol": "UDS",
+  "seedkey": {
+    "level": 3,
+    "dll": "",
+    "func": "GenerateKeyEx",
+    "xor_mask": ""
+  },
+  "blocks": [
+    {
+      "name": "konfor_isik",
+      "did": 528,
+      "read_sid": 34,
+      "write_sid": 46,
+      "security_level": 3,
+      "length": 2,
+      "fields": [
+        {
+          "name": "coming_home",
+          "byte_offset": 0,
+          "bit_offset": 0,
+          "bit_length": 1,
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        },
+        {
+          "name": "leaving_home",
+          "byte_offset": 0,
+          "bit_offset": 1,
+          "bit_length": 1,
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        },
+        {
+          "name": "konfor_sinyal_sayisi",
+          "byte_offset": 0,
+          "bit_offset": 2,
+          "bit_length": 3,
+          "description": "tek dokunus sinyal sayisi",
+          "options": {
+            "3": "3",
+            "4": "4",
+            "5": "5"
+          }
+        },
+        {
+          "name": "ayna_katlama",
+          "byte_offset": 1,
+          "bit_offset": 0,
+          "bit_length": 1,
+          "description": "kilitlenince ayna katla",
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        },
+        {
+          "name": "acil_fren_flasor",
+          "byte_offset": 1,
+          "bit_offset": 1,
+          "bit_length": 1,
+          "description": "sert frende dortlu flasor",
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        }
+      ]
+    }
+  ],
+  "features": [
+    {
+      "name": "coming_leaving_home",
+      "title": "Coming/Leaving Home",
+      "block": "konfor_isik",
+      "category": "isik",
+      "description": "Yaklasinca/inince farlar yansin.",
+      "changes": {
+        "coming_home": 1,
+        "leaving_home": 1
+      }
+    },
+    {
+      "name": "ayna_katlama",
+      "title": "Kilitlenince Ayna Katlama",
+      "block": "konfor_isik",
+      "category": "konfor",
+      "changes": {
+        "ayna_katlama": 1
+      }
+    },
+    {
+      "name": "acil_fren_flasor",
+      "title": "Acil Frende Flasor",
+      "block": "konfor_isik",
+      "category": "guvenlik",
+      "changes": {
+        "acil_fren_flasor": 1
+      }
+    }
+  ],
+  "routines": [
+    {
+      "name": "konfor_normalizasyon",
+      "title": "Konfor Normalizasyon",
+      "routine_id": 3856,
+      "control": 1,
+      "security_level": 3,
+      "description": "Cam/tavan normalizasyonu (aku sonrasi)."
+    }
+  ],
+  "_NOT": "ORNEK/SABLON. DID, byte/bit, CAN ID, routine_id ve seedkey seviyesi platform/beyne gore DEGISIR ve YAKLASIKTIR. Yazmadan/tanitmadan once kendi CBF'inden (CaesarSuite) dogrula. Yanlis deger beyni bozabilir."
+}

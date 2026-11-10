@@ -165,9 +165,46 @@ class CodingBlock:
 
 
 @dataclass
+class Feature:
+    """Tek tikla uygulanan hazir ozellik (orn. 'AMG Menu Aktivasyonu').
+
+    Bir blogun bir ya da birden fazla alanini belirli degerlere ayarlar.
+    disable_changes verilirse 'kapat' icin kullanilir; yoksa tum alanlar 0.
+    """
+    name: str                    # dahili ad: "amg_menu"
+    title: str                   # gorunen ad: "AMG Menu Aktivasyonu"
+    block: str                   # hangi kodlama blogu
+    changes: dict[str, int] = field(default_factory=dict)   # acmak icin
+    disable_changes: dict[str, int] = field(default_factory=dict)  # kapatmak
+    category: str = "genel"      # gruplama: isik, multimedya, gosterge...
+    description: str = ""
+    requires_hardware: str = ""  # donanim onsarti notu
+
+
+@dataclass
+class Routine:
+    """RoutineControl (0x31) ile calistirilan tanitma/kalibrasyon islemi.
+
+    Orn: beyin degisimi sonrasi 'tanitma', far ayari, konfor normalizasyonu,
+    SRS/kemer sifirlamasi haricindeki guvenli rutinler.
+    """
+    name: str
+    title: str
+    routine_id: int
+    control: int = 0x01          # 0x01 start, 0x02 stop, 0x03 sonuc
+    data_hex: str = ""           # rutine gonderilecek ek veri (hex)
+    security_level: int = 0
+    category: str = "tanitma"
+    description: str = ""
+
+
+@dataclass
 class CodingDefinition:
     """Bir beyin icin tam kodlama tanimi. Uygulamanin tukettigi birim."""
     ecu_name: str
+    platform: str = ""           # W176, W205, W213, W222, W177 ...
+    model_name: str = ""         # gorunen ad: "A-Serisi (W176)"
+    vin_patterns: list[str] = field(default_factory=list)  # VIN regex ipuclari
     request_id: int = 0x7E0
     response_id: int = 0x7E8
     baudrate: int = 500000
@@ -176,7 +213,19 @@ class CodingDefinition:
     # seedkey: {"level":3, "dll":"yol.dll", "func":"GenerateKeyEx"} veya
     #          {"level":1, "xor_mask":"aabbccdd"}
     seedkey: dict = field(default_factory=dict)
+    ecu_role: str = ""           # "far_beyni", "konfor_beyni", "gosterge"...
     blocks: list[CodingBlock] = field(default_factory=list)
+    features: list[Feature] = field(default_factory=list)
+    routines: list[Routine] = field(default_factory=list)
+
+    def feature_by_name(self, name: str) -> "Feature | None":
+        return next((f for f in self.features if f.name == name), None)
+
+    def routine_by_name(self, name: str) -> "Routine | None":
+        return next((r for r in self.routines if r.name == name), None)
+
+    def block_by_name(self, name: str) -> "CodingBlock | None":
+        return next((b for b in self.blocks if b.name == name), None)
 
     # -- JSON serilestirme -------------------------------------------------
 
@@ -193,6 +242,8 @@ class CodingDefinition:
             d = json.load(f)
         field_keys = {f.name for f in CodingField.__dataclass_fields__.values()}
         block_keys = {f.name for f in CodingBlock.__dataclass_fields__.values()}
+        feat_keys = {f.name for f in Feature.__dataclass_fields__.values()}
+        rout_keys = {f.name for f in Routine.__dataclass_fields__.values()}
         def_keys = {f.name for f in cls.__dataclass_fields__.values()}
 
         def _clean(src: dict, allowed: set) -> dict:
@@ -209,5 +260,10 @@ class CodingDefinition:
                 fields.append(CodingField(**fd))
             b = {**_clean(b, block_keys), "fields": fields}
             blocks.append(CodingBlock(**b))
-        d = {**_clean(d, def_keys), "blocks": blocks}
+        features = [Feature(**_clean(fe, feat_keys))
+                    for fe in d.get("features", [])]
+        routines = [Routine(**_clean(ro, rout_keys))
+                    for ro in d.get("routines", [])]
+        d = {**_clean(d, def_keys), "blocks": blocks, "features": features,
+             "routines": routines}
         return cls(**d)

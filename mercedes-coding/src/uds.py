@@ -62,6 +62,40 @@ NRC = {
 }
 
 
+# DTC durum byte'i bit anlamlari (ISO 14229-1)
+DTC_STATUS_FLAGS = [
+    (0x01, "testHatali"),
+    (0x02, "buDongudeHatali"),
+    (0x04, "beklemede"),
+    (0x08, "onaylandi"),
+    (0x10, "temizlemeDenSonraTestEdilmedi"),
+    (0x20, "buDongudeTestEdilmedi"),
+    (0x40, "uyariLambasiIstendi"),
+    (0x80, "aktif"),
+]
+
+_DTC_LETTER = {0: "P", 1: "C", 2: "B", 3: "U"}
+
+
+def decode_dtc(rec: bytes) -> dict:
+    """4 byte'lik DTC kaydini (3 byte kod + 1 byte durum) cozer."""
+    if len(rec) < 3:
+        return {"code": "?", "raw": rec.hex(), "status": 0, "flags": [],
+                "active": False}
+    b0, b1, b2 = rec[0], rec[1], rec[2]
+    status = rec[3] if len(rec) >= 4 else 0
+    letter = _DTC_LETTER[(b0 >> 6) & 0x03]
+    code = f"{letter}{b0 & 0x3F:02X}{b1:02X}-{b2:02X}"
+    flags = [name for bit, name in DTC_STATUS_FLAGS if status & bit]
+    return {
+        "code": code,
+        "raw": rec[:3].hex(),
+        "status": status,
+        "flags": flags,
+        "active": bool(status & 0x01) or bool(status & 0x08),
+    }
+
+
 class UdsError(Exception):
     pass
 
@@ -151,6 +185,17 @@ class UdsClient:
 
     def read_dtc(self, sub: int = 0x02, mask: int = 0xFF) -> bytes:
         return self.request(bytes([SID.READ_DTC, sub, mask]))
+
+    def read_dtcs(self, mask: int = 0xFF) -> list[dict]:
+        """0x19 0x02 ile arizalari okur ve OKUNABILIR listeye cevirir.
+
+        Her kayit: {code: 'B1234-56', raw: 'b1234656', status: 0x..,
+                    flags: [...], active: bool}
+        """
+        resp = self.read_dtc(0x02, mask)
+        # resp: [0x02, statusAvailabilityMask, (DTC3 + status1)*n]
+        body = resp[2:] if len(resp) >= 2 else b""
+        return [decode_dtc(body[i:i + 4]) for i in range(0, len(body) - 3, 4)]
 
     # -- security access ---------------------------------------------------
 

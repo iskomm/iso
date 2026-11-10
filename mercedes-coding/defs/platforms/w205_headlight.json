@@ -1,0 +1,105 @@
+{
+  "ecu_name": "W205_Headlight",
+  "platform": "W205",
+  "model_name": "C-Serisi (W205, 2014-2021)",
+  "ecu_role": "far_beyni",
+  "vin_patterns": [
+    "^WDD205",
+    "^W1K205"
+  ],
+  "request_id": 2018,
+  "response_id": 2026,
+  "baudrate": 500000,
+  "extended_id": false,
+  "protocol": "UDS",
+  "seedkey": {
+    "level": 3,
+    "dll": "",
+    "func": "GenerateKeyEx",
+    "xor_mask": ""
+  },
+  "blocks": [
+    {
+      "name": "far_ayarlari",
+      "did": 544,
+      "read_sid": 34,
+      "write_sid": 46,
+      "security_level": 3,
+      "length": 2,
+      "fields": [
+        {
+          "name": "sis_viraj_lambasi",
+          "byte_offset": 0,
+          "bit_offset": 0,
+          "bit_length": 1,
+          "description": "sis farini kornering light yap",
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        },
+        {
+          "name": "gunduz_farlari",
+          "byte_offset": 0,
+          "bit_offset": 1,
+          "bit_length": 1,
+          "description": "DRL gunduz surus farlari",
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        },
+        {
+          "name": "otoyol_asistani",
+          "byte_offset": 0,
+          "bit_offset": 2,
+          "bit_length": 1,
+          "description": "adaptif far / highbeam assist",
+          "options": {
+            "0": "kapali",
+            "1": "acik"
+          }
+        }
+      ]
+    }
+  ],
+  "features": [
+    {
+      "name": "kornering",
+      "title": "Sis Farini Viraj Lambasi Yap",
+      "block": "far_ayarlari",
+      "category": "isik",
+      "changes": {
+        "sis_viraj_lambasi": 1
+      }
+    },
+    {
+      "name": "drl",
+      "title": "Gunduz Surus Farlari (DRL)",
+      "block": "far_ayarlari",
+      "category": "isik",
+      "changes": {
+        "gunduz_farlari": 1
+      }
+    }
+  ],
+  "routines": [
+    {
+      "name": "far_tanitma",
+      "title": "Far Beyni Tanitma (degisim sonrasi)",
+      "routine_id": 3872,
+      "control": 1,
+      "security_level": 3,
+      "description": "Far beyni/LED modulu degisimi sonrasi tanitma."
+    },
+    {
+      "name": "far_kalibrasyon",
+      "title": "Far Yuksekligi Kalibrasyon",
+      "routine_id": 3873,
+      "control": 1,
+      "security_level": 3,
+      "description": "Far seviyesi/aydinlatma kalibrasyonu."
+    }
+  ],
+  "_NOT": "ORNEK/SABLON. DID, byte/bit, CAN ID, routine_id ve seedkey seviyesi platform/beyne gore DEGISIR ve YAKLASIKTIR. Yazmadan/tanitmadan once kendi CBF'inden (CaesarSuite) dogrula. Yanlis deger beyni bozabilir."
+}

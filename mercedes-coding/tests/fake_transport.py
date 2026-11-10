@@ -14,6 +14,10 @@ class FakeEcu:
         self.require_security_for_write = True
         self._pending_response: bytes | None = None
         self.sent: list[bytes] = []
+        # 4 byte'lik DTC kayitlari (3 kod + 1 durum)
+        self.dtcs: bytes = bytes([0xB1, 0x23, 0x45, 0x08,   # B...  onaylandi
+                                  0x40, 0x11, 0x22, 0x01])  # C...  testHatali
+        self.routines_run: list[int] = []
 
     # transport arabirimi
     def send(self, payload: bytes):
@@ -59,6 +63,17 @@ class FakeEcu:
             return bytes([0x6E, p[1], p[2]])
         if sid == 0x11:  # ecu reset
             return bytes([0x51, p[1]])
+        if sid == 0x14:  # clear DTC
+            self.dtcs = b""
+            return bytes([0x54])
+        if sid == 0x19:  # read DTC
+            return bytes([0x59, p[1], 0xFF]) + self.dtcs
+        if sid == 0x31:  # routine control
+            rid = (p[2] << 8) | p[3]
+            if self.require_security_for_write and not self.unlocked:
+                return bytes([0x7F, 0x31, 0x33])
+            self.routines_run.append(rid)
+            return bytes([0x71, p[1], p[2], p[3], 0x00])
         return bytes([0x7F, sid, 0x11])  # serviceNotSupported
 
 

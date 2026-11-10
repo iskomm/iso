@@ -1,8 +1,25 @@
 # Mercedes-Benz Kodlama Uygulaması (OpenPort 2.0 / J2534)
 
-CBF dosyalarından çıkarılan tanımlarla Mercedes beyinlerinde (ECU) variant
-coding okuma/yazma yapan, **security access (seed/key)** destekli bir araç.
-OpenPort 2.0 (Tactrix) J2534 pass-thru cihazı ile çalışır.
+Bütün Mercedes platformları için (W176, W177, W205, W213, W222) variant
+coding okuma/yazma, **tek tıkla özellik aktivasyonu (AMG Menü dahil)**,
+beyin başına **arıza oku/sil ve tekrar tanıtma (teach-in)** yapan,
+**security access (seed/key)** destekli bir araç. OpenPort 2.0 (Tactrix)
+J2534 pass-thru cihazı ile çalışır.
+
+## Hızlı başlangıç (direkt uygulama)
+
+```bash
+python mercedes_coding.py      # GUI (Windows'ta Baslat.bat çift tık)
+```
+
+GUI açılışta gömülü tanım kütüphanesini yükler. Akış: **Model/beyin seç →
+Bağlan → Oturum Aç →** üç sekme:
+- **Özellikler:** tek tıkla aç/kapat. `★ AMG Menü Aktivasyonu` her modelde var.
+- **Arıza & Tanıtma:** arızaları oku (okunabilir kod + durum), sil,
+  "Sil + Tekrar Tanıt" (far beyni/konfor beyni değişimi sonrası).
+- **Gelişmiş:** blok/alan bazlı manuel okuma/yazma.
+
+`VIN ile Tanı` butonu beynin VIN'ini okuyup modeli otomatik seçer.
 
 > ⚠️ **Sorumluluk reddi.** Araç kodlaması risklidir. Yanlış değer yazmak
 > beyni kullanılamaz hale getirebilir. Yalnızca kendi aracınızda, ne
@@ -13,18 +30,31 @@ OpenPort 2.0 (Tactrix) J2534 pass-thru cihazı ile çalışır.
 ## Mimari
 
 ```
+mercedes_coding.py   Tek tıkla başlatıcı (GUI)
+Baslat.bat           Windows çift-tık başlatıcı
 src/
   j2534.py     OpenPort 2.0 J2534 sarmalayıcısı (ISO15765 / CAN)
-  uds.py       UDS (ISO 14229) + kısmi KWP2000 istemcisi
+  uds.py       UDS (ISO 14229) + KWP2000 istemcisi + DTC çözümleme
   security.py  Seed/key (27) çerçevesi: XOR/Add/LFSR örnekleri + DLL köprüsü
-  cbf.py       CBF dosya tarayıcı + kodlama tanım modeli (JSON)
-  coding.py    Yüksek seviye motor: oku/yedekle/yaz/doğrula + restore
+  cbf.py       CBF tarayıcı + tanım modeli (block/field/feature/routine)
+  library.py   Tüm platform tanımlarını yükleyen kütüphane + VIN eşleştirme
+  coding.py    Motor: oku/yedekle/yaz/doğrula, özellik uygula, arıza, tanıtma
   cli.py       Komut satırı arayüzü
-  app.py       Tkinter grafik arayüzü
-defs/
-  w176_sam_example.json   Örnek kodlama tanımı (şema referansı)
-tests/         Donanımsız çalışan birim testleri (sahte ECU)
+  app.py       Tkinter GUI (Özellikler / Arıza-Tanıtma / Gelişmiş)
+defs/platforms/
+  w176_*.json w177_*.json w205_*.json w213_*.json w222_*.json
+               Her platform için gösterge/konfor/far/EZS beyinleri
+tests/         Donanımsız çalışan 31 birim testi (sahte ECU)
 ```
+
+## Kavramlar
+
+- **Beyin (ECU) tanımı:** bir beynin CAN ID'leri, seedkey seviyesi, kodlama
+  blokları, hazır **özellikleri** ve **tanıtma rutinleri**. Her JSON bir beyin.
+- **Özellik (feature):** tek tıkla uygulanan hazır ayar (örn. AMG menü =
+  gösterge bloğundaki birkaç biti açar).
+- **Tanıtma (routine):** RoutineControl (0x31) ile çalışan teach-in /
+  kalibrasyon (örn. far beyni değişimi sonrası tanıtma).
 
 Tasarım ilkesi: **iş mantığı transport'tan bağımsızdır.** `UdsClient` sadece
 `send/recv` sağlayan bir nesne ister; bu yüzden tüm UDS/security/coding

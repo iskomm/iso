@@ -17,9 +17,23 @@ import argparse
 import sys
 
 from .cbf import CbfFile, CodingDefinition
+from .library import DefinitionLibrary
 from .uds import UdsClient
 from .coding import CodingSession, Backup
 from .security import SecurityProfile, DllSeedKey, XorKey
+
+
+def _resolve_definition(args) -> CodingDefinition:
+    """--ecu (kutuphaneden) ya da pozitif definition yolundan tanim getirir."""
+    if getattr(args, "ecu", None):
+        lib = DefinitionLibrary.load()
+        d = lib.by_ecu(args.ecu)
+        if not d:
+            print(f"beyin bulunamadi: {args.ecu}")
+            print("mevcut:", ", ".join(x.ecu_name for x in lib.definitions))
+            sys.exit(1)
+        return d
+    return CodingDefinition.from_json(args.definition)
 
 
 def _log(m):
@@ -68,8 +82,72 @@ def cmd_devices(args):
         sys.exit(1)
 
 
+def cmd_models(args):
+    lib = DefinitionLibrary.load()
+    for d in lib.definitions:
+        feats = ", ".join(f.name for f in d.features) or "-"
+        print(f"{d.ecu_name:20s} [{d.platform:5s} {d.ecu_role:14s}] "
+              f"ozellik: {feats}")
+
+
+def cmd_faults(args):
+    defn = _resolve_definition(args)
+    dev, uds = _connect(defn)
+    try:
+        sess = CodingSession(uds, defn, _build_security(args), log=_log)
+        sess.start()
+        if args.clear:
+            sess.clear_faults()
+        faults = sess.read_faults()
+        for d in faults:
+            print(f"  {d['code']:<12} [{', '.join(d['flags']) or '-'}]")
+        if not faults:
+            print("  (temiz)")
+    finally:
+        dev.close()
+
+
+def cmd_feature(args):
+    defn = _resolve_definition(args)
+    feat = defn.feature_by_name(args.name)
+    if not feat:
+        print(f"ozellik yok: {args.name}")
+        print("mevcut:", ", ".join(f.name for f in defn.features))
+        sys.exit(1)
+    dev, uds = _connect(defn)
+    try:
+        sess = CodingSession(uds, defn, _build_security(args), log=_log)
+        sess.start()
+        ok = sess.apply_feature(feat, enable=not args.disable, verify=True,
+                                backup_path=args.backup)
+        print("SONUC:", "BASARILI" if ok else "DOGRULAMA FARKLI")
+        sys.exit(0 if ok else 2)
+    finally:
+        dev.close()
+
+
+def cmd_routine(args):
+    defn = _resolve_definition(args)
+    rout = defn.routine_by_name(args.name)
+    if not rout:
+        print(f"tanitma yok: {args.name}")
+        print("mevcut:", ", ".join(r.name for r in defn.routines))
+        sys.exit(1)
+    dev, uds = _connect(defn)
+    try:
+        sess = CodingSession(uds, defn, _build_security(args), log=_log)
+        sess.start()
+        if args.clear_first:
+            sess.clear_and_reteach(rout)
+        else:
+            sess.run_routine(rout)
+        print("SONUC: tamam")
+    finally:
+        dev.close()
+
+
 def cmd_read(args):
-    defn = CodingDefinition.from_json(args.definition)
+    defn = _resolve_definition(args)
     dev, uds = _connect(defn)
     try:
         sess = CodingSession(uds, defn, _build_security(args), log=_log)
@@ -84,7 +162,7 @@ def cmd_read(args):
 
 
 def cmd_set(args):
-    defn = CodingDefinition.from_json(args.definition)
+    defn = _resolve_definition(args)
     changes = {}
     for item in args.field:
         k, v = item.split("=", 1)
@@ -103,7 +181,7 @@ def cmd_set(args):
 
 
 def cmd_restore(args):
-    defn = CodingDefinition.from_json(args.definition)
+    defn = _resolve_definition(args)
     bk = Backup.load(args.backup)
     dev, uds = _connect(defn)
     try:
@@ -125,6 +203,13 @@ def _add_security_args(p):
     p.add_argument("--xor-mask", help="basit XOR algoritmasi icin hex maske")
 
 
+def _add_target(p):
+    """Hedef beyin: ya kutuphaneden --ecu ya da pozitif definition yolu."""
+    p.add_argument("definition", nargs="?",
+                   help="tanim JSON yolu (--ecu verilirse gerekmez)")
+    p.add_argument("--ecu", help="kutuphaneden beyin adi (bkz. 'models')")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="mercedes-coding",
                                  description="Mercedes CBF kodlama araci")
@@ -137,14 +222,17 @@ def main(argv=None):
     s = sub.add_parser("devices", help="OpenPort surucusunu bul")
     s.set_defaults(func=cmd_devices)
 
+    s = sub.add_parser("models", help="kutuphanedeki tum beyinleri listele")
+    s.set_defaults(func=cmd_models)
+
     s = sub.add_parser("read", help="kodlama blogunu oku")
-    s.add_argument("definition")
+    _add_target(s)
     s.add_argument("--block", required=True)
     _add_security_args(s)
     s.set_defaults(func=cmd_read)
 
     s = sub.add_parser("set", help="kodlama alanlarini degistir")
-    s.add_argument("definition")
+    _add_target(s)
     s.add_argument("--block", required=True)
     s.add_argument("--field", action="append", default=[],
                    help="alan=deger (birden fazla olabilir)")
@@ -152,9 +240,32 @@ def main(argv=None):
     _add_security_args(s)
     s.set_defaults(func=cmd_set)
 
+    s = sub.add_parser("feature", help="hazir ozellik uygula (orn. amg_menu)")
+    _add_target(s)
+    s.add_argument("name", help="ozellik adi (orn. amg_menu)")
+    s.add_argument("--disable", action="store_true", help="ac yerine kapat")
+    s.add_argument("--backup", help="yazmadan once yedek dosyasi")
+    _add_security_args(s)
+    s.set_defaults(func=cmd_feature)
+
+    s = sub.add_parser("faults", help="arizalari oku (ve istege bagli sil)")
+    _add_target(s)
+    s.add_argument("--clear", action="store_true", help="once arizalari sil")
+    _add_security_args(s)
+    s.set_defaults(func=cmd_faults)
+
+    s = sub.add_parser("routine", help="tanitma/kalibrasyon rutini calistir")
+    _add_target(s)
+    s.add_argument("name", help="rutin adi (orn. far_tanitma)")
+    s.add_argument("--clear-first", action="store_true",
+                   help="once arizalari sil, sonra tanit")
+    _add_security_args(s)
+    s.set_defaults(func=cmd_routine)
+
     s = sub.add_parser("restore", help="yedekten geri yukle")
-    s.add_argument("definition")
-    s.add_argument("backup")
+    s.add_argument("backup", help="yedek JSON dosyasi")
+    s.add_argument("--ecu", help="kutuphaneden beyin adi")
+    s.add_argument("--def", dest="definition", help="tanim JSON yolu")
     _add_security_args(s)
     s.set_defaults(func=cmd_restore)
 
