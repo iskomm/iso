@@ -88,6 +88,16 @@ def cmd_devices(args):
         sys.exit(1)
 
 
+def cmd_coding(args):
+    cbf = CbfFile(args.file)
+    opts = cbf.extract_coding_options()
+    print(f"kodlama secenekleri ({len(opts)}) — KATALOG (byte/bit DEGIL):")
+    for o in opts:
+        al = f"  [{', '.join(o['aliases'])}]" if len(o["aliases"]) > 1 else ""
+        print(f"  {o['short']:28s} {o['label']}{al}")
+    print("\nNOT: Tam byte/bit konumu icin CaesarSuite ile dogrulayin.")
+
+
 def cmd_models(args):
     lib = DefinitionLibrary.load()
     for d in lib.definitions:
@@ -227,6 +237,10 @@ def main(argv=None):
 
     s = sub.add_parser("devices", help="OpenPort surucusunu bul")
     s.set_defaults(func=cmd_devices)
+
+    s = sub.add_parser("coding", help="CBF'teki kodlama secenek katalogu")
+    s.add_argument("file")
+    s.set_defaults(func=cmd_coding)
 
     s = sub.add_parser("models", help="kutuphanedeki tum beyinleri listele")
     s.set_defaults(func=cmd_models)

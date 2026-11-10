@@ -84,6 +84,32 @@ class CbfFile:
             coding_classes=meta["coding_classes"],
         )
 
+    def extract_coding_options(self) -> list[dict]:
+        """CBF'teki 'Globale Kodierungen' seceneklerini (etiket + kisa ad)
+        cikarir. Bu bir KATALOGtur: hangi ozelliklerin kodlanabildigini
+        gosterir. DIKKAT: her secenegin tam byte/bit konumu bu listede YOKTUR
+        (o bilgi Caesar ikili parametre tablosunda; CaesarSuite ile dogrulanir).
+        """
+        text = self.data.decode("latin-1", "ignore")
+        out, seen = [], set()
+        pat = re.compile(r"Globale Kodierungen:\s*([^\x00\r\n]+)")
+        for m in pat.finditer(text):
+            line = m.group(1).strip()
+            if not line or len(line) > 120:
+                continue
+            mm = re.match(r"(.*?)\s*\((.*)\)\s*$", line)
+            if mm:
+                label = mm.group(1).strip()
+                shorts = re.findall(r"[A-Za-z0-9_]+", mm.group(2))
+            else:
+                label, shorts = line, []
+            key = shorts[0] if shorts else label
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append({"label": label, "short": key, "aliases": shorts})
+        return out
+
     def extract_metadata(self) -> dict:
         """CBF'e gomulu Diogenes 'SelectionConfiguration' XML'inden beyin
         adi, versiyon ve varyant listesini cikarir. Bu XML her CBF'de

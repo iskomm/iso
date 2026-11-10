@@ -31,3 +31,33 @@ def test_scan_reports_size_and_magic(tmp_path):
     scan = CbfFile(path).scan()
     assert scan.size > 0
     assert scan.magic.startswith("efdd")
+
+
+def test_extract_metadata_from_embedded_xml(tmp_path):
+    payload = (b"CBF-\x00junk"
+               b"<EcuName>IC_204</EcuName>"
+               b"<VersionName>IC_204.6.1.18</VersionName>"
+               b"<VariantName>IC_204_Mid_Line_D1</VariantName>"
+               b"<VariantName>IC_204_Entry_D1</VariantName>"
+               b"...Variantenkodierung...")
+    p = tmp_path / "ic.cbf"
+    p.write_bytes(payload)
+    meta = CbfFile(str(p)).extract_metadata()
+    assert meta["ecu_name"] == "IC_204"
+    assert meta["version"] == "IC_204.6.1.18"
+    assert "IC_204_Mid_Line_D1" in meta["variants"]
+    assert "Variantenkodierung" in meta["coding_classes"]
+
+
+def test_extract_coding_options(tmp_path):
+    payload = (b"x\x00Globale Kodierungen: Night View (NightView)\x00"
+               b"y\x00Globale Kodierungen: Distronic (DTR (Distronic))\x00"
+               b"z\x00Globale Kodierungen: Steering Variant (Linkslenker) (Rechtslenker)\x00")
+    p = tmp_path / "c.cbf"
+    p.write_bytes(payload)
+    opts = CbfFile(str(p)).extract_coding_options()
+    shorts = {o["short"] for o in opts}
+    assert "NightView" in shorts
+    assert "DTR" in shorts
+    labels = {o["label"] for o in opts}
+    assert "Night View" in labels
