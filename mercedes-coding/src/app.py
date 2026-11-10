@@ -85,6 +85,20 @@ class App:
         self.feat_inner.bind("<Configure>", lambda e: self.feat_canvas.configure(
             scrollregion=self.feat_canvas.bbox("all")))
 
+        # --- CBF Eslestir sekmesi (okuma-only) ---
+        self.mtab = ttk.Frame(self.nb)
+        self.nb.add(self.mtab, text="CBF Eşleştir")
+        mbar = ttk.Frame(self.mtab, padding=4)
+        mbar.pack(fill="x")
+        ttk.Button(mbar, text="CBF Klasörü Seç", command=self.pick_cbf_folder).pack(side="left", padx=2)
+        ttk.Button(mbar, text="Araçtan Oku & Eşleştir", command=self.match_car).pack(side="left", padx=2)
+        ttk.Label(mbar, text="  ipucu:").pack(side="left")
+        self.hint_entry = ttk.Entry(mbar, width=12)
+        self.hint_entry.pack(side="left")
+        self.match_text = tk.Text(self.mtab, height=16, font=("Courier", 9))
+        self.match_text.pack(fill="both", expand=True, padx=6, pady=4)
+        self._catalog = None
+
         # --- Ariza & Tanitma sekmesi ---
         self.dtc_tab = ttk.Frame(self.nb)
         self.nb.add(self.dtc_tab, text="Arıza & Tanıtma")
@@ -305,6 +319,55 @@ class App:
         self.library.definitions.append(d)
         self._refresh_models()
         self.log(f"dış tanım eklendi: {d.ecu_name}")
+
+    # ---- CBF Eslestir (okuma-only) --------------------------------------
+
+    def pick_cbf_folder(self):
+        from .matcher import CbfCatalog
+        folder = filedialog.askdirectory(title="CBF dosyalarının olduğu klasör")
+        if not folder:
+            return
+        def job():
+            self._catalog = CbfCatalog.from_folder(folder)
+            self.match_text.delete("1.0", "end")
+            self.match_text.insert("end", f"{len(self._catalog.entries)} CBF tanındı:\n\n")
+            for e in self._catalog.entries:
+                brs = ",".join(b[2:] for b in e.baumuster)
+                self.match_text.insert(
+                    "end", f"  {e.ecu_name or '?':12s} v{e.version or '?':16s} "
+                           f"BR:{brs}\n     {e.filename}\n")
+        self._run(job)
+
+    def match_car(self):
+        if not self._need_session():
+            return
+        if not self._catalog:
+            messagebox.showinfo("Bilgi", "Önce CBF klasörü seçin.")
+            return
+        from .matcher import baumuster_from_vin
+        def job():
+            info, tokens = self.session.read_identity_tokens()
+            vin = info.get("DID_F190", "")
+            br = baumuster_from_vin(vin)
+            hint = self.hint_entry.get().strip()
+            results = self._catalog.match(tokens, car_baumuster=br, ecu_hint=hint)
+            def show():
+                self.match_text.delete("1.0", "end")
+                self.match_text.insert("end", "ARAÇ KİMLİĞİ (okundu, yazılmadı):\n")
+                for k, v in info.items():
+                    self.match_text.insert("end", f"  {k}: {v}\n")
+                self.match_text.insert("end", f"  Baumuster (VIN): {br or '?'}\n\n")
+                self.match_text.insert("end", "EN OLASI DOĞRU CBF (puan sırası):\n")
+                for r in results[:8]:
+                    self.match_text.insert(
+                        "end", f"  [{r.score:4.0f}] {r.entry.ecu_name:10s} "
+                               f"v{r.entry.version}\n       {r.entry.filename}\n"
+                               f"       → {'; '.join(r.reasons) or '-'}\n")
+                self.match_text.insert(
+                    "end", "\nNOT: Son sürüm teyidini sen yap (tam eşleşme CBF "
+                           "ikili tablosunda).\n")
+            self.root.after(0, show)
+        self._run(job)
 
     # ---- Ariza & Tanitma -------------------------------------------------
 

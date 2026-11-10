@@ -104,6 +104,28 @@ class CodingSession:
         self.log(f"kimlik: {info}")
         return info
 
+    # Eslestirme icin okunan genis kimlik DID kumesi (ISO + Daimler araligi)
+    IDENTITY_DIDS = [DID_VIN, DID_PART_NUMBER, DID_SW_VERSION, DID_SYSTEM_NAME,
+                     0xF191, 0xF18C, 0xF18A, 0xF195, 0xF150, 0xF151, 0xF153]
+
+    def read_identity_tokens(self) -> tuple[dict, set]:
+        """CBF eslestirmesi icin beynin kimlik DID'lerini okur (SADECE OKUMA).
+
+        Doner: (okunabilir bilgi sozlugu, eslestirme token kumesi).
+        """
+        from .matcher import normalize_tokens
+        info = {}
+        texts = []
+        for did in self.IDENTITY_DIDS:
+            val = self._read_ascii_did(did)
+            if val:
+                info[f"DID_{did:04X}"] = val
+                texts.append(val)
+        tokens = normalize_tokens(*texts)
+        self.log(f"arac kimlik tokenlari ({len(tokens)}): "
+                 f"{', '.join(sorted(tokens)[:10])}")
+        return info, tokens
+
     # -- hazir ozellik uygulama (AMG menu vb.) ----------------------------
 
     # -- ariza oku / sil ---------------------------------------------------

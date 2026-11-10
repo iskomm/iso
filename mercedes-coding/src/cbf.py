@@ -131,11 +131,26 @@ class CbfFile:
                    "Kodierung", "VariantCoding"):
             if kw.lower() in text.lower() and kw not in coding:
                 coding.append(kw)
+        # desteklenen Baumuster (arac serisi): BR204, BR212 ...
+        baumuster = sorted(set(re.findall(r"BR\d{3}", text)))
         return {
             "ecu_name": ecu.group(1).strip() if ecu else "",
             "version": ver.group(1).strip() if ver else "",
             "variants": variants,
             "coding_classes": coding,
+            "baumuster": baumuster,
+        }
+
+    def identity(self) -> dict:
+        """Eslestirme icin ozet kimlik: beyin adi, versiyon, Baumuster,
+        varyant sayisi. Dosya yolu dahil."""
+        m = self.extract_metadata()
+        return {
+            "path": self.path,
+            "ecu_name": m["ecu_name"],
+            "version": m["version"],
+            "baumuster": m["baumuster"],
+            "variants": m["variants"],
         }
 
     def _extract_strings(self) -> list[str]:

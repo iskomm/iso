@@ -47,6 +47,21 @@ defs/platforms/
 tests/         Donanımsız çalışan 31 birim testi (sahte ECU)
 ```
 
+## CBF Tanı & Eşleştir (kendi dosyalarınla)
+
+Kendi CBF dosyalarını bir klasöre koy; uygulama hepsini **otomatik tanır**
+(gerçek beyin adı, versiyon, desteklenen Baumuster) ve araca bağlanıp beynin
+kimliğini **okuyarak** (parça no, yazılım, VIN — sadece okuma) doğru CBF'i
+sıralar.
+
+```bash
+python -m src.cli index /klasor/cbf        # dosyaları tanı/listele
+python -m src.cli match /klasor/cbf --ecu W204_IC --hint SAM   # araçla eşleştir
+```
+GUI'de **"CBF Eşleştir"** sekmesi: klasör seç → "Araçtan Oku & Eşleştir".
+Aynı beynin iki versiyonu varsa (ör. iki IC_204), aracın yazılım sürümüne en
+yakın olanı öne çıkarır. Son sürüm teyidini kullanıcı verir.
+
 ## Kavramlar
 
 - **Beyin (ECU) tanımı:** bir beynin CAN ID'leri, seedkey seviyesi, kodlama

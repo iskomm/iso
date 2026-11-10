@@ -88,6 +88,47 @@ def cmd_devices(args):
         sys.exit(1)
 
 
+def cmd_index(args):
+    from .matcher import CbfCatalog
+    cat = CbfCatalog.from_folder(args.folder)
+    print(f"{len(cat.entries)} CBF bulundu:")
+    for e in cat.entries:
+        print(f"  {e.filename:34s} -> {e.ecu_name or '?':12s} "
+              f"v{e.version or '?':14s} BR:{','.join(b[2:] for b in e.baumuster)}")
+
+
+def cmd_match(args):
+    from .matcher import CbfCatalog, baumuster_from_vin
+    cat = CbfCatalog.from_folder(args.folder)
+    if not cat.entries:
+        print("klasorde CBF yok:", args.folder)
+        sys.exit(1)
+    # araca baglan ve kimligi oku (SADECE OKUMA)
+    defn = _resolve_definition(args) if (args.ecu or args.definition) else None
+    if defn is None:
+        print("araca baglanmak icin --ecu ya da bir tanim gerekli "
+              "(CAN ID'leri icin). Yalnizca indeks icin 'index' kullanin.")
+        sys.exit(1)
+    dev, uds = _connect(defn)
+    try:
+        sess = CodingSession(uds, defn, _build_security(args), log=_log)
+        sess.start()
+        info, tokens = sess.read_identity_tokens()
+        vin = info.get(f"DID_F190", "")
+        br = baumuster_from_vin(vin)
+        print(f"\narac kimligi: {info}")
+        print(f"Baumuster (VIN'den): {br or '?'}\n")
+        results = cat.match(tokens, car_baumuster=br, ecu_hint=args.hint or "")
+        print("EN OLASI CBF (puan sirasi):")
+        for r in results[:8]:
+            print(f"  [{r.score:4.0f}] {r.entry.filename:34s} "
+                  f"{r.entry.ecu_name}  — {'; '.join(r.reasons) or '-'}")
+        print("\nNOT: Son surum teyidini insan yapmali (tam eslesme CBF ikili "
+              "tablosunda).")
+    finally:
+        dev.close()
+
+
 def cmd_coding(args):
     cbf = CbfFile(args.file)
     opts = cbf.extract_coding_options()
@@ -241,6 +282,18 @@ def main(argv=None):
     s = sub.add_parser("coding", help="CBF'teki kodlama secenek katalogu")
     s.add_argument("file")
     s.set_defaults(func=cmd_coding)
+
+    s = sub.add_parser("index", help="klasordeki CBF'leri tanimla/indexle")
+    s.add_argument("folder")
+    s.set_defaults(func=cmd_index)
+
+    s = sub.add_parser("match", help="araca baglanip dogru CBF'i bul (okuma)")
+    s.add_argument("folder", help="CBF klasoru")
+    s.add_argument("--ecu", help="baglanti icin kutuphane beyni")
+    s.add_argument("--def", dest="definition", help="baglanti icin tanim JSON")
+    s.add_argument("--hint", help="beklenen beyin adi ipucu (orn. SAM)")
+    _add_security_args(s)
+    s.set_defaults(func=cmd_match)
 
     s = sub.add_parser("models", help="kutuphanedeki tum beyinleri listele")
     s.set_defaults(func=cmd_models)
