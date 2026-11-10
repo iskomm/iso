@@ -1,0 +1,59 @@
+{
+  "ecu_name": "W176 Front-SAM (ORNEK)",
+  "request_id": 2016,
+  "response_id": 2024,
+  "baudrate": 500000,
+  "extended_id": false,
+  "protocol": "UDS",
+  "seedkey": {
+    "level": 3,
+    "dll": "",
+    "func": "GenerateKeyEx",
+    "xor_mask": ""
+  },
+  "blocks": [
+    {
+      "name": "konfor_isiklandirma",
+      "did": 256,
+      "read_sid": 34,
+      "write_sid": 46,
+      "security_level": 3,
+      "length": 2,
+      "fields": [
+        {
+          "name": "coming_home",
+          "byte_offset": 0,
+          "bit_offset": 0,
+          "bit_length": 1,
+          "description": "yaklasinca farlar yansin",
+          "options": {"0": "kapali", "1": "acik"}
+        },
+        {
+          "name": "leaving_home",
+          "byte_offset": 0,
+          "bit_offset": 1,
+          "bit_length": 1,
+          "description": "inince farlar yansin",
+          "options": {"0": "kapali", "1": "acik"}
+        },
+        {
+          "name": "konfor_sinyal_sayisi",
+          "byte_offset": 0,
+          "bit_offset": 2,
+          "bit_length": 3,
+          "description": "tek dokunusta sinyal yanip sonme sayisi",
+          "options": {"3": "3 kez", "4": "4 kez", "5": "5 kez"}
+        },
+        {
+          "name": "sis_viraj_lambasi",
+          "byte_offset": 1,
+          "bit_offset": 0,
+          "bit_length": 1,
+          "description": "sis farini kornering light yap",
+          "options": {"0": "kapali", "1": "acik"}
+        }
+      ]
+    }
+  ],
+  "_NOT": "Bu dosya SADECE ORNEK semadir. DID, byte/bit konumlari ve CAN ID'leri UYDURMADIR. Gercek degerleri kendi CBF dosyandan (CaesarSuite ile) cikarip buraya yazmalisin. Yanlis konuma yazmak beyni bozabilir."
+}

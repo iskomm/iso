@@ -1,0 +1,5 @@
+# Calisma zamani: yalnizca standart kutuphane (ctypes, tkinter, winreg).
+# Harici bagimlilik YOK - OpenPort DLL'i Windows surucusunden gelir.
+
+# Gelistirme / test:
+pytest>=7.0
