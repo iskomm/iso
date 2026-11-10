@@ -43,6 +43,13 @@ def test_field_bit_read_write():
     assert blk[0] & 0b00000011 == 0b00000000
 
 
+def test_unmapped_field_write_is_blocked():
+    import pytest
+    f = CodingField("gizli", -1, 0, 1)   # eslenmemis
+    with pytest.raises(ValueError, match="eslenmemis"):
+        f.write(bytearray([0]), 1)
+
+
 def test_decode_block():
     blk = _demo_definition().blocks[0]
     # LSB-first: bit0=1, bit1=0, bit2..4=101(=5) -> 0b00010101

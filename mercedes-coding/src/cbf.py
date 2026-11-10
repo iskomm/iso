@@ -196,7 +196,16 @@ class CodingField:
         return val
 
     def write(self, block: bytearray, value: int) -> None:
-        """Alani blok icine yazar (yerinde degistirir). LSB-first."""
+        """Alani blok icine yazar (yerinde degistirir). LSB-first.
+
+        GUVENLIK: byte_offset < 0 ise alan 'eslenmemis' sayilir (byte/bit
+        konumu CBF'ten dogrulanmamis). Boyle bir alana yazim ENGELLENIR,
+        cunku yanlis konuma yazmak beyni bozar.
+        """
+        if self.byte_offset < 0:
+            raise ValueError(
+                f"{self.name}: alan eslenmemis (byte/bit bilinmiyor). "
+                f"Yazim guvenlik geregi engellendi; once CBF'ten dogrula.")
         if value >= (1 << self.bit_length):
             raise ValueError(f"{self.name}: deger {self.bit_length} bite sigmaz")
         for i in range(self.bit_length):
