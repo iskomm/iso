@@ -12,14 +12,25 @@ kullanici modelini secer, OpenPort'a baglanir, ozellikleri uygular.
 from __future__ import annotations
 
 import os
+import sys
 import re
 import glob
 
 from .cbf import CodingDefinition, Feature
 
 
-# bu dosyanin yanindaki ../defs klasoru (gomulu kutuphane)
-_DEFAULT_DEFS = os.path.join(os.path.dirname(__file__), "..", "defs")
+def _default_defs_dir() -> str:
+    """Gomulu defs/ klasoru. PyInstaller ile paketlenince (_MEIPASS)
+    cikarilan konuma, aksi halde kaynak agacina bakar."""
+    base = getattr(sys, "_MEIPASS", None)
+    if base:
+        cand = os.path.join(base, "defs")
+        if os.path.isdir(cand):
+            return cand
+    return os.path.join(os.path.dirname(__file__), "..", "defs")
+
+
+_DEFAULT_DEFS = _default_defs_dir()
 
 
 class DefinitionLibrary:

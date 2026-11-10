@@ -12,6 +12,15 @@ J2534 pass-thru cihazı ile çalışır.
 python mercedes_coding.py      # GUI (Windows'ta Baslat.bat çift tık)
 ```
 
+### Tek dosya .exe (Windows, kurulum gerektirmez)
+
+```bash
+build_exe.bat                  # -> dist\MercedesKodlama.exe
+```
+PyInstaller ile tanım kütüphanesi (defs/) içine gömülü tek `.exe` üretir;
+çift tıkla çalışır. OpenPort sürücüsü 32-bit olduğundan 32-bit Python ile
+derleyin.
+
 GUI açılışta gömülü tanım kütüphanesini yükler. Akış: **Model/beyin seç →
 Bağlan → Oturum Aç →** üç sekme:
 - **Özellikler:** tek tıkla aç/kapat. `★ AMG Menü Aktivasyonu` her modelde var.

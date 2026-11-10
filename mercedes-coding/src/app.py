@@ -47,6 +47,15 @@ class App:
         self._build_tabs()
         self._build_log()
         self._refresh_models()
+        self._welcome()
+
+    def _welcome(self):
+        self.log("Mercedes-Benz Kodlama — hazır.")
+        self.log(f"Kütüphane: {len(self.library.definitions)} beyin tanımı, "
+                 f"{len(self.library.platforms())} platform.")
+        self.log("Akış: Model seç → Bağlan → Oturum Aç → sekmeler.")
+        self.log("Güvenlik: eşlenmemiş (byte/bit doğrulanmamış) alanlar YAZILMAZ.")
+        self.log("-" * 60)
 
     # ---- ust panel: model secimi + baglanti ------------------------------
 

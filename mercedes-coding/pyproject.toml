@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mercedes-coding"
+version = "0.2.0"
+description = "Mercedes-Benz CBF kodlama uygulamasi (OpenPort 2.0 / J2534)"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+build = ["pyinstaller>=6.0"]
+
+[project.scripts]
+mercedes-coding = "src.cli:main"
+mercedes-coding-gui = "src.app:main"
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.setuptools.package-data]
+src = ["../defs/**/*.json"]
